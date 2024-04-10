@@ -6,6 +6,9 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite-react/lib/**/*.js",
+    "./pages/**/*.{ts,tsx}",
+    "./public/**/*.html",
   ],
   theme: {
     extend: {},
@@ -28,6 +31,7 @@ export default {
     ],
   },
   plugins: [
-    require('daisyui')
+    require('daisyui'),
+    require('flowbite/plugin')
   ],
 }

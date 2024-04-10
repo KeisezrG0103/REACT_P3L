@@ -14,14 +14,19 @@ import Pengadaan_Bahan_Baku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/Peng
 import DetailHampers from "./pages/dashboard/ADMIN/Detail_Hampers/DetailHampers.jsx";
 import Hampers from "./pages/dashboard/ADMIN/Hampers/Hampers.jsx";
 import Produk from "./pages/dashboard/ADMIN/Produk/Produk.jsx";
+import Edit_Produk from "./pages/dashboard/ADMIN/Produk/Edit_Produk.jsx";
+import Tambah_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Produk.jsx";
 
 function App() {
   const karyawan_Json = localStorage.getItem("karyawan");
 
-  const karyawan = karyawan_Json ? JSON.parse(karyawan_Json) : {};
+  const karyawan = karyawan_Json ? JSON.parse(karyawan_Json) : "";
 
-  console.log(karyawan.role);
+  console.log(karyawan?.role);
 
+  localStorage.setItem("token", karyawan?.token);
+
+  console.log(localStorage.getItem("token"));
   return (
     <>
       <BrowserRouter>
@@ -39,6 +44,12 @@ function App() {
             >
               <Route path="/dashboard/Admin/" element={<Index_Admin />} />
               <Route path="/dashboard/Admin/produk" element={<Produk />} />
+              <Route
+                path="/dashboard/Admin/produk/:id"
+                element={<Tambah_Produk />}
+              />
+              <Route path="/dashboard/Admin/produk/tambah" element={< Tambah_Produk/>} />
+
               <Route path="/dashboard/Admin/hampers" element={<Hampers />} />
               <Route
                 path="/dashboard/Admin/detailHampers"

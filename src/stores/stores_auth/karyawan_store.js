@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 
-
 const useKaryawanStore = create((set) => ({
   karyawan: {
   },
@@ -18,5 +17,7 @@ const useKaryawanStore = create((set) => ({
   ),
   logout: () => set({ karyawan: {} })
 }));
+
+
 
 export default useKaryawanStore;

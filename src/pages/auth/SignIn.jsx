@@ -8,17 +8,11 @@ import toast from "react-hot-toast";
 import Logo from "../../assets/logo.png";
 import { useMutation } from "react-query";
 
-
-
 const SignIn = () => {
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const mutation = useMutation(loginKaryawan);
   const mutationPelanggan = useMutation(loginPelanggan);
-
 
   const navigate = useNavigate();
   const setKaryawan = useKaryawanStore((state) => state.setKaryawan);
@@ -31,7 +25,6 @@ const SignIn = () => {
 
   const isKaryawan = location.pathname.includes("signinKaryawan");
 
-
   const onSubmit = (data) => {
     if (isKaryawan) {
       mutation.mutate(data, {
@@ -40,22 +33,22 @@ const SignIn = () => {
           console.log(state.Nama);
           toast.success("Login Berhasil");
 
-          if(res.data.role === "Admin") {
+          if (res.data.role === "Admin") {
             navigate("/dashboard/Admin");
           }
-          if(res.data.role === "MO") {
+          if (res.data.role === "MO") {
             navigate("/dashboard/MO");
           }
-          if(res.data.role === "Owner") {
+          if (res.data.role === "Owner") {
             navigate("/dashboard/Owner");
           }
         },
         onError: (err) => {
           console.log(err);
-        }
+          toast.error("Login Gagal");
+        },
       });
     } else {
-      
       mutationPelanggan.mutate(data, {
         onSuccess: (res) => {
           setCustomer(res.data);
@@ -65,6 +58,7 @@ const SignIn = () => {
         },
         onError: (err) => {
           console.log(err);
+          toast.error("Login Gagal");
         },
       });
     }
@@ -72,12 +66,7 @@ const SignIn = () => {
 
   return (
     <div>
-      
-
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="card p-4 w-96 mx-auto mt-20"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="card w-full  mx-auto">
         <div className="text-center">
           <img src={Logo} alt="logo" className="w-40 mx-auto" />
         </div>
@@ -126,8 +115,11 @@ const SignIn = () => {
         </label>
         <div className="mt-4">
           <button className="btn btn-primary w-full text-white">
-          {mutation.isLoading ? (<span className="loading loading-dots loading-md"></span>) : ("Sign In")}
-
+            {mutation.isLoading ? (
+              <span className="loading loading-dots loading-md"></span>
+            ) : (
+              "Sign In"
+            )}
           </button>
         </div>
 

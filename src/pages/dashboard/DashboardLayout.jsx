@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 import SidebarContent from "./SidebarContent";
-
+import "./Dashboard.css";
 
 const DashboardLayout = () => {
   const user_object = localStorage.getItem("karyawan");
@@ -9,7 +9,7 @@ const DashboardLayout = () => {
 
   return (
     <>
-      <div className="navbar bg-primary">
+      <div className="navbar bg-primary max-h-8">
         <div className="flex-none">
           <label
             htmlFor="my-drawer-2"
@@ -32,7 +32,7 @@ const DashboardLayout = () => {
         </div>
 
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl flex-col">
+          <a className=" text-xl flex items-center space-x-2" href="#">
             <img src={Logo} alt="logo" className="w-20" />
             <p>
               <span className="text-lg font-bold">Atma Kitchen</span>
@@ -82,9 +82,16 @@ const DashboardLayout = () => {
         <div className="drawer-content flex flex-col h-screen">
           {/*  */}
           <div className="flex-1 p-4 bg-blue-50">
-            {/* Insert your main content here */}
             <Outlet />
           </div>
+
+          <footer className="footer footer-center p-4 bg-base-100 text-base-content">
+            <aside>
+              <p>
+                Copyright © 2024 - All right reserved by Kelompok P3L RCN
+              </p>
+            </aside>
+          </footer>
         </div>
 
         <div className="drawer-side">
@@ -94,18 +101,7 @@ const DashboardLayout = () => {
             className="drawer-overlay"
           ></label>
           <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content">
-            {/* Sidebar content here */}
-
-            {/* {user.role === "MO" &&
-              Object.keys(MO_FEATURES).map((key, index) => {
-                return (
-                  <li key={index}>
-                    <a href={MO_ROUTES[MO_FEATURES[key]]}>{MO_FEATURES[key]}</a>
-                  </li>
-                );
-              })} */}
-
-              <SidebarContent role={user.role} />
+            <SidebarContent role={user.role} />
           </ul>
         </div>
       </div>
