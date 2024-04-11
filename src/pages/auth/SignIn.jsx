@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { json, Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginKaryawan, loginPelanggan } from "../../api/auth/auth_query";
@@ -10,13 +10,8 @@ import Logo from "../../assets/logo.png";
 import { useMutation } from "react-query";
 
 const SignIn = () => {
-
-const karyawan = useSelector((state) => state.karyawan);
-const customer = useSelector((state) => state.customer);
-
-
-
-
+  const karyawan = useSelector((state) => state.karyawan);
+  const customer = useSelector((state) => state.customer);
   const { register, handleSubmit } = useForm();
 
   const mutation = useMutation(loginKaryawan);
@@ -29,9 +24,6 @@ const customer = useSelector((state) => state.customer);
 
   const dispatch = useDispatch();
 
-  const set_Customer = (data) => dispatch(setCustomer(data));
-  const set_Karyawan = (data) => dispatch(setKaryawan(data));
-
   const location = useLocation();
 
   const isKaryawan = location.pathname.includes("signinKaryawan");
@@ -40,20 +32,14 @@ const customer = useSelector((state) => state.customer);
     if (isKaryawan) {
       mutation.mutate(data, {
         onSuccess: (res) => {
-
-          dispatch(set_Karyawan(res.data));
-
-          // console.log(res.data)
-
-
-          console.log(stateKaryawan);
-
-
-
+          dispatch(setKaryawan(res.data));
+          localStorage.setItem("karyawan", JSON.stringify(res.data));
           toast.success("Login Berhasil");
+
           localStorage.setItem("token", res.data.token);
-          console.log(localStorage.getItem("token"))
-      
+
+          console.log(res.data);
+
           if (res.data.role === "Admin") {
             navigate("/dashboard/Admin");
           }
@@ -75,7 +61,6 @@ const customer = useSelector((state) => state.customer);
           dispatch(setCustomer(res.data));
           console.log(stateCustomer);
 
-          
           toast.success("Login Berhasil");
           navigate("/dashboard/Customer");
         },

@@ -8,14 +8,20 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const DashboardLayout = () => {
-  const user = useSelector((state) => state.karyawan.karyawan);
+  
+  const karyawan_string = localStorage.getItem("karyawan");
+
+
+  const user = JSON.parse(karyawan_string);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const doLogout = () => {
     dispatch(logoutKaryawan());
     localStorage.removeItem("token");
+    localStorage.removeItem("karyawan");
     navigate("/auth/signin");
-  } 
+  };
   return (
     <>
       <div className="navbar bg-primary max-h-8">
@@ -63,7 +69,7 @@ const DashboardLayout = () => {
               </div>
             </div>
             <div className="ml-2">
-              <span className="text-sm font-bold">{user.Nama}</span>
+              <span className="text-sm font-bold">{user?.Nama}</span>
             </div>
           </a>
           <ul
@@ -81,7 +87,8 @@ const DashboardLayout = () => {
             </li>
             <li>
               <a className="btn btn-ghost btn-sm" onClick={doLogout}>
-                Logout</a>
+                Logout
+              </a>
             </li>
           </ul>
         </div>
@@ -97,9 +104,7 @@ const DashboardLayout = () => {
 
           <footer className="footer footer-center p-4 bg-base-100 text-base-content">
             <aside>
-              <p>
-                Copyright © 2024 - All right reserved by Kelompok P3L RCN
-              </p>
+              <p>Copyright © 2024 - All right reserved by Kelompok P3L RCN</p>
             </aside>
           </footer>
         </div>
@@ -111,7 +116,7 @@ const DashboardLayout = () => {
             className="drawer-overlay"
           ></label>
           <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content">
-            <SidebarContent role={user.role} />
+            <SidebarContent role={user?.role} />
           </ul>
         </div>
       </div>

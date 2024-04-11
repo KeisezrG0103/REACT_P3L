@@ -1,8 +1,9 @@
-import React, { Children } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 
-const ProtectedRoutes = ({ children, karyawan }) => {
+const ProtectedRoutes = ({ karyawan }) => {
+
+  
     if(karyawan){
         return <Outlet />;
     }
