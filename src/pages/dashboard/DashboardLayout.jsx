@@ -2,11 +2,20 @@ import { Outlet } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 import SidebarContent from "./SidebarContent";
 import "./Dashboard.css";
+import { useSelector } from "react-redux";
+import { logoutKaryawan } from "../../slicer/slicer_karyawan";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const DashboardLayout = () => {
-  const user_object = localStorage.getItem("karyawan");
-  const user = user_object ? JSON.parse(user_object) : null;
-
+  const user = useSelector((state) => state.karyawan.karyawan);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const doLogout = () => {
+    dispatch(logoutKaryawan());
+    localStorage.removeItem("token");
+    navigate("/auth/signin");
+  } 
   return (
     <>
       <div className="navbar bg-primary max-h-8">
@@ -71,7 +80,8 @@ const DashboardLayout = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <a className="btn btn-ghost btn-sm" onClick={doLogout}>
+                Logout</a>
             </li>
           </ul>
         </div>

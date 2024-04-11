@@ -20,14 +20,26 @@ export const addProduk = async (data) => {
   return response.data;
 }
 
-export const editProduk = async (data, id) => {
-  const response = await Axios.put(`${ADMIN_ROUTES.PRODUK}/${id}`, data, {
+export const editProduk = async ({data, id}) => {
+  console.log("ID:", id); // Check the value of id
+  console.log("Data:", data); // Check the value of data  
+  const datas = {
+    Nama: data.Nama,
+    Harga: data.Harga,
+    Stok: data.Stok,
+    Kategori_Id: data.Kategori_Id,
+    Penitip_Id: data.Penitip_Id,
+    Satuan: data.Satuan,
+  };
+
+  const response = await Axios.put(`${ADMIN_ROUTES.PRODUK}/${id}`, datas, {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
   });
   return response.data;
-}
+};
+
 
 export const deleteProduk = async (id) => {
   const response = await Axios.delete(`${ADMIN_ROUTES.PRODUK}/${id}`, {

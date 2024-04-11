@@ -2,24 +2,35 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginKaryawan, loginPelanggan } from "../../api/auth/auth_query";
-import useKaryawanStore from "../../stores/stores_auth/karyawan_store";
-import useCustomerStore from "../../stores/stores_auth/customer_store";
+import { setCustomer } from "../../slicer/slicer_customer";
+import { setKaryawan } from "../../slicer/slicer_karyawan";
+import { useSelector, useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import Logo from "../../assets/logo.png";
 import { useMutation } from "react-query";
 
 const SignIn = () => {
+
+const karyawan = useSelector((state) => state.karyawan);
+const customer = useSelector((state) => state.customer);
+
+
+
+
   const { register, handleSubmit } = useForm();
 
   const mutation = useMutation(loginKaryawan);
   const mutationPelanggan = useMutation(loginPelanggan);
 
   const navigate = useNavigate();
-  const setKaryawan = useKaryawanStore((state) => state.setKaryawan);
-  const state = useKaryawanStore((state) => state.karyawan);
 
-  const setCustomer = useCustomerStore((state) => state.setCustomer);
-  const stateCustomer = useCustomerStore((state) => state.customer);
+  const stateCustomer = useSelector((state) => state.customer);
+  const stateKaryawan = useSelector((state) => state.karyawan);
+
+  const dispatch = useDispatch();
+
+  const set_Customer = (data) => dispatch(setCustomer(data));
+  const set_Karyawan = (data) => dispatch(setKaryawan(data));
 
   const location = useLocation();
 
@@ -29,10 +40,20 @@ const SignIn = () => {
     if (isKaryawan) {
       mutation.mutate(data, {
         onSuccess: (res) => {
-          setKaryawan(res.data);
-          console.log(state.Nama);
-          toast.success("Login Berhasil");
 
+          dispatch(set_Karyawan(res.data));
+
+          // console.log(res.data)
+
+
+          console.log(stateKaryawan);
+
+
+
+          toast.success("Login Berhasil");
+          localStorage.setItem("token", res.data.token);
+          console.log(localStorage.getItem("token"))
+      
           if (res.data.role === "Admin") {
             navigate("/dashboard/Admin");
           }
@@ -51,8 +72,10 @@ const SignIn = () => {
     } else {
       mutationPelanggan.mutate(data, {
         onSuccess: (res) => {
-          setCustomer(res.data);
-          console.log(stateCustomer.Nama);
+          dispatch(setCustomer(res.data));
+          console.log(stateCustomer);
+
+          
           toast.success("Login Berhasil");
           navigate("/dashboard/Customer");
         },

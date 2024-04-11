@@ -1,45 +1,60 @@
 import { useEffect } from "react";
 import { getProduk } from "../../../../api/produk/produk_query";
 import { useQuery } from "react-query";
-import { useMutation } from "react-query";
-import { deleteProduk } from "../../../../api/produk/produk_query";
-
+import { setItems, setModal } from "../../../../slicer/slicer_modal";
+import { useDispatch } from "react-redux";
+import Modal_Delete from "../../../../components/Modal_Delete";
 import { Link } from "react-router-dom";
-
+import {
+  setIsEdit,
+  setItem,
+} from "../../../../slicer/produk/slicer_Editproduk";
+import { resetState } from "../../../../slicer/produk/slicer_Editproduk";
 const Produk = () => {
-  const { data, isLoading, isError, refetch } = useQuery(
-    {
-      queryKey: "produk",
-      queryFn: getProduk,
-      retry:3
-    },
-  
-);
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: "produk",
+    queryFn: getProduk,
+    retry: 3,
+  });
 
-const mutation = useMutation({
-  mutationFn: deleteProduk,
-  onSuccess: () => {
+  const dispatch = useDispatch();
+
+  const set_Items = (data) => dispatch(setItems(data));
+  const set_Modal = (data) => dispatch(setModal(data));
+
+  useEffect(() => {
+    dispatch(resetState());
+  }, [resetState]);
+
+  const openModal = (item) => {
+    set_Modal(true);
+    set_Items(item);
+  };
+
+  const set_setIsEdit = (data) => dispatch(setIsEdit(data));
+  const set_setModal = (data) => dispatch(setItem(data));
+
+  const Edit = (data) => {
+    set_setIsEdit(true);
+    set_setModal(data);
+  };
+
+  useEffect(() => {
     refetch();
-  }
-});
-
-
-useEffect (() => {
-  refetch();
-}, [refetch]);
+  }, [refetch]);
 
   console.log(data?.data);
 
-  let No = 1;
-  const cake = data?.data?.filter((item) => item.Kategori === "Cake" && item.Penitip == null);
-  const minuman = data?.data?.filter((item) => item.Kategori === "Minuman" && item.Penitip == null);
-  const roti = data?.data?.filter((item) => item.Kategori === "Roti" && item.Penitip == null);
+  const cake = data?.data?.filter(
+    (item) => item.Kategori === "Cake" && item.Penitip == null
+  );
+  const minuman = data?.data?.filter(
+    (item) => item.Kategori === "Minuman" && item.Penitip == null
+  );
+  const roti = data?.data?.filter(
+    (item) => item.Kategori === "Roti" && item.Penitip == null
+  );
   const titipan = data?.data?.filter((item) => item.Penitip !== null);
-
-
-  const deleteProdukFunction = async (id) => {
-    await mutation.mutateAsync(id);
-  };
 
   return (
     <div>
@@ -85,13 +100,20 @@ useEffect (() => {
                         <td>{item.Stok}</td>
                         <td className="flex justify-center">
                           <Link to={`/dashboard/Admin/produk/${item.Id}`}>
-                            <button className="btn btn-sm btn-primary text-white mr-2">
+                            <button
+                              className="btn btn-sm btn-primary text-white mr-2"
+                              onClick={() => Edit(item)}
+                            >
                               Edit
                             </button>
                           </Link>
-                          <button className="btn btn-sm btn-error " onClick={() => deleteProdukFunction(item.Id)}>
+                          <button
+                            className="btn btn-sm btn-error "
+                            onClick={() => openModal(item)}
+                          >
                             Delete
                           </button>
+                          <Modal_Delete />
                         </td>
                       </tr>
                     ))}
@@ -137,12 +159,21 @@ useEffect (() => {
                         <td>{item.Harga}</td>
                         <td>{item.Stok}</td>
                         <td className="flex justify-center">
-                          <button className="btn btn-sm btn-primary text-white mr-2">
-                            Edit
-                          </button>
-                          <button className="btn btn-sm btn-error " onClick={() => deleteProdukFunction(item.Id)}>
+                          <Link to={`/dashboard/Admin/produk/${item.Id}`}>
+                            <button
+                              className="btn btn-sm btn-primary text-white mr-2"
+                              onClick={() => Edit(item)}
+                            >
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            className="btn btn-sm btn-error "
+                            onClick={() => openModal(item)}
+                          >
                             Delete
                           </button>
+                          <Modal_Delete />
                         </td>
                       </tr>
                     ))}
@@ -184,12 +215,21 @@ useEffect (() => {
                         <td>{item.Harga}</td>
                         <td>{item.Stok}</td>
                         <td className="flex justify-center">
-                          <button className="btn btn-sm btn-primary text-white mr-2">
-                            Edit
-                          </button>
-                          <button className="btn btn-sm btn-error " onClick={() => deleteProdukFunction(item.Id)}>
+                          <Link to={`/dashboard/Admin/produk/${item.Id}`}>
+                            <button
+                              className="btn btn-sm btn-primary text-white mr-2"
+                              onClick={() => Edit(item)}
+                            >
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            className="btn btn-sm btn-error "
+                            onClick={() => openModal(item)}
+                          >
                             Delete
                           </button>
+                          <Modal_Delete />
                         </td>
                       </tr>
                     ))}
@@ -235,12 +275,21 @@ useEffect (() => {
                         <td>{item.Stok}</td>
                         <td>{item.Penitip}</td>
                         <td className="flex justify-center">
-                          <button className="btn btn-sm btn-primary text-white mr-2">
-                            Edit
-                          </button>
-                          <button className="btn btn-sm btn-error " onClick={() => deleteProdukFunction(item.Id)}>
+                          <Link to={`/dashboard/Admin/produk/${item.Id}`}>
+                            <button
+                              className="btn btn-sm btn-primary text-white mr-2"
+                              onClick={() => Edit(item)}
+                            >
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            className="btn btn-sm btn-error "
+                            onClick={() => openModal(item)}
+                          >
                             Delete
                           </button>
+                          <Modal_Delete />
                         </td>
                       </tr>
                     ))}

@@ -14,67 +14,77 @@ import Pengadaan_Bahan_Baku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/Peng
 import DetailHampers from "./pages/dashboard/ADMIN/Detail_Hampers/DetailHampers.jsx";
 import Hampers from "./pages/dashboard/ADMIN/Hampers/Hampers.jsx";
 import Produk from "./pages/dashboard/ADMIN/Produk/Produk.jsx";
-import Edit_Produk from "./pages/dashboard/ADMIN/Produk/Edit_Produk.jsx";
-import Tambah_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Produk.jsx";
+import Tambah_Edit_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Edit_Produk.jsx";
+import { useSelector } from "react-redux";
 
 function App() {
-  const karyawan_Json = localStorage.getItem("karyawan");
+  //HOW TO MAKE THIS NOT MAKE ANY ERROR WHEN
 
-  const karyawan = karyawan_Json ? JSON.parse(karyawan_Json) : "";
+  const karyawan_selector = useSelector((state) => state?.karyawan);
+  const karyawan = karyawan_selector?.karyawan;
 
-  console.log(karyawan?.role);
+  if (karyawan) {
+    localStorage.setItem("token", karyawan?.token);
+  }
 
-  localStorage.setItem("token", karyawan?.token);
 
-  console.log(localStorage.getItem("token"));
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/auth" element={<Layout />}>
-            <Route path="signup" element={<SignUp />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signinKaryawan" element={<SignIn />} />
-          </Route>
-
-          <Route element={<DashboardLayout />}>
-            <Route
-              path="/dashboard/Admin"
-              element={<ProtectedRoutes karyawan={karyawan.role === "Admin"} />}
-            >
-              <Route path="/dashboard/Admin/" element={<Index_Admin />} />
-              <Route path="/dashboard/Admin/produk" element={<Produk />} />
-              <Route
-                path="/dashboard/Admin/produk/:id"
-                element={<Tambah_Produk />}
-              />
-              <Route path="/dashboard/Admin/produk/tambah" element={< Tambah_Produk/>} />
-
-              <Route path="/dashboard/Admin/hampers" element={<Hampers />} />
-              <Route
-                path="/dashboard/Admin/detailHampers"
-                element={<DetailHampers />}
-              />
+          {!karyawan ? (
+            <Route path="/auth" element={<Layout />}>
+              <Route path="signup" element={<SignUp />} />
+              <Route path="signin" element={<SignIn />} />
+              <Route path="signinKaryawan" element={<SignIn />} />
             </Route>
-
-            <Route
-              path="/dashboard/MO"
-              element={<ProtectedRoutes karyawan={karyawan.role === "MO"} />}
-            >
-              <Route path="/dashboard/MO/" element={<Index_MO />} />
+          ) : (
+            <Route element={<DashboardLayout />}>
               <Route
-                path="/dashboard/MO/pengadaanBahanBaku"
-                element={<Pengadaan_Bahan_Baku />}
-              />
-            </Route>
+                path="/dashboard/Admin"
+                element={
+                  <ProtectedRoutes karyawan={karyawan.role === "Admin"} />
+                }
+              >
+                <Route path="/dashboard/Admin/" element={<Index_Admin />} />
+                <Route path="/dashboard/Admin/produk" element={<Produk />} />
+                <Route
+                  path="/dashboard/Admin/produk/:id"
+                  element={<Tambah_Edit_Produk />}
+                />
+                <Route
+                  path="/dashboard/Admin/produk/tambah"
+                  element={<Tambah_Edit_Produk />}
+                />
 
-            <Route
-              path="/dashboard/Owner"
-              element={<ProtectedRoutes karyawan={karyawan.role === "Owner"} />}
-            >
-              <Route path="/dashboard/Owner/" element={<Index_Owner />} />
+                <Route path="/dashboard/Admin/hampers" element={<Hampers />} />
+                <Route
+                  path="/dashboard/Admin/detailHampers"
+                  element={<DetailHampers />}
+                />
+              </Route>
+
+              <Route
+                path="/dashboard/MO"
+                element={<ProtectedRoutes karyawan={karyawan.role === "MO"} />}
+              >
+                <Route path="/dashboard/MO/" element={<Index_MO />} />
+                <Route
+                  path="/dashboard/MO/pengadaanBahanBaku"
+                  element={<Pengadaan_Bahan_Baku />}
+                />
+              </Route>
+
+              <Route
+                path="/dashboard/Owner"
+                element={
+                  <ProtectedRoutes karyawan={karyawan.role === "Owner"} />
+                }
+              >
+                <Route path="/dashboard/Owner/" element={<Index_Owner />} />
+              </Route>
             </Route>
-          </Route>
+          )}
 
           <Route path="*" element={<NotFound />} />
         </Routes>
