@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { editProduk } from "../../../../api/produk/produk_query";
-import { resetState } from "../../../../slicer/produk/slicer_Editproduk";
+import { resetState } from "../../../../slicer/slicer_IsEdit";
 
 const Tambah_Edit_Produk = () => {
   const { register, handleSubmit } = useForm();
@@ -27,10 +27,24 @@ const Tambah_Edit_Produk = () => {
   const mutateEdit = useMutation(editProduk);
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
+    if (data.Penitip_Id != "" && data.Stok == 0) {
+      toast.error("Stok tidak boleh 0");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("Nama", data.Nama);
+    formData.append("Harga", data.Harga);
+    formData.append("Stok", data.Stok);
+    formData.append("Satuan", data.Satuan);
+    formData.append("Kategori_Id", data.Kategori_Id);
+    formData.append("Penitip_Id", data.Penitip_Id);
+    formData.append("Gambar", data.Gambar[0]);
+
+    console.log(formData);
 
     try {
-      await mutation.mutateAsync(data);
+      await mutation.mutateAsync({ data: formData });
       toast.success("Produk berhasil ditambahkan");
       Navigate("/dashboard/Admin/produk");
     } catch (error) {
@@ -40,13 +54,26 @@ const Tambah_Edit_Produk = () => {
   };
 
   const onEdit = async (data) => {
-    console.log(data);
+    // console.log(data);
+    if (data.Penitip_Id != "" && data.Stok == 0) {
+      toast.error("Stok tidak boleh 0");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("Nama", data.Nama);
+    formData.append("Harga", data.Harga);
+    formData.append("Stok", data.Stok);
+    formData.append("Satuan", data.Satuan);
+    formData.append("Kategori_Id", data.Kategori_Id);
+    formData.append("Penitip_Id", data.Penitip_Id);
+    if (data.Gambar[0]) {
+      formData.append("Gambar", data.Gambar[0]);
+    }
+    formData.append("_method", "PUT");
+
     try {
-      const id = parseInt(produk.item.Id);
-      console.log(id);
-      await mutateEdit.mutateAsync({ data, id: id });
+      await mutateEdit.mutateAsync({ data: formData, id: produk.item.Id });
       toast.success("Produk berhasil diubah");
-      dispatch(resetState());
       Navigate("/dashboard/Admin/produk");
     } catch (error) {
       console.log(error);
@@ -60,8 +87,6 @@ const Tambah_Edit_Produk = () => {
   };
 
   console.log(kategori?.data);
-
-
 
   return (
     <div>
@@ -100,7 +125,7 @@ const Tambah_Edit_Produk = () => {
                 placeholder="Type here"
                 className="input input-bordered w-full"
                 required
-                defaultValue={produk.isEdit ? produk.item.Harga : ""}
+                defaultValue={produk.isEdit ? produk.item.Harga_Produk : ""}
                 {...register("Harga", { required: true })}
               />
             </label>
@@ -114,7 +139,7 @@ const Tambah_Edit_Produk = () => {
                 placeholder="Type here"
                 className="input input-bordered w-full"
                 required
-                defaultValue={produk.isEdit ? produk.item.Stok : ""}
+                defaultValue={produk.isEdit ? produk.item.Stok_Produk : ""}
                 {...register("Stok", { required: true })}
               />
             </label>
@@ -130,7 +155,7 @@ const Tambah_Edit_Produk = () => {
                   className="input input-bordered w-full"
                   required
                   {...register("Satuan", { required: true })}
-                  defaultValue={produk.isEdit ? produk.item.Satuan : ""}
+                  defaultValue={produk.isEdit ? produk.item.Satuan_Produk : ""}
                 />
               </label>
 
@@ -143,13 +168,16 @@ const Tambah_Edit_Produk = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   {...register("Penitip_Id")}
                 >
-                  <option value={produk.isEdit ? produk.item.Penitip_Id : ""}>
-                    {produk.isEdit
-                      ? produk.item.Penitip || "Pilih Penitip"
-                      : "Pilih Penitip"}
-                  </option>
+                  {!produk.isEdit || !produk.item.Penitip_Id ? (
+                    <option value="">Pilih Penitip</option>
+                  ) : (
+                    <option value={produk.item.Penitip_Id}>
+                      {produk.item.Penitip}
+                    </option>
+                  )}
+
                   {penitip?.data
-                    .filter((item) => item.Id !== produk.item.Penitip_Id) // Filter out item with the same value as the default value
+                    .filter((item) => item.Id !== produk.item.Penitip_Id)
                     .map((item) => (
                       <option key={item.Id} value={item.Id}>
                         {item.Nama_Penitip}
@@ -179,7 +207,7 @@ const Tambah_Edit_Produk = () => {
                       : "Pilih Kategori"}
                   </option>
                   {kategori?.data
-                    .filter((item) => item.Id !== produk.item.Kategori_Id) // Filter out item with the same value as the default value
+                    .filter((item) => item.Id !== produk.item.Kategori_Id)
                     .map((item) => (
                       <option key={item.Id} value={item.Id}>
                         {item.Kategori}
@@ -188,26 +216,33 @@ const Tambah_Edit_Produk = () => {
                 </select>
               </label>
             </div>
+            <label className="form-control w-full">
+              <div className="label">
+                <span className="label-text">Gambar</span>
+              </div>
+              <input
+                type="file"
+                className="file-input file-input-bordered w-full"
+                {...register("Gambar")}
+              />
+            </label>
 
-            {/* button */}
             <div className="flex justify-end mt-5">
-              {/* </Link> */}
+              <button
+                className="btn btn-error text-white mr-2"
+                onClick={
+                  produk.isEdit
+                    ? batalEdit
+                    : () => Navigate("/dashboard/Admin/produk")
+                }
+              >
+                Batal
+              </button>
               <button className="btn btn-primary text-white">
                 {produk.isEdit ? "Edit" : "Tambah"}
               </button>
             </div>
           </form>
-          {/* <Link to="/dashboard/Admin/produk"> */}
-          <button
-            className="btn btn-error text-white mr-2"
-            onClick={
-              produk.isEdit
-                ? batalEdit
-                : () => Navigate("/dashboard/Admin/produk")
-            }
-          >
-            Batal
-          </button>
         </div>
       </div>
     </div>

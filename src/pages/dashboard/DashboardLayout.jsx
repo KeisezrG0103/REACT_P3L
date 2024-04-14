@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 import SidebarContent from "./SidebarContent";
 import "./Dashboard.css";
-import { useSelector } from "react-redux";
 import { logoutKaryawan } from "../../slicer/slicer_karyawan";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";

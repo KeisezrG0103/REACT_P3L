@@ -1,4 +1,3 @@
-import { TOKEN } from "../../constant/Routes";
 import { ADMIN_ROUTES } from "../../constant/Routes";
 import Axios from "axios";
 

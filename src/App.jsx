@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import AdminRoutes from "./utils/AdminRoutes.jsx";
 import MORoutes from "./utils/MORoutes.jsx";
 import OwnerRoutes from "./utils/OwnerRoutes.jsx";
+import Tambah_Edit_Hampers from "./pages/dashboard/ADMIN/Hampers/Tambah_Edit_Hampers.jsx";
 
 function App() {
 
@@ -50,9 +51,10 @@ function App() {
 
               <Route path="/dashboard/Admin/hampers" element={<Hampers />} />
               <Route
-                path="/dashboard/Admin/detailHampers"
+                path="/dashboard/Admin/hampers/:id"
                 element={<DetailHampers />}
               />
+              <Route path="/dashboard/Admin/hampers/tambah" element={<Tambah_Edit_Hampers />} />
             </Route>
 
             <Route

@@ -1,23 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
+
 const initialState = {
     item: {},
-    isEdit: false,
+    isOpen: false,
 };
 
-const isEditProdukSlice = createSlice({
-    name: 'isEditProduk',
+const DetailHampers = createSlice({
+    name: 'DetailHampers',
     initialState,
     reducers: {
+        setOpen: (state, action) => {
+            state.isOpen = action.payload;
+        },
         setItem: (state, action) => {
             state.item = action.payload;
         },
-        setIsEdit: (state, action) => {
-            state.isEdit = action.payload;
-        },
         resetState: (state, action) => {
             state.item = {};
-            state.isEdit = false;
+            state.isOpen = false;
         }
     },
     extraReducers: (builder) => {
@@ -27,6 +28,6 @@ const isEditProdukSlice = createSlice({
     }
 });
 
-export const { setItem, setIsEdit, resetState } = isEditProdukSlice.actions;
+export const { setOpen, setItem, resetState } = DetailHampers.actions;
 
-export default isEditProdukSlice.reducer;
+export default DetailHampers.reducer;

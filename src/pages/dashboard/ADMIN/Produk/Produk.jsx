@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { getProduk } from "../../../../api/produk/produk_query";
 import { useQuery } from "react-query";
-import { setItems, setModal } from "../../../../slicer/slicer_modal";
+import {
+  setItems,
+  setModal,
+  setModalKey,
+} from "../../../../slicer/slicer_modal";
 import { useDispatch } from "react-redux";
 import Modal_Delete from "../../../../components/Modal_Delete";
 import { Link } from "react-router-dom";
-import {
-  setIsEdit,
-  setItem,
-} from "../../../../slicer/produk/slicer_Editproduk";
-import { resetState } from "../../../../slicer/produk/slicer_Editproduk";
+import { setIsEdit, setItem } from "../../../../slicer/slicer_IsEdit";
+import { resetState } from "../../../../slicer/slicer_IsEdit";
 const Produk = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: "produk",
@@ -21,6 +22,7 @@ const Produk = () => {
 
   const set_Items = (data) => dispatch(setItems(data));
   const set_Modal = (data) => dispatch(setModal(data));
+  const set_ModalKey = (data) => dispatch(setModalKey(data));
 
   useEffect(() => {
     dispatch(resetState());
@@ -29,14 +31,15 @@ const Produk = () => {
   const openModal = (item) => {
     set_Modal(true);
     set_Items(item);
+    set_ModalKey("produk");
   };
 
   const set_setIsEdit = (data) => dispatch(setIsEdit(data));
-  const set_setModal = (data) => dispatch(setItem(data));
+  const set_setItem = (data) => dispatch(setItem(data));
 
   const Edit = (data) => {
     set_setIsEdit(true);
-    set_setModal(data);
+    set_setItem(data);
   };
 
   useEffect(() => {
@@ -96,8 +99,8 @@ const Produk = () => {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{item.Nama_Produk}</td>
-                        <td>{item.Harga}</td>
-                        <td>{item.Stok}</td>
+                        <td>{item.Harga_Produk}</td>
+                        <td>{item.Stok_Produk}</td>
                         <td className="flex justify-center">
                           <Link to={`/dashboard/Admin/produk/${item.Id}`}>
                             <button
@@ -156,8 +159,8 @@ const Produk = () => {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{item.Nama_Produk}</td>
-                        <td>{item.Harga}</td>
-                        <td>{item.Stok}</td>
+                        <td>{item.Harga_Produk}</td>
+                        <td>{item.Stok_Produk}</td>
                         <td className="flex justify-center">
                           <Link to={`/dashboard/Admin/produk/${item.Id}`}>
                             <button
@@ -201,9 +204,9 @@ const Produk = () => {
                   <thead className="text-center">
                     <tr>
                       <th>No</th>
-                      <th>Nama</th>
-                      <th>Harga</th>
-                      <th>Stok</th>
+                      <th>Nama_Produk</th>
+                      <th>Harga_Produk</th>
+                      <th>Stok_Produk</th>
                       <th className="flex justify-center">Action</th>
                     </tr>
                   </thead>
@@ -212,8 +215,8 @@ const Produk = () => {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{item.Nama_Produk}</td>
-                        <td>{item.Harga}</td>
-                        <td>{item.Stok}</td>
+                        <td>{item.Harga_Produk}</td>
+                        <td>{item.Stok_Produk}</td>
                         <td className="flex justify-center">
                           <Link to={`/dashboard/Admin/produk/${item.Id}`}>
                             <button
@@ -271,8 +274,8 @@ const Produk = () => {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{item.Nama_Produk}</td>
-                        <td>{item.Harga}</td>
-                        <td>{item.Stok}</td>
+                        <td>{item.Harga_Produk}</td>
+                        <td>{item.Stok_Produk}</td>
                         <td>{item.Penitip}</td>
                         <td className="flex justify-center">
                           <Link to={`/dashboard/Admin/produk/${item.Id}`}>

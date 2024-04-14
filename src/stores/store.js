@@ -4,10 +4,14 @@ import reducer_customer from "../slicer/slicer_customer";
 import reducer_modal from "../slicer/slicer_modal";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import reducer_isEdit from "../slicer/produk/slicer_Editproduk";
+import reducer_isEdit from "../slicer/slicer_IsEdit"
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import { applyMiddleware } from "@reduxjs/toolkit";
 import { thunk } from "redux-thunk";
+import reducer_DetailHampers from "../slicer/slicer_DetailHampers";
+import reducer_tambahEditDetailHampers from "../slicer/slicer_tambahEditDetailHampers";
+
+
 const persistConfig = {
     key: 'root',
     storage,
@@ -23,6 +27,8 @@ const rootReducer = combineReducers({
     customer: persistReducer(persistConfig, reducer_customer),
     isEditProduk: persistReducer(persistConfig, reducer_isEdit),
     modal: reducer_modal,
+    DetailHampers : reducer_DetailHampers,
+    tambahEditDetailHampers : reducer_tambahEditDetailHampers
 });
 
 
