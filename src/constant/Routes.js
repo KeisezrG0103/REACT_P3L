@@ -1,5 +1,4 @@
 
-import { useSelector } from "react-redux";
 
 const BASEURL = "http://localhost:8000";
 export const TOKEN = localStorage.getItem("token");

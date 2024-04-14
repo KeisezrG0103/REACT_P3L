@@ -1,17 +1,15 @@
-import { json, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { loginKaryawan, loginPelanggan } from "../../api/auth/auth_query";
 import { setCustomer } from "../../slicer/slicer_customer";
 import { setKaryawan } from "../../slicer/slicer_karyawan";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import Logo from "../../assets/logo.png";
 import { useMutation } from "react-query";
 
 const SignIn = () => {
-  const karyawan = useSelector((state) => state.karyawan);
-  const customer = useSelector((state) => state.customer);
   const { register, handleSubmit } = useForm();
 
   const mutation = useMutation(loginKaryawan);
@@ -19,8 +17,6 @@ const SignIn = () => {
 
   const navigate = useNavigate();
 
-  const stateCustomer = useSelector((state) => state.customer);
-  const stateKaryawan = useSelector((state) => state.karyawan);
 
   const dispatch = useDispatch();
 
