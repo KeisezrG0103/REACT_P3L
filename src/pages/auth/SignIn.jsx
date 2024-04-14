@@ -57,16 +57,20 @@ const SignIn = () => {
     } else {
       mutationPelanggan.mutate(data, {
         onSuccess: (res) => {
-          dispatch(setCustomer(res.data));
-          console.log(stateCustomer);
-
-          toast.success("Login Berhasil");
-          navigate("/dashboard/Customer");
+          console.log(res.data);
+          
+          if(res.data == undefined){
+            toast.error("Login Gagal");
+          }else{
+            dispatch(setCustomer(res.data));
+            localStorage.setItem("customer", JSON.stringify(res.data));
+            localStorage.setItem("token", res.data.token);
+            toast.success("Login Berhasil");
+            navigate("/");
+          }
+          
         },
-        onError: (err) => {
-          console.log(err);
-          toast.error("Login Gagal");
-        },
+        
       });
     }
   };
