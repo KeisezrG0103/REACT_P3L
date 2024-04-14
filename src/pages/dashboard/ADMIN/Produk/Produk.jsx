@@ -15,7 +15,6 @@ const Produk = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: "produk",
     queryFn: getProduk,
-    retry: 3,
   });
 
   const dispatch = useDispatch();

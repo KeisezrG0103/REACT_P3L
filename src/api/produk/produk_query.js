@@ -24,16 +24,6 @@ export const addProduk = async ({data}) => {
 
 export const editProduk = async ({data, id}) => {
   const token = localStorage.getItem("token");
-  console.log("ID:", id); // Check the value of id
-  console.log("Data:", data); // Check the value of data  
-  // const datas = {
-  //   Nama: data.Nama,
-  //   Harga: data.Harga,
-  //   Stok: data.Stok,
-  //   Kategori_Id: data.Kategori_Id,
-  //   Penitip_Id: data.Penitip_Id,
-  //   Satuan: data.Satuan,
-  // };
 
   const response = await Axios.post(`${ADMIN_ROUTES.PRODUK}/${id}`, data, {
     headers: {

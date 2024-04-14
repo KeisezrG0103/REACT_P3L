@@ -19,11 +19,6 @@ export const ADMIN_FEATURES = {
     logo: <IoBag />,
     route: "/dashboard/admin/hampers",
   },
-  DETAIL_HAMPERS: {
-    name: "Detail Hampers",
-    logo: <FcViewDetails />,
-    route: "/dashboard/admin/detailHampers",
-  },
 };
 
 export const MO_FEATURES = {

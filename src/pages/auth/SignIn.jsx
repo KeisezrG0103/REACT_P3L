@@ -33,12 +33,11 @@ const SignIn = () => {
       mutation.mutate(data, {
         onSuccess: (res) => {
           dispatch(setKaryawan(res.data));
+
           localStorage.setItem("karyawan", JSON.stringify(res.data));
-          toast.success("Login Berhasil");
 
           localStorage.setItem("token", res.data.token);
-
-          console.log(res.data);
+          toast.success("Login Berhasil");
 
           if (res.data.role === "Admin") {
             navigate("/dashboard/Admin");

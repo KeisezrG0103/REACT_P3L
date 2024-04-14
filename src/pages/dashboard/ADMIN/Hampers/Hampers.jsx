@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useQuery, useMutation } from "react-query";
+import { useQuery} from "react-query";
 import {
   getHampers,
 } from "../../../../api/hampers/hampers_query";
