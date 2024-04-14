@@ -52,7 +52,7 @@ function App() {
               <Route path="/dashboard/Admin/hampers" element={<Hampers />} />
               <Route
                 path="/dashboard/Admin/hampers/:id"
-                element={<DetailHampers />}
+                element={<Tambah_Edit_Hampers/>}
               />
               <Route path="/dashboard/Admin/hampers/tambah" element={<Tambah_Edit_Hampers />} />
             </Route>

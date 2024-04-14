@@ -25,7 +25,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     karyawan: persistReducer(persistConfig, reducer_karyawan),
     customer: persistReducer(persistConfig, reducer_customer),
-    isEditProduk: persistReducer(persistConfig, reducer_isEdit),
+    isEdit: persistReducer(persistConfig, reducer_isEdit),
     modal: reducer_modal,
     DetailHampers : reducer_DetailHampers,
     tambahEditDetailHampers : reducer_tambahEditDetailHampers

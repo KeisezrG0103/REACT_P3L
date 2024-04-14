@@ -19,7 +19,7 @@ const Tambah_Edit_Produk = () => {
 
   const Navigate = useNavigate();
 
-  const produk = useSelector((state) => state.isEditProduk);
+  const produk = useSelector((state) => state.isEdit);
 
   console.log(produk);
 

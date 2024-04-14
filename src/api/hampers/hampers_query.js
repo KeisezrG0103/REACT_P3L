@@ -27,7 +27,7 @@ export const addHampers = async ({data}) => {
 
 export const editHampers = async ({ data, id }) => {
     const token = localStorage.getItem("token");
-    const response = await Axios.put(`${ADMIN_ROUTES.HAMPERS}/${id}`, data, {
+    const response = await Axios.post(`${ADMIN_ROUTES.HAMPERS}/${id}`, data, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

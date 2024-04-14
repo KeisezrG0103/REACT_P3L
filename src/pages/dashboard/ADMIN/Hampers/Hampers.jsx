@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "react-query";
 import {
   getHampers,
-  deleteHampers,
 } from "../../../../api/hampers/hampers_query";
-import toast from "react-hot-toast";
 import { useEffect } from "react";
 import Modal_Delete from "../../../../components/Modal_Delete";
 import {
@@ -13,9 +11,11 @@ import {
   setModalKey,
 } from "../../../../slicer/slicer_modal";
 import { useDispatch } from "react-redux";
-import { DEFAULT_IMAGE } from "../../../../constant/default";
 import { setItem, setOpen } from "../../../../slicer/slicer_DetailHampers";
 import Modal_DetailHampers from "../../../../components/Modal_DetailHampers";
+import { setIsEdit } from "../../../../slicer/slicer_IsEdit";
+import { setItem as sethampers } from "../../../../slicer/slicer_IsEdit";
+import { resetState } from "../../../../slicer/slicer_IsEdit";
 
 const Hampers = () => {
   const { data: hampers, isLoading, refetch } = useQuery("hampers", getHampers);
@@ -27,9 +27,16 @@ const Hampers = () => {
   const set_Modal = (data) => dispatch(setModal(data));
   const set_Key = (data) => dispatch(setModalKey(data));
 
+  const set_Hampers = (data) => dispatch(sethampers(data));
+  const set_Edit = (data) => dispatch(setIsEdit(data));
+
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  useEffect(() => {
+    dispatch(resetState());
+  }, [resetState]);
 
   const openModal = (item) => {
     set_Modal(true);
@@ -40,6 +47,11 @@ const Hampers = () => {
   const openDetail = (item) => {
     dispatch(setItem(item));
     dispatch(setOpen(true));
+  };
+
+  const isEdit = (item) => {
+    set_Hampers(item);
+    set_Edit(true);
   };
 
   return (
@@ -79,7 +91,6 @@ const Hampers = () => {
                         <td>
                           <img
                             src={hampers.Gambar}
-                            
                             alt="gambar"
                             className="object-cover h-20 w-20 mx-auto"
                           />
@@ -87,11 +98,17 @@ const Hampers = () => {
                         <td>{hampers.Nama_Hampers}</td>
                         <td>{hampers.Harga}</td>
                         <td className="flex flex-col items-center justify-center flex-wrap space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2 lg:text-center">
-                          <button className="btn btn-sm btn-accent text-base-100 ml-2 w-20" onClick={openDetail.bind(this, hampers)}>
+                          <button
+                            className="btn btn-sm btn-accent text-base-100 ml-2 w-20"
+                            onClick={openDetail.bind(this, hampers)}
+                          >
                             Detail
                           </button>
                           <Link to={`/dashboard/Admin/hampers/${hampers.id}`}>
-                            <button className="btn btn-sm btn-primary text-base-100 ml-2 w-20">
+                            <button
+                              className="btn btn-sm btn-primary text-base-100 ml-2 w-20"
+                              onClick={() => isEdit(hampers)}
+                            >
                               Edit
                             </button>
                           </Link>

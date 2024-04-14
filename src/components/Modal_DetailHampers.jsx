@@ -37,6 +37,7 @@ const Modal_DetailHampers = () => {
   const setOpen_Modal = (isOpen) => {
     dispatch(setOpen(isOpen));
     setState(isOpen);
+    setStateEdit(false);
     reset();
   };
 

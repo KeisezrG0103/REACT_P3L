@@ -111,7 +111,7 @@ const Produk = () => {
                             </button>
                           </Link>
                           <button
-                            className="btn btn-sm btn-error "
+                            className="btn btn-sm btn-error text-white"
                             onClick={() => openModal(item)}
                           >
                             Delete
@@ -171,7 +171,7 @@ const Produk = () => {
                             </button>
                           </Link>
                           <button
-                            className="btn btn-sm btn-error "
+                            className="btn btn-sm btn-error text-white "
                             onClick={() => openModal(item)}
                           >
                             Delete
@@ -227,7 +227,7 @@ const Produk = () => {
                             </button>
                           </Link>
                           <button
-                            className="btn btn-sm btn-error "
+                            className="btn btn-sm btn-error text-white"
                             onClick={() => openModal(item)}
                           >
                             Delete
@@ -287,7 +287,7 @@ const Produk = () => {
                             </button>
                           </Link>
                           <button
-                            className="btn btn-sm btn-error "
+                            className="btn btn-sm btn-error text-white"
                             onClick={() => openModal(item)}
                           >
                             Delete
