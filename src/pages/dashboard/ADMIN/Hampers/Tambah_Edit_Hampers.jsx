@@ -1,4 +1,3 @@
-import React from "react";
 import { useMutation } from "react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

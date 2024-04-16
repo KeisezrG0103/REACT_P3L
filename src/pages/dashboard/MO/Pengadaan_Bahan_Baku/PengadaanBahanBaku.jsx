@@ -28,7 +28,6 @@ const PengadaanBahanBaku = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     refetch();
