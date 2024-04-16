@@ -12,7 +12,7 @@ export const getPengadaanBahanBaku = async () => {
     return response.data;
 }
 
-export const createPengadaanBahanBaku = async (data) => {
+export const createPengadaanBahanBaku = async ({data}) => {
     const token = localStorage.getItem("token");
     const response = await Axios.post(MO_ROUTES.PENGADAAN_BAHAN_BAKU, data, {
         headers: {

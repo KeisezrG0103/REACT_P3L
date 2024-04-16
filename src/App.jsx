@@ -9,17 +9,15 @@ import NotFound from "./pages/not_found/NotFound.jsx";
 import Index_Owner from "./pages/dashboard/OWNER/Index.jsx";
 import Index_MO from "./pages/dashboard/MO/Index.jsx";
 import Index_Admin from "./pages/dashboard/ADMIN/Index.jsx";
-import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 import Pengadaan_Bahan_Baku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/PengadaanBahanBaku.jsx";
-import DetailHampers from "./pages/dashboard/ADMIN/Detail_Hampers/DetailHampers.jsx";
 import Hampers from "./pages/dashboard/ADMIN/Hampers/Hampers.jsx";
 import Produk from "./pages/dashboard/ADMIN/Produk/Produk.jsx";
 import Tambah_Edit_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Edit_Produk.jsx";
-import { useSelector } from "react-redux";
 import AdminRoutes from "./utils/AdminRoutes.jsx";
 import MORoutes from "./utils/MORoutes.jsx";
 import OwnerRoutes from "./utils/OwnerRoutes.jsx";
 import Tambah_Edit_Hampers from "./pages/dashboard/ADMIN/Hampers/Tambah_Edit_Hampers.jsx";
+import Tambah_Edit_PengadaanBahanBaku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/Tambah_Edit_PengadaanBahanBaku.jsx";
 
 function App() {
 
@@ -65,6 +63,15 @@ function App() {
               <Route
                 path="/dashboard/MO/pengadaanBahanBaku"
                 element={<Pengadaan_Bahan_Baku />}
+              />
+              <Route
+                path="/dashboard/MO/pengadaanBahanBaku/:id"
+                element={<Tambah_Edit_PengadaanBahanBaku />}
+              />
+
+              <Route
+                path="/dashboard/MO/pengadaanBahanBaku/tambah"
+                element={<Tambah_Edit_PengadaanBahanBaku />}
               />
             </Route>
 

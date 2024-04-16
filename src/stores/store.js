@@ -10,12 +10,13 @@ import { applyMiddleware } from "@reduxjs/toolkit";
 import { thunk } from "redux-thunk";
 import reducer_DetailHampers from "../slicer/slicer_DetailHampers";
 import reducer_tambahEditDetailHampers from "../slicer/slicer_tambahEditDetailHampers";
+import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 
 
 const persistConfig = {
     key: 'root',
     storage,
-    stateReconciler: autoMergeLevel2,
+    stateReconciler: autoMergeLevel1
 }
 
 
@@ -27,8 +28,8 @@ const rootReducer = combineReducers({
     customer: persistReducer(persistConfig, reducer_customer),
     isEdit: persistReducer(persistConfig, reducer_isEdit),
     modal: reducer_modal,
-    DetailHampers : reducer_DetailHampers,
-    tambahEditDetailHampers : reducer_tambahEditDetailHampers
+    DetailHampers: reducer_DetailHampers,
+    tambahEditDetailHampers: reducer_tambahEditDetailHampers
 });
 
 

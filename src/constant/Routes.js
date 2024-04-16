@@ -15,6 +15,7 @@ export const ADMIN_ROUTES = {
     DETAIL_HAMPERS : BASEURL + "/api/detail_hampers",
     PENITIP : BASEURL + "/api/penitip",
     KATEGORI : BASEURL + "/api/kategori",
+    BAHAN_BAKU : BASEURL + "/api/bahan_baku",
 }
 
 export const MO_ROUTES = {

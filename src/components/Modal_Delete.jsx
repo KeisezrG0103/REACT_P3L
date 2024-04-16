@@ -4,6 +4,8 @@ import { useMutation } from "react-query";
 import { deleteProduk } from "../api/produk/produk_query";
 import { toast } from "react-hot-toast";
 import { deleteHampers } from "../api/hampers/hampers_query";
+import { deletePengadaanBahanBaku } from "../api/pengadaan_bahan_baku/pengadaan_bahan_baku_query";
+
 function Modal_Delete() {
   const dispatch = useDispatch();
   const stateModal = useSelector((state) => state.modal);
@@ -12,6 +14,7 @@ function Modal_Delete() {
   const Item = useSelector((state) => state.modal.item);
   const mutation = useMutation(deleteProduk);
   const mutateHampers = useMutation(deleteHampers);
+  const MutatePengadaan = useMutation(deletePengadaanBahanBaku);
 
   const NameofProduk = (key) => {
     if (key == "produk") {
@@ -19,6 +22,9 @@ function Modal_Delete() {
     }
     if (key == "hampers") {
       return Item.Nama_Hampers;
+    }
+    if (key == "pengadaan_bahan_baku") {
+      return Item.BahanBaku_Nama;
     }
   };
 
@@ -48,6 +54,19 @@ function Modal_Delete() {
         },
       });
     }
+
+    if (key == "pengadaan_bahan_baku") {
+      MutatePengadaan.mutate(id, {
+        onSuccess: (res) => {
+          console.log(res);
+          toast.success("Pengadaan Bahan Baku berhasil dihapus");
+          window.location.reload(true);
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      });
+    }
   };
 
   if (stateModal.isOpen) {
@@ -58,7 +77,6 @@ function Modal_Delete() {
     <dialog id="my_modal_3" className="modal">
       <div className="modal-box">
         <form method="dialog">
-          {/* if there is a button in form, it will close the modal */}
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
             onClick={() => setOpen(false)}
@@ -77,8 +95,7 @@ function Modal_Delete() {
             style={{ width: "5rem" }}
             onClick={() => deleteProdukFunc(Item.Id)}
           >
-            {/* modified this please */}
-            {mutation.isLoading || mutateHampers.isLoading  ? (
+            {mutation.isLoading || mutateHampers.isLoading || MutatePengadaan.isLoading ? (
               <span className="loading loading-dots loading-md"></span>
             ) : (
               "Ya"
