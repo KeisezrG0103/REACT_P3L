@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProduk } from "../../../../api/produk/produk_query";
 import { useQuery } from "react-query";
 import {
@@ -18,6 +18,7 @@ const Produk = () => {
   });
 
   const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const set_Items = (data) => dispatch(setItems(data));
   const set_Modal = (data) => dispatch(setModal(data));
@@ -25,7 +26,7 @@ const Produk = () => {
 
   useEffect(() => {
     dispatch(resetState());
-  }, [resetState]);
+  }, [dispatch]);
 
   const openModal = (item) => {
     set_Modal(true);
@@ -58,10 +59,37 @@ const Produk = () => {
   );
   const titipan = data?.data?.filter((item) => item.Penitip !== null);
 
+  const filterCake = cake?.filter((item) =>
+    item.Nama_Produk.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filterMinuman = minuman?.filter((item) =>
+    item.Nama_Produk.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filterRoti = roti?.filter((item) =>
+    item.Nama_Produk.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filterTitipan = titipan?.filter((item) =>
+    item.Nama_Produk.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <h1 className="font-bold text-2xl">Produk</h1>
+      <div className="flex justify-between place-items-end lg:place-items-center">
+        <div className="flex items-start space-y-4 flex-col">
+          <h1 className="font-bold text-2xl">Produk</h1>
+          <div className="form-control">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered w-60 md:w-auto"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
         <Link to="/dashboard/Admin/produk/tambah">
           <button className="btn btn-primary text-white mt-5">
             Tambah Produk
@@ -94,7 +122,7 @@ const Produk = () => {
                     </tr>
                   </thead>
                   <tbody className="text-center">
-                    {cake?.map((item, index) => (
+                    {filterCake?.map((item, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{item.Nama_Produk}</td>
@@ -154,7 +182,7 @@ const Produk = () => {
                     </tr>
                   </thead>
                   <tbody className="text-center">
-                    {minuman?.map((item, index) => (
+                    {filterMinuman?.map((item, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{item.Nama_Produk}</td>
@@ -210,7 +238,7 @@ const Produk = () => {
                     </tr>
                   </thead>
                   <tbody className="text-center">
-                    {roti?.map((item, index) => (
+                    {filterRoti?.map((item, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{item.Nama_Produk}</td>
@@ -269,7 +297,7 @@ const Produk = () => {
                     </tr>
                   </thead>
                   <tbody className="text-center">
-                    {titipan?.map((item, index) => (
+                    {filterTitipan?.map((item, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{item.Nama_Produk}</td>

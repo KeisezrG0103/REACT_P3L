@@ -1,12 +1,10 @@
-import { useNavigate, Outlet, redirect, Navigate } from "react-router-dom";
-import SignIn from "../pages/auth/SignUp";
+import {Outlet,  Navigate } from "react-router-dom";
 
 const AdminRoutes = () => {
 
     const karyawan_string = localStorage.getItem("karyawan");
     const karyawan = JSON.parse(karyawan_string);
 
-    const navigate = useNavigate();
 
     if(karyawan?.role == "Admin"){
         return <Outlet />;

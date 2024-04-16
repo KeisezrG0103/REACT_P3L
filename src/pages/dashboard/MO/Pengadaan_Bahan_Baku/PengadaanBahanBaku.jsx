@@ -1,26 +1,39 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import Modal_Delete from "../../../../components/Modal_Delete";
+import {
+  setItems,
+  setModal,
+  setModalKey,
+} from "../../../../slicer/slicer_modal";
+import { useDispatch } from "react-redux";
+import {
+  setItem,
+  setIsEdit,
+  resetState,
+} from "../../../../slicer/slicer_IsEdit";
+import { useNavigate } from "react-router-dom";
 import {
   getPengadaanBahanBaku,
   deletePengadaanBahanBaku,
 } from "../../../../api/pengadaan_bahan_baku/pengadaan_bahan_baku_query";
-import { useMutation, useQuery } from "react-query";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setItem, setIsEdit, resetState } from "../../../../slicer/slicer_IsEdit";
-import {setModal, setItems, setModalKey } from "../../../../slicer/slicer_modal";
-import Modal_Delete from "../../../../components/Modal_Delete";
-import { useNavigate } from "react-router-dom";
+
 const PengadaanBahanBaku = () => {
   const { data, refetch, isLoading } = useQuery(
     "pengadaan_bahan_baku",
     getPengadaanBahanBaku
   );
-  
+  const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    return () => {
-      dispatch(resetState());
-    };
-  }, [resetState]);
+    refetch();
+    
+  }, [refetch]);
 
   const OpenModal = (item) => {
     dispatch(setItems(item));
@@ -28,48 +41,57 @@ const PengadaanBahanBaku = () => {
     dispatch(setModalKey("pengadaan_bahan_baku"));
   };
 
-  const dispatch = useDispatch();
-  
+  useEffect(() => {
+    dispatch(resetState());
+  }, [dispatch]);
+
   const handleEdit = (item) => {
     dispatch(setItem(item));
     dispatch(setIsEdit(true));
   };
 
   const pengadaanBahanBaku = data?.data;
-  console.log(pengadaanBahanBaku);
+  const filteredData = pengadaanBahanBaku?.filter((item) =>
+    item.BahanBaku_Nama.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-
-
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-
+  const totalPages = Math.ceil(filteredData?.length / limit);
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
-
-  const currentData = pengadaanBahanBaku?.slice(startIndex, endIndex);
-
-  const totalPages = Math.ceil(pengadaanBahanBaku?.length / limit);
+  const currentData = filteredData?.slice(startIndex, endIndex);
 
   const changePage = (page) => {
     setPage(Math.max(1, Math.min(page, totalPages)));
   };
 
-  
-
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <h1 className="font-bold text-2xl">Pengadaan Bahan Baku</h1>
+      <div className="flex justify-between place-items-end lg:place-items-center">
+        <div className="flex items-start space-y-4 flex-col">
+          <h1 className="font-bold text-2xl">Pengadaan Bahan Baku</h1>
+          <div className="form-control">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered w-60 md:w-auto"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
         <Link to="/dashboard/MO/pengadaanBahanBaku/tambah">
           <button className="btn btn-primary text-white mt-5">
-            Tambah Pengadaan Bahan Baku
+            Tambah Hampers
           </button>
         </Link>
       </div>
 
       <div className="overflow-x-auto w-full mt-5">
         <div className="card shadow-md bg-base-100" style={{ width: "100%" }}>
-          <div className="card-body relative" style={{ width: "100%", height:"70vh" }}>
+          <div
+            className="card-body relative"
+            style={{ width: "100%", height: "70vh" }}
+          >
             {isLoading ? (
               <div className="h-full w-full flex justify-center items-center absolute top-0 left-0 right-0 bottom-0">
                 <span className="loading loading-spinner loading-lg"></span>
@@ -101,7 +123,10 @@ const PengadaanBahanBaku = () => {
                           <Link
                             to={`/dashboard/MO/pengadaanBahanBaku/${pengadaanBahanBaku.Id}`}
                           >
-                            <button className="btn btn-primary text-white w-20" onClick={() => handleEdit(pengadaanBahanBaku)}>
+                            <button
+                              className="btn btn-primary text-white w-20"
+                              onClick={() => handleEdit(pengadaanBahanBaku)}
+                            >
                               Edit
                             </button>
                           </Link>
@@ -119,22 +144,21 @@ const PengadaanBahanBaku = () => {
                 </table>
               </div>
             )}
-
-        </div>
-            <div className="join flex justify-center mb-4">
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <button
-                  key={index}
-                  className={`join-item btn btn-square ${
-                    index + 1 === page ? "btn-primary text-white" : ""
-                  }`}
-                  onClick={() => changePage(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              ))}
-            </div>
           </div>
+          <div className="join flex justify-center mb-4">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={`join-item btn btn-square ${
+                  index + 1 === page ? "btn-primary text-white" : ""
+                }`}
+                onClick={() => changePage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

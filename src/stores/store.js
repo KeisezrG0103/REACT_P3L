@@ -12,7 +12,6 @@ import reducer_DetailHampers from "../slicer/slicer_DetailHampers";
 import reducer_tambahEditDetailHampers from "../slicer/slicer_tambahEditDetailHampers";
 import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 
-
 const persistConfig = {
     key: 'root',
     storage,
@@ -29,7 +28,7 @@ const rootReducer = combineReducers({
     isEdit: persistReducer(persistConfig, reducer_isEdit),
     modal: reducer_modal,
     DetailHampers: reducer_DetailHampers,
-    tambahEditDetailHampers: reducer_tambahEditDetailHampers
+    tambahEditDetailHampers: reducer_tambahEditDetailHampers,
 });
 
 

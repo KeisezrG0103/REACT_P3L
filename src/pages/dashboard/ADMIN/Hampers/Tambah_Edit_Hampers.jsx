@@ -71,7 +71,7 @@ const Tambah_Edit_Hampers = () => {
               </div>
               <input
                 type="text"
-                placeholder="Type here"
+                placeholder="Input Nama Hampers"
                 className="input input-bordered w-full"
                 required
                 {...register("Nama_Hampers", { required: true })}
@@ -88,7 +88,7 @@ const Tambah_Edit_Hampers = () => {
                 className="input input-bordered w-full"
                 required
                 {...register("Harga", { required: true })}
-                defaultValue={isEdit ? hampers.Harga : ""}
+                defaultValue={isEdit ? hampers.Harga : 0}
               />
             </label>
             <label className="form-control w-full ">

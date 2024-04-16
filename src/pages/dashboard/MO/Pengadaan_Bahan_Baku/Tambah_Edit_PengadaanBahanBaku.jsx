@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./style.css";
 import { useQuery } from "react-query";
 import { getBahanBaku } from "../../../../api/bahan_baku/bahan_baku_query";
 import {
@@ -107,12 +106,28 @@ const Tambah_Edit_PengadaanBahanBaku = () => {
                   defaultValue={isEdit ? Pengadaan_edit.BahanBaku_Id : ""}
                   {...register("BahanBaku_Id")}
                 >
-                  <option value="">Pilih Bahan Baku</option>
-                  {bahan_baku?.map((item) => (
-                    <option key={item.Id} value={item.Id}>
-                      {item.Nama}
-                    </option>
-                  ))}
+                  <option value={isEdit ? Pengadaan_edit.BahanBaku_Id : ""}>
+                    {isEdit
+                      ? Pengadaan_edit.BahanBaku_Nama
+                      : "Pilih Bahan Baku"}
+                  </option>
+                  {bahan_baku?.map((item) => {
+                    if (isEdit) {
+                      if (item.Id != Pengadaan_edit.BahanBaku_Id) {
+                        return (
+                          <option key={item.Id} value={item.Id}>
+                            {item.Nama}
+                          </option>
+                        );
+                      }
+                    } else {
+                      return (
+                        <option key={item.Id} value={item.Id}>
+                          {item.Nama}
+                        </option>
+                      );
+                    }
+                  })}
                 </select>
               </label>
               <label className="form-control w-full">
@@ -148,7 +163,7 @@ const Tambah_Edit_PengadaanBahanBaku = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Type here"
+                  placeholder="Input Satuan"
                   className="input input-bordered w-full"
                   required
                   defaultValue={isEdit ? Pengadaan_edit.Satuan : ""}
@@ -182,15 +197,7 @@ const Tambah_Edit_PengadaanBahanBaku = () => {
                   Batal
                 </button>
                 <button className="btn btn-primary text-white">
-                  {isEdit ? (
-                    mutationEdit.isLoading ? (
-                      <span className="loading loading-dots"></span>
-                    ) : (
-                      "Edit"
-                    )
-                  ) : (
-                    "Tambah"
-                  )}
+                  {isEdit ? "Edit" : "Tambah"}
                 </button>
               </div>
             </form>

@@ -108,7 +108,7 @@ const Tambah_Edit_Produk = () => {
               </div>
               <input
                 type="text"
-                placeholder="Type here"
+                placeholder="Input Nama Produk"
                 className="input input-bordered w-full"
                 defaultValue={produk.isEdit ? produk.item.Nama_Produk : ""}
                 {...register("Nama", { required: true })}
@@ -125,7 +125,7 @@ const Tambah_Edit_Produk = () => {
                 placeholder="Type here"
                 className="input input-bordered w-full"
                 required
-                defaultValue={produk.isEdit ? produk.item.Harga_Produk : ""}
+                defaultValue={produk.isEdit ? produk.item.Harga_Produk : 0}
                 {...register("Harga", { required: true })}
               />
             </label>
@@ -139,7 +139,7 @@ const Tambah_Edit_Produk = () => {
                 placeholder="Type here"
                 className="input input-bordered w-full"
                 required
-                defaultValue={produk.isEdit ? produk.item.Stok_Produk : ""}
+                defaultValue={produk.isEdit ? produk.item.Stok_Produk : 0}
                 {...register("Stok", { required: true })}
               />
             </label>
@@ -151,7 +151,7 @@ const Tambah_Edit_Produk = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Type here"
+                  placeholder="Input Satuan"
                   className="input input-bordered w-full"
                   required
                   {...register("Satuan", { required: true })}

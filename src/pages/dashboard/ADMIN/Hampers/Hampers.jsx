@@ -1,8 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery} from "react-query";
-import {
-  getHampers,
-} from "../../../../api/hampers/hampers_query";
+import { useQuery } from "react-query";
+import { getHampers } from "../../../../api/hampers/hampers_query";
 import { useEffect } from "react";
 import Modal_Delete from "../../../../components/Modal_Delete";
 import {
@@ -18,17 +17,16 @@ import { setItem as sethampers } from "../../../../slicer/slicer_IsEdit";
 import { resetState } from "../../../../slicer/slicer_IsEdit";
 
 const Hampers = () => {
-  const { data: hampers, isLoading, refetch } = useQuery("hampers", getHampers);
+  const {
+    data: hampersData,
+    isLoading,
+    refetch,
+  } = useQuery("hampers", getHampers);
 
-  console.log(hampers?.data);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredHampers, setFilteredHampers] = useState([]);
+
   const dispatch = useDispatch();
-
-  const set_Items = (data) => dispatch(setItems(data));
-  const set_Modal = (data) => dispatch(setModal(data));
-  const set_Key = (data) => dispatch(setModalKey(data));
-
-  const set_Hampers = (data) => dispatch(sethampers(data));
-  const set_Edit = (data) => dispatch(setIsEdit(data));
 
   useEffect(() => {
     refetch();
@@ -36,12 +34,22 @@ const Hampers = () => {
 
   useEffect(() => {
     dispatch(resetState());
-  }, [resetState]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (hampersData && hampersData.data) {
+      const filtered = hampersData.data.filter((hampers) =>
+        hampers.Nama_Hampers.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredHampers(filtered);
+      setPage(1);
+    }
+  }, [hampersData, searchQuery]);
 
   const openModal = (item) => {
-    set_Modal(true);
-    set_Items(item);
-    set_Key("hampers");
+    dispatch(setModal(true));
+    dispatch(setItems(item));
+    dispatch(setModalKey("hampers"));
   };
 
   const openDetail = (item) => {
@@ -50,14 +58,39 @@ const Hampers = () => {
   };
 
   const isEdit = (item) => {
-    set_Hampers(item);
-    set_Edit(true);
+    dispatch(sethampers(item));
+    dispatch(setIsEdit(true));
+  };
+
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = Math.min(startIndex + limit, filteredHampers.length);
+
+  const currentData = filteredHampers.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(filteredHampers.length / limit);
+
+  const changePage = (page) => {
+    setPage(Math.max(1, Math.min(page, totalPages)));
   };
 
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <h1 className="font-bold text-2xl">Hampers</h1>
+      <div className="flex justify-between place-items-end lg:place-items-center">
+        <div className="flex items-start space-y-4 flex-col">
+          <h1 className="font-bold text-2xl">Hampers</h1>
+          <div className="form-control">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered w-60 md:w-auto"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
         <Link to="/dashboard/Admin/hampers/tambah">
           <button className="btn btn-primary text-white mt-5">
             Tambah Hampers
@@ -85,9 +118,9 @@ const Hampers = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {hampers?.data.map((hampers, index) => (
+                    {currentData.map((hampers, index) => (
                       <tr key={index} className="text-center">
-                        <td>{index + 1}</td>
+                        <td>{startIndex + index + 1}</td>
                         <td>
                           <img
                             src={hampers.Gambar}
@@ -100,7 +133,7 @@ const Hampers = () => {
                         <td className="flex flex-col items-center justify-center flex-wrap space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2 lg:text-center">
                           <button
                             className="btn btn-sm btn-accent text-base-100 ml-2 w-20"
-                            onClick={openDetail.bind(this, hampers)}
+                            onClick={() => openDetail(hampers)}
                           >
                             Detail
                           </button>
@@ -114,7 +147,7 @@ const Hampers = () => {
                           </Link>
                           <button
                             className="btn btn-sm btn-error text-base-100 ml-2 w-20"
-                            onClick={openModal.bind(this, hampers)}
+                            onClick={() => openModal(hampers)}
                           >
                             Delete
                           </button>
@@ -127,6 +160,19 @@ const Hampers = () => {
                 </table>
               </div>
             )}
+          </div>
+          <div className="join flex justify-center mb-4">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={`join-item btn btn-square ${
+                  index + 1 === page ? "btn-primary text-white" : ""
+                }`}
+                onClick={() => changePage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
         </div>
       </div>
