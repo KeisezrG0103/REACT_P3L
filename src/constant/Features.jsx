@@ -1,6 +1,7 @@
 import { FcViewDetails } from "react-icons/fc";
 import { GiCakeSlice } from "react-icons/gi";
 import { IoBag } from "react-icons/io5";
+import { BsFillBoxFill } from "react-icons/bs";
 import { IoReceiptOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
 export const ADMIN_FEATURES = {
@@ -18,6 +19,11 @@ export const ADMIN_FEATURES = {
     name: "Hampers",
     logo: <IoBag />,
     route: "/dashboard/admin/hampers",
+  },
+  BAHAN_BAKU: {
+    name: "Bahan Baku",
+    logo: <BsFillBoxFill />,
+    route: "/dashboard/admin/bahan_baku",
   },
 };
 

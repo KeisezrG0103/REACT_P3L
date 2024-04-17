@@ -12,6 +12,8 @@ import Index_Admin from "./pages/dashboard/ADMIN/Index.jsx";
 import Pengadaan_Bahan_Baku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/PengadaanBahanBaku.jsx";
 import Hampers from "./pages/dashboard/ADMIN/Hampers/Hampers.jsx";
 import Produk from "./pages/dashboard/ADMIN/Produk/Produk.jsx";
+import Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Bahan_Baku.jsx";
+import Tambah_Edit_Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Tambah_Edit_Bahan_Baku.jsx";
 import Tambah_Edit_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Edit_Produk.jsx";
 import AdminRoutes from "./utils/AdminRoutes.jsx";
 import MORoutes from "./utils/MORoutes.jsx";
@@ -53,6 +55,19 @@ function App() {
                 path="/dashboard/Admin/hampers/tambah"
                 element={<Tambah_Edit_Hampers />}
               />
+
+              <Route path="/dashboard/Admin/bahan_baku" element={<Bahan_Baku />} />
+
+              <Route
+                path="/dashboard/Admin/bahan_baku/tambah"
+                element={<Tambah_Edit_Bahan_Baku />}
+              />
+
+              <Route
+                path="/dashboard/Admin/bahan_baku/:id"
+                element={<Tambah_Edit_Bahan_Baku />}
+              />
+
             </Route>
 
             <Route path="/dashboard/MO" element={<MORoutes />}>
