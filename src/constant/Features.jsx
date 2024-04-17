@@ -4,6 +4,8 @@ import { IoBag } from "react-icons/io5";
 import { BsFillBoxFill } from "react-icons/bs";
 import { IoReceiptOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
+import { IoPerson } from "react-icons/io5";
+
 export const ADMIN_FEATURES = {
   DASHBOARD: {
     name: "Dashboard",
@@ -24,6 +26,11 @@ export const ADMIN_FEATURES = {
     name: "Bahan Baku",
     logo: <BsFillBoxFill />,
     route: "/dashboard/admin/bahan_baku",
+  },
+  PENITIP: {
+    name: "Penitip",
+    logo: <IoPerson />,
+    route: "/dashboard/admin/penitip",
   },
 };
 

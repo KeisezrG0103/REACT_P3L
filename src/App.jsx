@@ -13,14 +13,18 @@ import Pengadaan_Bahan_Baku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/Peng
 import Hampers from "./pages/dashboard/ADMIN/Hampers/Hampers.jsx";
 import Produk from "./pages/dashboard/ADMIN/Produk/Produk.jsx";
 import Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Bahan_Baku.jsx";
-import Tambah_Edit_Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Tambah_Edit_Bahan_Baku.jsx";
-import Tambah_Edit_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Edit_Produk.jsx";
+import Penitip from "./pages/dashboard/ADMIN/Penitip/Penitip.jsx";
 import AdminRoutes from "./utils/AdminRoutes.jsx";
 import MORoutes from "./utils/MORoutes.jsx";
 import OwnerRoutes from "./utils/OwnerRoutes.jsx";
 import Tambah_Edit_Hampers from "./pages/dashboard/ADMIN/Hampers/Tambah_Edit_Hampers.jsx";
 import Tambah_Edit_PengadaanBahanBaku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/Tambah_Edit_PengadaanBahanBaku.jsx";
+import Tambah_Edit_Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Tambah_Edit_Bahan_Baku.jsx";
+import Tambah_Edit_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Edit_Produk.jsx";
 import IsAuthRoute from "./utils/IsAuthRoute.jsx";
+import Tambah_Edit_Penitip from "./pages/dashboard/ADMIN/Penitip/Tambah_Edit_Penitip.jsx";
+
+
 function App() {
   return (
     <>
@@ -66,6 +70,18 @@ function App() {
               <Route
                 path="/dashboard/Admin/bahan_baku/:id"
                 element={<Tambah_Edit_Bahan_Baku />}
+              />
+
+              <Route path="/dashboard/Admin/penitip" element={<Penitip />} />
+
+              <Route
+                path="/dashboard/Admin/Penitip/tambah"
+                element={<Tambah_Edit_Penitip />}
+              />
+
+              <Route
+                path="/dashboard/Admin/Penitip/:id"
+                element={<Tambah_Edit_Penitip />}
               />
 
             </Route>

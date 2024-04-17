@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { deleteHampers } from "../api/hampers/hampers_query";
 import { deletePengadaanBahanBaku } from "../api/pengadaan_bahan_baku/pengadaan_bahan_baku_query";
 import { deleteBahanBaku } from "../api/bahan_baku/bahan_baku_query";
+import { deletePenitip } from "../api/penitip/penitip_query";
 
 function Modal_Delete() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function Modal_Delete() {
   const mutation = useMutation(deleteProduk);
   const mutateHampers = useMutation(deleteHampers);
   const mutateBahan = useMutation(deleteBahanBaku);
+  const mutatePenitip = useMutation(deletePenitip);
   const MutatePengadaan = useMutation(deletePengadaanBahanBaku);
 
   const NameofProduk = (key) => {
@@ -82,6 +84,20 @@ function Modal_Delete() {
         },
       });
     }
+
+    if (key == "penitip") {
+      mutatePenitip.mutate(id, {
+        onSuccess: (res) => {
+          console.log(res);
+          toast.success("Penitip berhasil dihapus");
+          window.location.reload(true);
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      });
+    }
+
   };
 
   if (stateModal.isOpen) {
