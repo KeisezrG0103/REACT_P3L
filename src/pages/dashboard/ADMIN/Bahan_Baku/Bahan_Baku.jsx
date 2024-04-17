@@ -65,7 +65,7 @@ const Bahan_Baku = () => {
 
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(15);
+  const [limit, setLimit] = useState(10);
 
   const startIndex = (page - 1) * limit;
   const endIndex = Math.min(startIndex + limit, filteredBahanBaku.length);
