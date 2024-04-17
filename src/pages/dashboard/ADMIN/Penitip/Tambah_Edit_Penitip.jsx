@@ -13,18 +13,15 @@ const Tambah_Edit_Penitip = () => {
   const penitip = useSelector((state) => state.isEdit.item);
   const isEdit = useSelector((state) => state.isEdit.isEdit);
 
-
-
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("Nama_Penitip", data.Nama_Penitip);
-  
+
     try {
       await mutation.mutateAsync({ data: formData });
       toast.success("Penitip Berhasil Ditambahkan");
       Navigate("/dashboard/Admin/penitip");
-    }
-    catch (error) {
+    } catch (error) {
       toast.error(error.response.data.message);
     }
   };
@@ -32,27 +29,26 @@ const Tambah_Edit_Penitip = () => {
   const onEdit = async (data) => {
     const formData = new FormData();
     formData.append("Nama_Penitip", data.Nama_Penitip);
+    formData.append("komisi", data.komisi);
 
     formData.append("_method", "PUT");
-    
-    
+
     try {
       await editPenitip({ data: formData, id: penitip.Id }).then(() => {
         toast.success("Penitip berhasil diubah");
         Navigate("/dashboard/Admin/penitip");
       });
-    }
-    catch (error) {
+    } catch (error) {
       toast.error(error.response.data.message);
     }
-  }
+  };
 
   return (
     <div>
       <div className="card shadow-lg bg-base-100">
         <div className="card-header">
           <h2 className="card-title text-xl font-semibold ml-4 mt-5">
-            Tambah Penitip
+            {isEdit ? "Edit" : "Tambah"} Penitip
           </h2>
         </div>
         <div className="card-body">
@@ -70,10 +66,28 @@ const Tambah_Edit_Penitip = () => {
                 defaultValue={isEdit ? penitip.Nama_Penitip : ""}
               />
             </label>
+            {isEdit && (
+              <label className="form-control w-full">
+                <div className="label">
+                  <span className="label-text font-bold">Komisi</span>
+                </div>
+                <input
+                  type="number"
+                  placeholder="Komisi"
+                  className="input input-bordered w-full"
+                  required
+                  {...register("komisi", { required: true })}
+                  defaultValue={isEdit ? penitip.komisi : ""}
+                />
+              </label>
+            )}
             <div className="flex justify-end mt-5">
               <button className="btn btn-error text-white mr-2" onClick={() => Navigate("/dashboard/Admin/penitip")}>
-                Batal</button>
-              <button className="btn btn-primary text-white">{isEdit ? "Edit" : "Tambah"}</button>
+                Batal
+              </button>
+              <button className="btn btn-primary text-white">
+                {isEdit ? "Edit" : "Tambah"}
+              </button>
             </div>
           </form>
         </div>
