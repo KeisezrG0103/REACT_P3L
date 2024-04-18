@@ -49,7 +49,7 @@ const DashboardLayout = () => {
           <a className=" text-xl flex items-center space-x-2" href="#">
             <img src={Logo} alt="logo" className="w-20" />
             <p>
-              <span className="text-lg font-bold">Atma Kitchen</span>
+              <span className="text-lg text-white font-bold">Atma Kitchen</span>
             </p>
           </a>
         </div>
@@ -68,7 +68,7 @@ const DashboardLayout = () => {
               </div>
             </div>
             <div className="ml-2">
-              <span className="text-sm font-bold">{user?.Nama}</span>
+              <span className="text-sm text-white font-bold">{user?.Nama}</span>
             </div>
           </a>
           <ul

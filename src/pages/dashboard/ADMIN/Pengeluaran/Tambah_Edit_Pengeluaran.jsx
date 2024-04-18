@@ -2,30 +2,30 @@ import { useMutation } from "react-query";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { addHampers, editHampers } from "../../../../api/hampers/hampers_query";
+import { addPengeluaran, editPengeluaran } from "../../../../api/pengeluaran/pengeluaran_query";
 import toast from "react-hot-toast";
 
-const Tambah_Edit_Hampers = () => {
+const Tambah_Edit_Pengeluaran = () => {
   const { register, handleSubmit } = useForm();
 
-  const mutation = useMutation(addHampers);
+  const mutation = useMutation(addPengeluaran);
   const Navigate = useNavigate();
-  const hampers = useSelector((state) => state.isEdit.item);
+  const pengeluaran = useSelector((state) => state.isEdit.item);
   const isEdit = useSelector((state) => state.isEdit.isEdit);
-
 
 
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append("Nama_Hampers", data.Nama_Hampers);
+    formData.append("Nama_Pengeluaran", data.Nama_Pengeluaran);
     formData.append("Harga", data.Harga);
-    formData.append("Gambar", data.Gambar[0]);
-
+    formData.append("Satuan", data.Satuan);
+    formData.append("Qty", data.Qty);
+    
     try {
       await mutation.mutateAsync({ data: formData });
-      toast.success("Hampers Berhasil Ditambahkan");
-      Navigate("/dashboard/Admin/hampers");
+      toast.success("Pengeluaran Berhasil Ditambahkan");
+      Navigate("/dashboard/Admin/pengeluaran");
     }
     catch (error) {
       toast.error(error.response.data.message);
@@ -34,19 +34,18 @@ const Tambah_Edit_Hampers = () => {
 
   const onEdit = async (data) => {
     const formData = new FormData();
-    formData.append("Nama_Hampers", data.Nama_Hampers);
+    formData.append("Nama_Pengeluaran", data.Nama_Pengeluaran);
     formData.append("Harga", data.Harga);
-    if(data.Gambar[0] != undefined){
-      formData.append("Gambar", data.Gambar[0]);
-    }
+    formData.append("Satuan", data.Satuan);
+    formData.append("Qty", data.Qty);
+
     formData.append("_method", "PUT");
     
     
-
     try {
-      await editHampers({ data: formData, id: hampers.Id }).then(() => {
-        toast.success("Hampers berhasil diubah");
-        Navigate("/dashboard/Admin/hampers");
+      await editPengeluaran({ data: formData, id: pengeluaran.Id }).then(() => {
+        toast.success("Pengeluaran berhasil diubah");
+        Navigate("/dashboard/Admin/pengeluaran");
       });
     }
     catch (error) {
@@ -59,7 +58,7 @@ const Tambah_Edit_Hampers = () => {
       <div className="card shadow-lg bg-base-100">
         <div className="card-header">
           <h2 className="card-title text-xl font-semibold ml-4 mt-5">
-          {isEdit ? 'Edit Hampers' : 'Tambah Hampers'}
+           {isEdit ? 'Edit Pengeluaran' : 'Tambah Pengeluaran'}
           </h2>
         </div>
         <div className="card-body">
@@ -70,11 +69,11 @@ const Tambah_Edit_Hampers = () => {
               </div>
               <input
                 type="text"
-                placeholder="Input Nama Hampers"
+                placeholder="Nama Pengeluaran"
                 className="input input-bordered w-full"
                 required
-                {...register("Nama_Hampers", { required: true })}
-                defaultValue={isEdit ? hampers.Nama_Hampers : ""}
+                {...register("Nama_Pengeluaran", { required: true })}
+                defaultValue={isEdit ? pengeluaran.Nama_Pengeluaran : ""}
               />
             </label>
             <label className="form-control w-full">
@@ -83,28 +82,43 @@ const Tambah_Edit_Hampers = () => {
               </div>
               <input
                 type="number"
-                placeholder="Type here"
+                placeholder="Harga"
                 className="input input-bordered w-full"
                 required
                 {...register("Harga", { required: true })}
-                defaultValue={isEdit ? hampers.Harga : 0}
+                defaultValue={isEdit ? pengeluaran.Harga : 0}
               />
             </label>
-            <label className="form-control w-full ">
+            <label className="form-control w-full">
               <div className="label">
-                <span className="label-text font-bold">Gambar</span>
+                <span className="label-text font-bold">Satuan</span>
               </div>
               <input
-                type="file"
-                className="file-input file-input-bordered w-full"
-                {...register("Gambar")}
-
+                type="text"
+                placeholder="Satuan"
+                className="input input-bordered w-full"
+                required
+                {...register("Satuan", { required: true })}
+                defaultValue={isEdit ? pengeluaran.Satuan : ""}
               />
-              
+            </label>
+
+            <label className="form-control w-full">
+              <div className="label">
+                <span className="label-text font-bold">Qty</span>
+              </div>
+              <input
+                type="number"
+                placeholder="Quantity"
+                className="input input-bordered w-full"
+                required
+                {...register("Qty", { required: true })}
+                defaultValue={isEdit ? pengeluaran.Qty : 0}
+              />
             </label>
 
             <div className="flex justify-end mt-5">
-              <button className="btn btn-error text-white mr-2" onClick={() => Navigate("/dashboard/Admin/hampers")}>
+              <button className="btn btn-error text-white mr-2" onClick={() => Navigate("/dashboard/Admin/pengeluaran")}>
                 Batal</button>
               <button className="btn btn-primary text-white">{isEdit ? "Edit" : "Tambah"}</button>
             </div>
@@ -115,4 +129,4 @@ const Tambah_Edit_Hampers = () => {
   );
 };
 
-export default Tambah_Edit_Hampers;
+export default Tambah_Edit_Pengeluaran;

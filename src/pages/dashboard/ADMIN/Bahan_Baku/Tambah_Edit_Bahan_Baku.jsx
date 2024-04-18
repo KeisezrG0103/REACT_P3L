@@ -56,7 +56,7 @@ const Tambah_Edit_Hampers = () => {
       <div className="card shadow-lg bg-base-100">
         <div className="card-header">
           <h2 className="card-title text-xl font-semibold ml-4 mt-5">
-            Tambah Bahan Baku
+          {isEdit ? 'Edit Bahan Baku' : 'Tambah Bahan Baku'}
           </h2>
         </div>
         <div className="card-body">

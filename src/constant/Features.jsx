@@ -5,6 +5,7 @@ import { BsFillBoxFill } from "react-icons/bs";
 import { IoReceiptOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
 import { IoPerson } from "react-icons/io5";
+import { FaMoneyBillAlt } from "react-icons/fa"
 
 export const ADMIN_FEATURES = {
   DASHBOARD: {
@@ -32,6 +33,11 @@ export const ADMIN_FEATURES = {
     logo: <IoPerson />,
     route: "/dashboard/admin/penitip",
   },
+  PENGELUARAN:{
+    name: "Pengeluaran",
+    logo: <FaMoneyBillAlt/>,
+    route: "/dashboard/admin/pengeluaran",
+  }
 };
 
 export const MO_FEATURES = {

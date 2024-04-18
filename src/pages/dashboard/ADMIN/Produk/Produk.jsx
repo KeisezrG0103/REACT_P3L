@@ -91,7 +91,7 @@ const Produk = () => {
           </div>
         </div>
         <Link to="/dashboard/Admin/produk/tambah">
-          <button className="btn btn-primary text-white mt-5">
+          <button className="btn btn-success text-white mt-5">
             Tambah Produk
           </button>
         </Link>

@@ -94,7 +94,7 @@ const Bahan_Baku = () => {
         </div>
         <div>
         <Link to="/dashboard/Admin/bahan_baku/tambah">
-          <button className="btn btn-primary text-white mt-5">
+          <button className="btn btn-success text-white mt-5">
             Tambah Bahan Baku
           </button>
         </Link>
@@ -122,7 +122,7 @@ const Bahan_Baku = () => {
                   <tbody>
                     {currentData.map((bahan_baku, index) => (
                       <tr key={index} className="text-center">
-                        <td>{index + 1}</td>
+                        <td>{startIndex + index + 1}</td>
                         <td>{bahan_baku.Nama}</td>
                         <td>{bahan_baku.Qty}</td>
                         <td>{bahan_baku.Satuan}</td>

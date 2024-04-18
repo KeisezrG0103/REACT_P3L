@@ -16,6 +16,7 @@ export const ADMIN_ROUTES = {
     PENITIP : BASEURL + "/api/penitip",
     KATEGORI : BASEURL + "/api/kategori",
     BAHAN_BAKU : BASEURL + "/api/bahan_baku",
+    PENGELUARAN: BASEURL + "/api/pengeluaran",
 }
 
 export const MO_ROUTES = {

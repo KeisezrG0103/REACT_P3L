@@ -165,7 +165,7 @@ const Modal_DetailHampers = () => {
                     <td className="text-center">
                       <div className="flex flex-row justify-center items-center">
                         <button
-                          className="btn btn-sm btn-primary text-white"
+                          className="btn btn-sm btn-success text-white"
                           onClick={() => {
                             doEdit(item);
                           }}
@@ -234,7 +234,7 @@ const Modal_DetailHampers = () => {
               </div>
 
               <div>
-                <button className="btn btn-sm btn-primary text-white">
+                <button className="btn btn-sm btn-success text-white">
                   {stateEdit ? "Edit" : "Simpan"}
                 </button>
 

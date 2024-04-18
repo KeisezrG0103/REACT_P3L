@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getHampers } from "../../../../api/hampers/hampers_query";
+import { getPengeluaran } from "../../../../api/pengeluaran/pengeluaran_query";
 import { useEffect } from "react";
 import Modal_Delete from "../../../../components/Modal_Delete";
 import {
@@ -9,24 +9,26 @@ import {
   setModal,
   setModalKey,
 } from "../../../../slicer/slicer_modal";
+
 import { useDispatch } from "react-redux";
-import { setItem, setOpen } from "../../../../slicer/slicer_DetailHampers";
-import Modal_DetailHampers from "../../../../components/Modal_DetailHampers";
+
 import { setIsEdit } from "../../../../slicer/slicer_IsEdit";
-import { setItem as sethampers } from "../../../../slicer/slicer_IsEdit";
+import { setItem as setPengeluaran } from "../../../../slicer/slicer_IsEdit";
 import { resetState } from "../../../../slicer/slicer_IsEdit";
 
-const Hampers = () => {
-  const {
-    data: hampersData,
-    isLoading,
-    refetch,
-  } = useQuery("hampers", getHampers);
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredHampers, setFilteredHampers] = useState([]);
+const Pengeluaran = () => {
 
   const dispatch = useDispatch();
+
+  const {
+    data: pengeluaranData,
+    isLoading,
+    refetch,
+  } = useQuery("pengeluaran", getPengeluaran);
+    
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredPengeluaran, setFilteredPengeluaran] = useState([]);
 
   useEffect(() => {
     refetch();
@@ -37,40 +39,39 @@ const Hampers = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (hampersData && hampersData.data) {
-      const filtered = hampersData.data.filter((hampers) =>
-        hampers.Nama_Hampers.toLowerCase().includes(searchQuery.toLowerCase())
+    if (pengeluaranData && pengeluaranData.data) {
+      const filtered = pengeluaranData.data.filter((pengeluaran) =>
+        pengeluaran.Nama_Pengeluaran.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredHampers(filtered);
-      setPage(1);
+      setFilteredPengeluaran(filtered);
     }
-  }, [hampersData, searchQuery]);
+  }, [pengeluaranData, searchQuery]);
 
+  
   const openModal = (item) => {
     dispatch(setModal(true));
     dispatch(setItems(item));
-    dispatch(setModalKey("hampers"));
+    dispatch(setModalKey("pengeluaran"));
   };
 
-  const openDetail = (item) => {
-    dispatch(setItem(item));
-    dispatch(setOpen(true));
-  };
+
 
   const isEdit = (item) => {
-    dispatch(sethampers(item));
+    dispatch(setPengeluaran(item));
     dispatch(setIsEdit(true));
   };
 
+
+
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
 
   const startIndex = (page - 1) * limit;
-  const endIndex = Math.min(startIndex + limit, filteredHampers.length);
+  const endIndex = Math.min(startIndex + limit, filteredPengeluaran.length);
 
-  const currentData = filteredHampers.slice(startIndex, endIndex);
+  const currentData = filteredPengeluaran.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(filteredHampers.length / limit);
+  const totalPages = Math.ceil(filteredPengeluaran.length / limit);
 
   const changePage = (page) => {
     setPage(Math.max(1, Math.min(page, totalPages)));
@@ -80,7 +81,7 @@ const Hampers = () => {
     <div>
       <div className="flex justify-between place-items-end lg:place-items-center">
         <div className="flex items-start space-y-4 flex-col">
-          <h1 className="font-bold text-2xl">Hampers</h1>
+          <h1 className="font-bold text-2xl">Pengeluaran</h1>
           <div className="form-control">
             <input
               type="text"
@@ -91,16 +92,17 @@ const Hampers = () => {
             />
           </div>
         </div>
-        <Link to="/dashboard/Admin/hampers/tambah">
+        <div>
+        <Link to="/dashboard/Admin/pengeluaran/tambah">
           <button className="btn btn-success text-white mt-5">
-            Tambah Hampers
+            Tambah Pengeluaran
           </button>
         </Link>
+        </div>
       </div>
-
       <div className="overflow-x-auto w-full mt-5">
         <div className="card shadow-md bg-base-100" style={{ width: "100%" }}>
-          <div className="card-body relative" style={{ width: "100%" }}>
+          <div className="card-body relative" style={{ width: "100%", height: "100vh" }}>
             {isLoading ? (
               <div className="h-full w-full flex justify-center items-center absolute top-0 left-0 right-0 bottom-0">
                 <span className="loading loading-spinner loading-lg"></span>
@@ -111,48 +113,37 @@ const Hampers = () => {
                   <thead>
                     <tr className="text-center">
                       <th>No</th>
-                      <th>Gambar</th>
                       <th>Nama</th>
                       <th>Harga</th>
+                      <th>Satuan</th>
+                      <th>Qty</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {currentData.map((hampers, index) => (
+                    {currentData.map((pengeluaran, index) => (
                       <tr key={index} className="text-center">
                         <td>{startIndex + index + 1}</td>
+                        <td>{pengeluaran.Nama_Pengeluaran}</td>
+                        <td>{pengeluaran.Harga}</td>
+                        <td>{pengeluaran.Satuan}</td>
+                        <td>{pengeluaran.Qty}</td>
                         <td>
-                          <img
-                            src={hampers.Gambar}
-                            alt="gambar"
-                            className="object-cover h-20 w-20 mx-auto"
-                          />
-                        </td>
-                        <td>{hampers.Nama_Hampers}</td>
-                        <td>{hampers.Harga}</td>
-                        <td className="flex flex-col items-center justify-center flex-wrap space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2 lg:text-center">
-                          <button
-                            className="btn btn-sm btn-secondary text-white text-base-100 ml-2 w-20"
-                            onClick={() => openDetail(hampers)}
-                          >
-                            Detail
-                          </button>
-                          <Link to={`/dashboard/Admin/hampers/${hampers.id}`}>
+                        <Link to={`/dashboard/Admin/pengeluaran/${pengeluaran.id}`}>
                             <button
                               className="btn btn-sm btn-primary text-base-100 ml-2 w-20"
-                              onClick={() => isEdit(hampers)}
+                              onClick={() => isEdit(pengeluaran)}
                             >
                               Edit
                             </button>
                           </Link>
-                          <button
+                        <button
                             className="btn btn-sm btn-error text-base-100 ml-2 w-20"
-                            onClick={() => openModal(hampers)}
+                            onClick={() => openModal(pengeluaran)}
                           >
                             Delete
                           </button>
                           <Modal_Delete />
-                          <Modal_DetailHampers />
                         </td>
                       </tr>
                     ))}
@@ -178,6 +169,6 @@ const Hampers = () => {
       </div>
     </div>
   );
-};
+}
 
-export default Hampers;
+export default Pengeluaran;

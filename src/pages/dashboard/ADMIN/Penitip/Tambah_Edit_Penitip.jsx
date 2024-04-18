@@ -48,7 +48,7 @@ const Tambah_Edit_Penitip = () => {
       <div className="card shadow-lg bg-base-100">
         <div className="card-header">
           <h2 className="card-title text-xl font-semibold ml-4 mt-5">
-            {isEdit ? "Edit" : "Tambah"} Penitip
+          {isEdit ? 'Edit Penitip' : 'Tambah Penitip'}
           </h2>
         </div>
         <div className="card-body">

@@ -94,7 +94,7 @@ const Penitip = () => {
         </div>
         <div>
         <Link to="/dashboard/Admin/penitip/tambah">
-          <button className="btn btn-primary text-white mt-5">
+          <button className="btn btn-success text-white mt-5">
             Tambah Penitip
           </button>
         </Link>
@@ -122,7 +122,7 @@ const Penitip = () => {
                   <tbody>
                     {currentData.map((penitip, index) => (
                       <tr key={index} className="text-center">
-                        <td>{index + 1}</td>
+                        <td>{startIndex + index + 1}</td>
                         <td>{penitip.Id}</td>
                         <td>{penitip.Nama_Penitip}</td>
                         <td>{penitip.komisi}</td>
