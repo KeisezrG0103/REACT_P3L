@@ -17,6 +17,7 @@ export const ADMIN_ROUTES = {
     KATEGORI : BASEURL + "/api/kategori",
     BAHAN_BAKU : BASEURL + "/api/bahan_baku",
     PENGELUARAN: BASEURL + "/api/pengeluaran",
+    CUSTOMER: BASEURL + "/api/customer",
 }
 
 export const MO_ROUTES = {

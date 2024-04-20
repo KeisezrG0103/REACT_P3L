@@ -25,6 +25,7 @@ import IsAuthRoute from "./utils/IsAuthRoute.jsx";
 import Tambah_Edit_Penitip from "./pages/dashboard/ADMIN/Penitip/Tambah_Edit_Penitip.jsx";
 import Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Pengeluaran.jsx";
 import Tambah_Edit_Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
+import Customer from "./pages/dashboard/ADMIN/Customer/Customer.jsx";
 
 
 function App() {
@@ -97,7 +98,8 @@ function App() {
                 path="/dashboard/Admin/pengeluaran/:id"
                 element={<Tambah_Edit_Pengeluaran />}
               />
-
+              
+              <Route path="/dashboard/Admin/customer" element={<Customer/>} />
 
             </Route>
 

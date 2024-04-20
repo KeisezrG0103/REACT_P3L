@@ -6,6 +6,8 @@ import { IoReceiptOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
 import { IoPerson } from "react-icons/io5";
 import { FaMoneyBillAlt } from "react-icons/fa"
+import { BsPersonFillCheck } from "react-icons/bs";
+import { PiEggCrackFill } from "react-icons/pi"
 
 export const ADMIN_FEATURES = {
   DASHBOARD: {
@@ -25,19 +27,25 @@ export const ADMIN_FEATURES = {
   },
   BAHAN_BAKU: {
     name: "Bahan Baku",
-    logo: <BsFillBoxFill />,
+    logo: <PiEggCrackFill />,
     route: "/dashboard/admin/bahan_baku",
   },
   PENITIP: {
     name: "Penitip",
-    logo: <IoPerson />,
+    logo: <BsFillBoxFill />,
     route: "/dashboard/admin/penitip",
   },
   PENGELUARAN:{
     name: "Pengeluaran",
     logo: <FaMoneyBillAlt/>,
     route: "/dashboard/admin/pengeluaran",
+  },
+  CUSTOMER:{
+    name: "Customer",
+    logo: <IoPerson />,
+    route: "/dashboard/admin/customer",
   }
+  
 };
 
 export const MO_FEATURES = {
