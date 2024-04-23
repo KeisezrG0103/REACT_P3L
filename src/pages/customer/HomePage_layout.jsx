@@ -8,12 +8,21 @@ import Cart from "../../components/Cart";
 import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import { ROUTES_HOMEPAGE } from "../../constant/Routes";
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FiLogIn } from "react-icons/fi";
 
 const HomePage_layout = () => {
   const [navResponsive, setNavResponsive] = useState(false);
-
+  const location = useLocation();
   const dispatch = useDispatch();
   const cartOpen = useSelector((state) => state.cart.isOpen);
+  const navigate = useNavigate();
+
+  const customer = localStorage?.getItem("customer");
+  const karyawan = localStorage?.getItem("karyawan");
+  console.log(JSON.parse(customer));
+  console.log(JSON.parse(karyawan));
 
   const openCloseCart = () => {
     if (cartOpen) {
@@ -21,6 +30,12 @@ const HomePage_layout = () => {
     } else {
       dispatch(setIsOpen(true));
     }
+  };
+  const doLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("karyawan");
+    localStorage.removeItem("customer");
+    navigate("/auth/signin");
   };
 
   return (
@@ -77,6 +92,49 @@ const HomePage_layout = () => {
                   <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
               </button>
+              <div className="dropdown dropdown-end mx-2">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    {customer || karyawan ? (
+                      <img
+                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                        alt="profile"
+                        className="w-10 h-10 rounded-full"
+                      />
+                    ) : (
+                      // login icon and button here
+                      <Link to="/auth/signin">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center">
+                          <FiLogIn className="w-6 h-8" />
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <a className="justify-between">
+                      Profile
+                      <span className="badge">New</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a>Settings</a>
+                  </li>
+                  <li>
+                    <a className="btn btn-ghost btn-sm" onClick={doLogout}>
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
               <div className="flex sm:hidden">
                 <button
@@ -103,9 +161,14 @@ const HomePage_layout = () => {
           >
             <div className="flex flex-col sm:flex-row">
               {Object.values(ROUTES_HOMEPAGE).map((route) => (
-                <Link to={route.route}
+                <Link
+                  to={route.route}
                   key={route.route}
-                  className="mt-3 text-sm text-gray-600 hover:text-gray-500 sm:mx-3 sm:mt-0"
+                  className={`${
+                    location.pathname === route.route
+                      ? "bg-gray-200 text-gray-900"
+                      : "text-gray-600"
+                  } px-4 py-2 mt-2 text-sm font-semibold rounded hover:text-primary hover:bg-gray-100 focus:outline-none focus:text-primary focus:bg-gray-100`}
                 >
                   {route.name}
                 </Link>
@@ -144,7 +207,6 @@ const HomePage_layout = () => {
       <main className="my-8">
         <Outlet />
       </main>
-      {/* Footer component make always in the bottom*/}
       <div className="flex flex-col items-center justify-between p-4 bg-base-100 text-base-content">
         <Footer />
       </div>

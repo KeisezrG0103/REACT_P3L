@@ -1,4 +1,3 @@
-import Shop from "../pages/customer/Shop/Shop";
 
 
 const BASEURL = "http://localhost:8000";
@@ -26,7 +25,9 @@ export const MO_ROUTES = {
 }
 
 
-
+export const CUSTOMER_ROUTES = {
+    PRODUK_PENITIP : BASEURL + "/api/ProdukPenitip",
+}
 
 export const OWNER_ROUTES = {
     LAPORAN : BASEURL + "/api/laporan",
