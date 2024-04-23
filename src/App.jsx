@@ -26,6 +26,11 @@ import Tambah_Edit_Penitip from "./pages/dashboard/ADMIN/Penitip/Tambah_Edit_Pen
 import Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Pengeluaran.jsx";
 import Tambah_Edit_Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
 import Customer from "./pages/dashboard/ADMIN/Customer/Customer.jsx";
+import HomePage_layout from "./pages/customer/HomePage_layout.jsx";
+import Home from "./pages/customer/Home/Home.jsx";
+import Shop from "./pages/customer/Shop/Shop.jsx";
+import About from "./pages/customer/About/About.jsx";
+import Contact from "./pages/customer/Contact/Contact.jsx";
 
 
 function App() {
@@ -33,6 +38,12 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route  element={<HomePage_layout />}>
+            <Route path="/" element={<Home/>} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Route>
           <Route path="/auth" element={<IsAuthRoute />}>
             <Route element={<Layout />}>
               <Route path="signup" element={<SignUp />} />
@@ -63,7 +74,10 @@ function App() {
                 element={<Tambah_Edit_Hampers />}
               />
 
-              <Route path="/dashboard/Admin/bahan_baku" element={<Bahan_Baku />} />
+              <Route
+                path="/dashboard/Admin/bahan_baku"
+                element={<Bahan_Baku />}
+              />
 
               <Route
                 path="/dashboard/Admin/bahan_baku/tambah"
@@ -87,7 +101,10 @@ function App() {
                 element={<Tambah_Edit_Penitip />}
               />
 
-              <Route path="/dashboard/Admin/pengeluaran" element={<Pengeluaran />} />
+              <Route
+                path="/dashboard/Admin/pengeluaran"
+                element={<Pengeluaran />}
+              />
 
               <Route
                 path="/dashboard/Admin/pengeluaran/tambah"
@@ -98,9 +115,8 @@ function App() {
                 path="/dashboard/Admin/pengeluaran/:id"
                 element={<Tambah_Edit_Pengeluaran />}
               />
-              
-              <Route path="/dashboard/Admin/customer" element={<Customer/>} />
 
+              <Route path="/dashboard/Admin/customer" element={<Customer />} />
             </Route>
 
             <Route path="/dashboard/MO" element={<MORoutes />}>

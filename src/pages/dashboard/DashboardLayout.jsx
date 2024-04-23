@@ -5,11 +5,10 @@ import "./Dashboard.css";
 import { logoutKaryawan } from "../../slicer/slicer_karyawan";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/Footer";
 
 const DashboardLayout = () => {
-  
   const karyawan_string = localStorage.getItem("karyawan");
-
 
   const user = JSON.parse(karyawan_string);
 
@@ -101,11 +100,7 @@ const DashboardLayout = () => {
             <Outlet />
           </div>
 
-          <footer className="footer footer-center p-4 bg-base-100 text-base-content">
-            <aside>
-              <p>Copyright © 2024 - All right reserved by Kelompok P3L RCN</p>
-            </aside>
-          </footer>
+          <Footer/>
         </div>
 
         <div className="drawer-side">

@@ -1,3 +1,4 @@
+import Shop from "../pages/customer/Shop/Shop";
 
 
 const BASEURL = "http://localhost:8000";
@@ -29,4 +30,24 @@ export const MO_ROUTES = {
 
 export const OWNER_ROUTES = {
     LAPORAN : BASEURL + "/api/laporan",
+}
+
+
+export const ROUTES_HOMEPAGE = {
+    HOME : {
+        name : "Home",
+        route : "/"
+    },
+    Shop : {
+        name : "Shop",
+        route : "/shop",
+    },
+    CONTACT : {
+        name : "Contact",
+        route : "/contact",
+    },
+    ABOUT : {
+        name : "About",
+        route : "/about",
+    }
 }
