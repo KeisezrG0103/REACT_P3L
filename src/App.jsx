@@ -26,6 +26,7 @@ import Tambah_Edit_Penitip from "./pages/dashboard/ADMIN/Penitip/Tambah_Edit_Pen
 import Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Pengeluaran.jsx";
 import Tambah_Edit_Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
 import Customer from "./pages/dashboard/ADMIN/Customer/Customer.jsx";
+import History from "./pages/dashboard/ADMIN/History/History.jsx";
 
 
 function App() {
@@ -101,6 +102,7 @@ function App() {
               
               <Route path="/dashboard/Admin/customer" element={<Customer/>} />
 
+              <Route path="/dashboard/Admin/history" element={<History/>} />
             </Route>
 
             <Route path="/dashboard/MO" element={<MORoutes />}>
