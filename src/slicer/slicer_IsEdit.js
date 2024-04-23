@@ -15,7 +15,7 @@ const isEditSlice = createSlice({
         setIsEdit: (state, action) => {
             state.isEdit = action.payload;
         },
-        resetState: (state, action) => {
+        resetState: (state) => {
             state.item = {};
             state.isEdit = false;
         }

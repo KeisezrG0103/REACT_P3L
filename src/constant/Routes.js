@@ -26,8 +26,30 @@ export const MO_ROUTES = {
 }
 
 
-
+export const CUSTOMER_ROUTES = {
+    PRODUK_PENITIP : BASEURL + "/api/ProdukPenitip",
+}
 
 export const OWNER_ROUTES = {
     LAPORAN : BASEURL + "/api/laporan",
+}
+
+
+export const ROUTES_HOMEPAGE = {
+    HOME : {
+        name : "Home",
+        route : "/"
+    },
+    Shop : {
+        name : "Shop",
+        route : "/shop",
+    },
+    CONTACT : {
+        name : "Contact",
+        route : "/contact",
+    },
+    ABOUT : {
+        name : "About",
+        route : "/about",
+    }
 }

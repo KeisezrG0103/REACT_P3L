@@ -12,6 +12,8 @@ import { thunk } from "redux-thunk";
 import reducer_DetailHampers from "../slicer/slicer_DetailHampers";
 import reducer_tambahEditDetailHampers from "../slicer/slicer_tambahEditDetailHampers";
 import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
+import reducer_cart from "../slicer/slicer_cart";
+import reducer_Filter from "../slicer/slicer_FIltered";
 
 const persistConfig = {
     key: 'root',
@@ -27,6 +29,8 @@ const rootReducer = combineReducers({
     DetailHampers: reducer_DetailHampers,
     History: persistReducer(persistConfig,reducer_History),
     tambahEditDetailHampers: reducer_tambahEditDetailHampers,
+    cart: reducer_cart,
+    Filter : persistReducer(persistConfig, reducer_Filter)
 });
 
 

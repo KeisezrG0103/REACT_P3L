@@ -14,7 +14,7 @@ const Auth_Layout = () => {
           </div>
         </div>
 
-        <div className="absolute md:w-1/2 md:inline-flex md:relative -z-10">
+        <div className="hidden md:w-1/2 md:inline-flex md:relative -z-10">
           <img
             src={croisant}
             alt="croisant"
