@@ -1,5 +1,5 @@
 import { Navigate, Outlet} from 'react-router-dom';
-const IsAuthRoute = ({children}) => {
+const IsAuthRoute = () => {
     const karyawan_string = localStorage.getItem("karyawan");
     const karyawan = JSON.parse(karyawan_string);
 
