@@ -100,7 +100,7 @@ const History = () => {
                         <td>{customer.Nama}</td>
                         <td>
                         <button
-                            className="btn btn-sm btn-primary text-white text-base-100 ml-2 w-40"
+                            className="btn btn-sm btn-primary text-white ml-2 w-40"
                             onClick={() => openHistory(customer)}
                           >
                             History Pesanan

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getCustomer } from "../../../../api/customer/customer_query";
 import { useEffect } from "react";

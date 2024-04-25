@@ -132,7 +132,7 @@ const Hampers = () => {
                         <td>{hampers.Harga}</td>
                         <td className="flex flex-col items-center justify-center flex-wrap space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2 lg:text-center">
                           <button
-                            className="btn btn-sm btn-secondary text-white text-base-100 ml-2 w-20"
+                            className="btn btn-sm btn-secondary text-white ml-2 w-20"
                             onClick={() => openDetail(hampers)}
                           >
                             Detail
