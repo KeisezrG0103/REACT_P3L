@@ -17,6 +17,10 @@ const FilterSlice = createSlice({
         resetFilter: (state) => {
             state.isFiltered = false;
             state.Value = "";
+        },
+        updateFilter: (state, action) => {
+            state.isFiltered = action.payload.isFiltered;
+            state.Value = action.payload.Value;
         }
     },
     extraReducers: (builder) => {
@@ -26,6 +30,6 @@ const FilterSlice = createSlice({
     }
 });
 
-export const { setFilter, resetFilter } = FilterSlice.actions;
+export const { setFilter, resetFilter,updateFilter } = FilterSlice.actions;
 
 export default FilterSlice.reducer;

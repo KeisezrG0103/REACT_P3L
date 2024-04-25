@@ -132,13 +132,22 @@ const Home = () => {
         <div className="mt-16">
           <h3 className="text-gray-600 text-2xl font-medium">Produk Lainnya</h3>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-6">
-            {isLoading ? (
-              <div>Loading...</div>
-            ) : (
-              data?.data
-                // Slice the data to show only a limited number of items
-                ?.slice(0, itemsToShow)
-                .map((item, index) => (
+            {isLoading
+              ? // make 5 skeleton cards
+                Array.from({ length: 5 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden p-4"
+                  >
+                    <div className="flex flex-col gap-4 w-52">
+                      <div className="skeleton h-32 w-full"></div>
+                      <div className="skeleton h-4 w-28"></div>
+                      <div className="skeleton h-4 w-full"></div>
+                      <div className="skeleton h-4 w-full"></div>
+                    </div>
+                  </div>
+                ))
+              : data?.data?.slice(0, itemsToShow).map((item, index) => (
                   <div
                     key={index}
                     className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
@@ -157,9 +166,15 @@ const Home = () => {
                       </button>
                     </div>
                     <div className="px-5 py-3">
-                      <h3 className="text-gray-700 uppercase">{item.Nama_Produk}</h3>
-                      <span className="text-gray-500 mt-2">Rp. {item.Harga_Produk}</span>
-                      <p className="text-gray-500 mt-2">Stok: {item.Stok_Produk}</p>
+                      <h3 className="text-gray-700 uppercase">
+                        {item.Nama_Produk}
+                      </h3>
+                      <span className="text-gray-500 mt-2">
+                        Rp. {item.Harga_Produk}
+                      </span>
+                      <p className="text-gray-500 mt-2">
+                        Stok: {item.Stok_Produk}
+                      </p>
                       <button
                         className="block text-center w-full p-3 mt-4 bg-primary text-white uppercase font-semibold rounded"
                         onClick={() => navigate(`/shop/${item.Id}`)}
@@ -168,8 +183,7 @@ const Home = () => {
                       </button>
                     </div>
                   </div>
-                ))
-            )}
+                ))}
           </div>
           {data?.data.length > itemsToShow && (
             <div className="flex justify-center mt-6">
