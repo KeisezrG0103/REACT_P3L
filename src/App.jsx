@@ -26,12 +26,12 @@ import Tambah_Edit_Penitip from "./pages/dashboard/ADMIN/Penitip/Tambah_Edit_Pen
 import Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Pengeluaran.jsx";
 import Tambah_Edit_Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
 import Customer from "./pages/dashboard/ADMIN/Customer/Customer.jsx";
+import History from "./pages/dashboard/ADMIN/History/History.jsx"
 import HomePage_layout from "./pages/customer/HomePage_layout.jsx";
 import Home from "./pages/customer/Home/Home.jsx";
 import Shop from "./pages/customer/Shop/Shop.jsx";
 import About from "./pages/customer/About/About.jsx";
 import Contact from "./pages/customer/Contact/Contact.jsx";
-
 
 function App() {
   return (
@@ -106,6 +106,8 @@ function App() {
                 element={<Pengeluaran />}
               />
 
+              <Route path="/dashboard/Admin/history" element={<History/>} />
+              
               <Route
                 path="/dashboard/Admin/pengeluaran/tambah"
                 element={<Tambah_Edit_Pengeluaran />}
@@ -115,8 +117,9 @@ function App() {
                 path="/dashboard/Admin/pengeluaran/:id"
                 element={<Tambah_Edit_Pengeluaran />}
               />
+              
+              <Route path="/dashboard/Admin/customer" element={<Customer/>} />
 
-              <Route path="/dashboard/Admin/customer" element={<Customer />} />
             </Route>
 
             <Route path="/dashboard/MO" element={<MORoutes />}>

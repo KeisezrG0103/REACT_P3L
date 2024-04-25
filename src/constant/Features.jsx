@@ -6,7 +6,7 @@ import { IoReceiptOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
 import { IoPerson } from "react-icons/io5";
 import { FaMoneyBillAlt } from "react-icons/fa"
-import { BsPersonFillCheck } from "react-icons/bs";
+import { FaHistory } from "react-icons/fa";
 import { PiEggCrackFill } from "react-icons/pi"
 
 export const ADMIN_FEATURES = {
@@ -44,6 +44,11 @@ export const ADMIN_FEATURES = {
     name: "Customer",
     logo: <IoPerson />,
     route: "/dashboard/admin/customer",
+  },
+  HISTORY:{
+    name: "Histori Pesanan",
+    logo: <FaHistory />,
+    route: "/dashboard/admin/history",
   }
   
 };
