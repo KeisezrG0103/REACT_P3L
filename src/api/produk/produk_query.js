@@ -51,3 +51,8 @@ export const getProdukNonPenitipWithKuota = async (date) => {
   const response = await Axios.get(`${CUSTOMER_ROUTES.GET_PRODUKNONPENITIPWITHKUOTA}/${date_}`);
   return response.data;
 }
+
+export const getKuotaProdukByIdAndDate = async (id, date) => {
+  const response = await Axios.get(`${CUSTOMER_ROUTES.GET_KUOTAPRODUKBYIDANDDATE}/${id}/${date}`);
+  return response.data;
+}

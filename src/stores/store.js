@@ -14,11 +14,18 @@ import reducer_tambahEditDetailHampers from "../slicer/slicer_tambahEditDetailHa
 import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 import reducer_cart from "../slicer/slicer_cart";
 import reducer_Filter from "../slicer/slicer_FIltered";
+import reducer_customer_view_produk from "../slicer/slicer_customer_view_produk";
 
 const persistConfig = {
     key: 'root',
     storage,
-    stateReconciler: autoMergeLevel1
+    stateReconciler: autoMergeLevel2
+}
+
+const persistConfig2 = {
+    key: 'customer_view_produk',
+    storage: storage,
+    stateReconciler: autoMergeLevel2
 }
 
 const rootReducer = combineReducers({
@@ -30,7 +37,8 @@ const rootReducer = combineReducers({
     History: persistReducer(persistConfig,reducer_History),
     tambahEditDetailHampers: reducer_tambahEditDetailHampers,
     cart: reducer_cart,
-    Filter : persistReducer(persistConfig, reducer_Filter)
+    Filter : persistReducer(persistConfig, reducer_Filter),
+    customer_view_produk: persistReducer(persistConfig2, reducer_customer_view_produk),
 });
 
 

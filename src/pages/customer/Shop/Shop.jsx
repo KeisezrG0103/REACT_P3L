@@ -5,6 +5,12 @@ import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { getProdukNonPenitipWithKuota } from "../../../api/produk/produk_query";
 import { updateFilter } from "../../../slicer/slicer_FIltered";
+import { useNavigate } from "react-router-dom";
+import {
+  setProduk,
+  setType,
+  resetStateView,
+} from "../../../slicer/slicer_customer_view_produk";
 
 const Shop = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(true);
@@ -12,6 +18,7 @@ const Shop = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     data: KategoriData,
@@ -19,6 +26,10 @@ const Shop = () => {
     isError: kategoriError,
   } = useQuery("kategori", getKategori);
   const filter = useSelector((state) => state.Filter);
+
+  useEffect(() => {
+    dispatch(resetStateView());
+  }, [dispatch]);
 
   const dateNow = new Date();
   const dateNowString = dateNow.toISOString().split("T")[0];
@@ -71,12 +82,24 @@ const Shop = () => {
     >
       <div className="flex flex-col gap-4 w-full">
         <div className="w-full h-52 bg-gray-300 animate-pulse"></div>
-        <div className=" w-1/2 h-4 bg-gray-300 animate-pulse px-5"></div>
-        <div className=" w-1/2 h-4 bg-gray-300 animate-pulse px-5"></div>
-      
+        <div className=" w-2/3 h-4 bg-gray-300 animate-pulse px-5"></div>
+        <div className=" w-1/2 h-4 bg-gray-300 animate-pulse mb-5"></div>
       </div>
     </div>
   ));
+
+  const handleViewProduk = (id, Produk) => {
+    console.log(id);
+    dispatch(setProduk(Produk));
+
+    if (Produk.Stok == 0) {
+      dispatch(setType("Pre Order"));
+    } else {
+      dispatch(setType("Add to cart"));
+    }
+
+    navigate(`/Produk/${id}`);
+  };
 
   return (
     <div className="flex justify-center content-center mx-2">
@@ -154,7 +177,10 @@ const Shop = () => {
                       className="flex items-end justify-end h-56 w-full bg-cover bg-center"
                       style={{ backgroundImage: `url(${item.Gambar})` }}
                     >
-                      <button className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2">
+                      <button
+                        className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
+                        onClick={() => handleViewProduk(item.Id, item)}
+                      >
                         View
                       </button>
                     </div>

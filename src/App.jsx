@@ -32,6 +32,7 @@ import Home from "./pages/customer/Home/Home.jsx";
 import Shop from "./pages/customer/Shop/Shop.jsx";
 import About from "./pages/customer/About/About.jsx";
 import Contact from "./pages/customer/Contact/Contact.jsx";
+import ViewProduk from "./pages/customer/Shop/ViewProduk.jsx";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/Produk/:id" element={<ViewProduk />} />
           </Route>
           <Route path="/auth" element={<IsAuthRoute />}>
             <Route element={<Layout />}>
