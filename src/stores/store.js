@@ -15,6 +15,7 @@ import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 import reducer_cart from "../slicer/slicer_cart";
 import reducer_Filter from "../slicer/slicer_FIltered";
 import reducer_customer_view_produk from "../slicer/slicer_customer_view_produk";
+import reducer_cartProduk from "../slicer/slicer_cartProduk";
 
 const persistConfig = {
     key: 'root',
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
     cart: reducer_cart,
     Filter : persistReducer(persistConfig, reducer_Filter),
     customer_view_produk: persistReducer(persistConfig2, reducer_customer_view_produk),
+    cartProduk: persistReducer(persistConfig, reducer_cartProduk)
 });
 
 

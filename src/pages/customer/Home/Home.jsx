@@ -7,11 +7,16 @@ import Roti from "../../../assets/roti.avif";
 import Minuman from "../../../assets/minuman.avif";
 import Cake from "../../../assets/cake.avif";
 import { getProdukPenitip } from "../../../api/produkPenitip/Produk_penitip_query";
+import { useSelector } from "react-redux";
+import {
+  resetStateView,
+  setProduk,
+  setType,
+} from "../../../slicer/slicer_customer_view_produk";
 
 const Home = () => {
   const [filteredProdukData, setFilteredProdukData] = useState(null);
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
-
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,6 +40,10 @@ const Home = () => {
   };
 
   useEffect(() => {
+    dispatch(resetStateView());
+  }, [dispatch]);
+
+  useEffect(() => {
     let filteredData = data?.data;
 
     if (searchQuery.trim() !== "") {
@@ -43,14 +52,17 @@ const Home = () => {
       );
     }
 
-
     setFilteredProdukData(filteredData);
   }, [setFilteredProdukData, data, searchQuery]);
 
-
-
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const handleView = (item) => {
+    dispatch(setProduk(item));
+    dispatch(setType("produkPenitip"));
+    navigate(`/Produk/${item.Id}`);
   };
 
   return (
@@ -208,7 +220,7 @@ const Home = () => {
                     >
                       <button
                         className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                        onClick={() => navigate(`/shop/${item.Id}`)}
+                        onClick={() => handleView(item)}
                       >
                         View
                       </button>

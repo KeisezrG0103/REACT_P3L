@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
-import { resetState } from './slicer_IsEdit';
 const initialState = {
     type: "",
     produk: {},
