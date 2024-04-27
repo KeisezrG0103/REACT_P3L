@@ -56,3 +56,13 @@ export const getKuotaProdukByIdAndDate = async (id, date) => {
   const response = await Axios.get(`${CUSTOMER_ROUTES.GET_KUOTAPRODUKBYIDANDDATE}/${id}/${date}`);
   return response.data;
 }
+
+
+export const getProdukByIdWithQuota = async (id, date) => {
+  console.log(id, date);
+  const response = await Axios.get(`${CUSTOMER_ROUTES.GET_GETPRODUKBYIDBYDATE}/${id}/${date}`);
+  return response.data;
+}
+
+
+
