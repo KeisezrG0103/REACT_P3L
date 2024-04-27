@@ -100,7 +100,7 @@ const Hampers = () => {
 
       <div className="overflow-x-auto w-full mt-5">
         <div className="card shadow-md bg-base-100" style={{ width: "100%" }}>
-          <div className="card-body relative" style={{ width: "100%" }}>
+          <div className="card-body relative" style={{ width: "100%", height:"70vh" }}>
             {isLoading ? (
               <div className="h-full w-full flex justify-center items-center absolute top-0 left-0 right-0 bottom-0">
                 <span className="loading loading-spinner loading-lg"></span>
@@ -132,7 +132,7 @@ const Hampers = () => {
                         <td>{hampers.Harga}</td>
                         <td className="flex flex-col items-center justify-center flex-wrap space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2 lg:text-center">
                           <button
-                            className="btn btn-sm btn-secondary text-white text-base-100 ml-2 w-20"
+                            className="btn btn-sm btn-secondary text-white ml-2 w-20"
                             onClick={() => openDetail(hampers)}
                           >
                             Detail

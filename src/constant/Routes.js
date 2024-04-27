@@ -28,6 +28,9 @@ export const MO_ROUTES = {
 
 export const CUSTOMER_ROUTES = {
     PRODUK_PENITIP : BASEURL + "/api/ProdukPenitip",
+    GET_PRODUKNONPENITIPWITHKUOTA : BASEURL + "/api/produkNonPenitipWithKuota",
+    GET_KUOTAPRODUKBYIDANDDATE : BASEURL + "/api/produkKuota",
+
 }
 
 export const OWNER_ROUTES = {

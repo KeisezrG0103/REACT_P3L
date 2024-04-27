@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setFilter } from "../../../slicer/slicer_FIltered";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,17 @@ import Roti from "../../../assets/roti.avif";
 import Minuman from "../../../assets/minuman.avif";
 import Cake from "../../../assets/cake.avif";
 import { getProdukPenitip } from "../../../api/produkPenitip/Produk_penitip_query";
+import { useSelector } from "react-redux";
+import {
+  resetStateView,
+  setProduk,
+  setType,
+} from "../../../slicer/slicer_customer_view_produk";
 
 const Home = () => {
+  const [filteredProdukData, setFilteredProdukData] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data, isLoading } = useQuery("produkPenitip", getProdukPenitip);
@@ -30,9 +39,60 @@ const Home = () => {
     setItemsToShow((prevItems) => prevItems + 5);
   };
 
+  useEffect(() => {
+    dispatch(resetStateView());
+  }, [dispatch]);
+
+  useEffect(() => {
+    let filteredData = data?.data;
+
+    if (searchQuery.trim() !== "") {
+      filteredData = filteredData.filter((produk) =>
+        produk.Nama_Produk.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    setFilteredProdukData(filteredData);
+  }, [setFilteredProdukData, data, searchQuery]);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleView = (item) => {
+    dispatch(setProduk(item));
+    dispatch(setType("produkPenitip"));
+    navigate(`/Produk/${item.Id}`);
+  };
+
   return (
     <div>
       <div className="container mx-auto px-6">
+        <div className="relative mt-6 max-w-lg mx-auto mb-4">
+          <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
+            <svg
+              className="h-5 w-5 text-gray-500"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+
+          <input
+            className="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+        </div>
         {/* Hero section */}
         <div
           className="h-64 rounded-md overflow-hidden bg-cover bg-center"
@@ -130,15 +190,24 @@ const Home = () => {
 
         {/* Produk Lainnya section */}
         <div className="mt-16">
-          <h3 className="text-gray-600 text-2xl font-medium">Produk Lainnya</h3>
+          <h3 className="text-gray-600 text-2xl font-medium">Produk Penitip</h3>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-6">
-            {isLoading ? (
-              <div>Loading...</div>
-            ) : (
-              data?.data
-                // Slice the data to show only a limited number of items
-                ?.slice(0, itemsToShow)
-                .map((item, index) => (
+            {isLoading
+              ? // make 5 skeleton cards
+                Array.from({ length: 5 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden p-4"
+                  >
+                    <div className="flex flex-col gap-4 w-52">
+                      <div className="skeleton h-32 w-full"></div>
+                      <div className="skeleton h-4 w-28"></div>
+                      <div className="skeleton h-4 w-full"></div>
+                      <div className="skeleton h-4 w-full"></div>
+                    </div>
+                  </div>
+                ))
+              : filteredProdukData?.slice(0, itemsToShow).map((item, index) => (
                   <div
                     key={index}
                     className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
@@ -151,15 +220,21 @@ const Home = () => {
                     >
                       <button
                         className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                        onClick={() => navigate(`/shop/${item.Id}`)}
+                        onClick={() => handleView(item)}
                       >
                         View
                       </button>
                     </div>
                     <div className="px-5 py-3">
-                      <h3 className="text-gray-700 uppercase">{item.Nama_Produk}</h3>
-                      <span className="text-gray-500 mt-2">Rp. {item.Harga_Produk}</span>
-                      <p className="text-gray-500 mt-2">Stok: {item.Stok_Produk}</p>
+                      <h3 className="text-gray-700 uppercase">
+                        {item.Nama_Produk}
+                      </h3>
+                      <span className="text-gray-500 mt-2">
+                        Rp. {item.Harga_Produk}
+                      </span>
+                      <p className="text-gray-500 mt-2">
+                        Stok: {item.Stok_Produk}
+                      </p>
                       <button
                         className="block text-center w-full p-3 mt-4 bg-primary text-white uppercase font-semibold rounded"
                         onClick={() => navigate(`/shop/${item.Id}`)}
@@ -168,8 +243,7 @@ const Home = () => {
                       </button>
                     </div>
                   </div>
-                ))
-            )}
+                ))}
           </div>
           {data?.data.length > itemsToShow && (
             <div className="flex justify-center mt-6">
