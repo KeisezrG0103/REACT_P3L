@@ -5,14 +5,21 @@ import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { getProdukNonPenitipWithKuota } from "../../../api/produk/produk_query";
 import { updateFilter } from "../../../slicer/slicer_FIltered";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   setProduk,
   setType,
   resetStateView,
 } from "../../../slicer/slicer_customer_view_produk";
 
+import { setProduk as setProdukCart } from "../../../slicer/slicer_cartProduk";
+
 const Shop = () => {
+  const Today = new Date();
+
+  const toStringDate = (date) => {
+    return date.toISOString().split("T")[0];
+  };
   const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [filteredProdukData, setFilteredProdukData] = useState(null); // State to hold filtered products
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
@@ -101,6 +108,19 @@ const Shop = () => {
     navigate(`/Produk/${id}`);
   };
 
+  const handleAddToCart = (Produk) => {
+    const cartProduk = {
+      Id: Produk.Id || Produk.Id_Produk,
+      Nama: Produk.Nama || Produk.Nama_Produk,
+      Harga: Produk.Harga || Produk.Harga_Produk,
+      Gambar: Produk.Gambar || Produk.Gambar_Produk,
+      Jumlah: 1,
+      Tanggal_Pengiriman: toStringDate(Today),
+    };
+
+    dispatch(setProdukCart(cartProduk));
+  };
+
   return (
     <div className="flex justify-center content-center mx-2">
       <div className="container">
@@ -173,39 +193,36 @@ const Shop = () => {
                     key={index}
                     className="w-full  mx-auto rounded-md shadow-md overflow-hidden transition-transform duration-200 hover:shadow-lg hover:scale-105 focus:shadow-lg focus:scale-105"
                   >
-                    <div
-                      className="flex items-end justify-end h-56 w-full bg-cover bg-center"
-                      style={{ backgroundImage: `url(${item.Gambar})` }}
+                    <Link
+                      to={`/Produk/${item.Id}`}
+                      onClick={() => handleViewProduk(item.Id, item)}
                     >
-                      <button
-                        className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                        onClick={() => handleViewProduk(item.Id, item)}
+                      <div
+                        className="flex items-end justify-end h-56 w-full bg-cover bg-center"
+                        style={{ backgroundImage: `url(${item.Gambar})` }}
                       >
-                        View
-                      </button>
-                    </div>
-                    <div className="px-5 py-3">
-                      <h3 className="text-gray-700 uppercase">{item.Nama}</h3>
-                      <span className="text-gray-500 mt-2">
-                        Rp. {item.Harga}
-                      </span>
-                      <div className="mt-2 flex items-center justify-between">
-                        <p className="text-gray-500 mt-2">Stok: {item.Stok}</p>
-                        <p className="text-gray-500 mt-2 ml-4">
-                          Kuota: {item.Kuota}
-                        </p>
+                        <button
+                          className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
+                          onClick={() => handleViewProduk(item.Id, item)}
+                        >
+                          View
+                        </button>
                       </div>
-
-                      {item.Stok == 0 ? (
-                        <button className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded">
-                          Pre Order
-                        </button>
-                      ) : (
-                        <button className="block text-center w-full p-3 mt-4 bg-primary text-white uppercase font-semibold rounded">
-                          Add to cart
-                        </button>
-                      )}
-                    </div>
+                      <div className="px-5 py-3">
+                        <h3 className="text-gray-700 uppercase">{item.Nama}</h3>
+                        <span className="text-gray-500 mt-2">
+                          Rp. {item.Harga}
+                        </span>
+                        <div className="mt-2 flex items-center justify-between">
+                          <p className="text-gray-500 mt-2">
+                            Stok: {item.Stok}
+                          </p>
+                          <p className="text-gray-500 mt-2 ml-4">
+                            Kuota: {item.Kuota}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
                   </div>
                 ))}
           </div>

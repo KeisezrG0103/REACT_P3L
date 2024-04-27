@@ -1,19 +1,49 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { setIsOpen } from "../slicer/slicer_cart";
+import { editJumlahProduk, removeProduk } from "../slicer/slicer_cartProduk";
+import { FaTrashAlt } from "react-icons/fa";
+
 const Cart = () => {
+  const cartOpen = useSelector((state) => state.cart.isOpen);
+  const cartProduk = useSelector((state) => state.cartProduk.Produk);
+  const dispatch = useDispatch();
 
-    const cartOpen = useSelector((state) => state.cart.isOpen);
-    const dispatch = useDispatch();
+  // Local state to track input quantities for each cart item
+  const [quantities, setQuantities] = useState({});
 
-    const openCloseCart = () => {
-        if (cartOpen) {
-            dispatch(setIsOpen(false));
-        }
-        else {
-            dispatch(setIsOpen(true));
-        }
-    };
+  // Initialize quantities from the cart products
+  useEffect(() => {
+    const initialQuantities = {};
+    cartProduk.forEach((item) => {
+      initialQuantities[item.Id] = item.Jumlah;
+    });
+    setQuantities(initialQuantities);
+  }, [cartProduk]);
+
+  // Function to open/close the cart
+  const openCloseCart = () => {
+    dispatch(setIsOpen(!cartOpen));
+  };
+
+  // Update Redux store with new quantity
+  useEffect(() => {
+    for (const itemId in quantities) {
+      const quantity = quantities[itemId];
+      if (quantity > 0) {
+        dispatch(editJumlahProduk({ Id: itemId, Jumlah: quantity }));
+      } 
+    }
+  }, [quantities, dispatch]);
+
+  // Function to handle input changes
+  const handleQuantityChange = (event, itemId) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [itemId]: newQuantity,
+    }));
+  };
 
   return (
     <div>
@@ -25,7 +55,7 @@ const Cart = () => {
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-medium text-gray-700">Your cart</h3>
           <button
-            onClick={() => openCloseCart()}
+            onClick={openCloseCart}
             className="text-gray-600 focus:outline-none"
           >
             <svg
@@ -43,49 +73,34 @@ const Cart = () => {
         </div>
         <hr className="my-3" />
         {/* Cart items */}
-        <div className="flex justify-between mt-6">
-          <div className="flex">
-            <img
-              className="h-20 w-20 object-cover rounded"
-              src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"
-              alt="Product"
-            />
-            <div className="mx-3">
-              <h3 className="text-sm text-gray-600">Mac Book Pro</h3>
-              <div className="flex items-center mt-2">
-                <button className="text-gray-500 focus:outline-none focus:text-gray-600">
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                </button>
-                <span className="text-gray-700 mx-2">2</span>
-                <button className="text-gray-500 focus:outline-none focus:text-gray-600">
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                </button>
+        {cartProduk.map((item, index) => (
+          <div className="flex justify-between mt-6" key={index}>
+            <div className="flex">
+              <img
+                className="h-20 w-20 object-cover rounded"
+                src={item.Gambar}
+                alt="Product"
+              />
+              <div className="mx-3">
+                <h3 className="text-sm text-gray-600">{item.Nama}</h3>
+                <div className="flex items-center mt-2">
+                  <input
+                    className="w-16 text-center border border-gray-300 rounded"
+                    type="number"
+                    min="1"
+                    value={quantities[item.Id] ?? item.Jumlah}
+                    onChange={(event) => handleQuantityChange(event, item.Id)}
+                  />
+                </div>
               </div>
             </div>
+            <div className="flex flex-col justify-between items-end">
+              <span className="text-gray-600">Rp. {item.Harga}</span>
+              <FaTrashAlt className="text-red-500 cursor-pointer" onClick={() => dispatch(removeProduk(item.Id))} />
+            </div>
           </div>
-          <span className="text-gray-600">20$</span>
-        </div>
-        {/* Additional cart items here, similar to above */}
+        ))}
+
         {/* Apply Promo code and Checkout button */}
         <div className="mt-8">
           <form className="flex items-center justify-center">
