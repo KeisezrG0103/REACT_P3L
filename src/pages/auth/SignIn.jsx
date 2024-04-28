@@ -140,7 +140,7 @@ const SignIn = () => {
 
         <div className="text-center mt-4">
         {!isKaryawan && (
-            <Link to="/">
+            <Link to="/forgot-password" relative="path">
               Forgot Password
             </Link>
           )}

@@ -6,6 +6,9 @@ export const TOKEN = localStorage.getItem("token");
 export const ROUTES = {
     LOGIN : BASEURL + "/api/login",
     REGISTER : BASEURL + "/api/register",
+    FORGOT: BASEURL + "/api/forgot-password",
+    VERIFY: BASEURL + "/api/verify/pin",
+    RESET: BASEURL + "/api/reset-password"
 }
 
 
