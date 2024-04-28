@@ -8,6 +8,7 @@ import { deletePengadaanBahanBaku } from "../api/pengadaan_bahan_baku/pengadaan_
 import { deleteBahanBaku } from "../api/bahan_baku/bahan_baku_query";
 import { deletePenitip } from "../api/penitip/penitip_query";
 import { deletePengeluaran } from "../api/pengeluaran/pengeluaran_query";
+import { deleteResep } from "../api/resep/resep_query";
 
 function Modal_Delete() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function Modal_Delete() {
   const mutateBahan = useMutation(deleteBahanBaku);
   const mutatePenitip = useMutation(deletePenitip);
   const mutatePengeluaran = useMutation(deletePengeluaran);
+  const mutateResep = useMutation(deleteResep);
   const MutatePengadaan = useMutation(deletePengadaanBahanBaku);
 
   const NameofProduk = (key) => {
@@ -43,6 +45,10 @@ function Modal_Delete() {
 
     if (key == "pengeluaran"){
       return Item.Nama_Pengeluaran;
+    }
+
+    if (key == "resep"){
+      return Item.Nama_Resep;
     }
   };
 
@@ -117,6 +123,19 @@ function Modal_Delete() {
         onSuccess: (res) => {
           console.log(res);
           toast.success("Pengeluaran berhasil dihapus");
+          window.location.reload(true);
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      });
+    }
+
+    if (key == "Resep") {
+      mutateResep.mutate(id, {
+        onSuccess: (res) => {
+          console.log(res);
+          toast.success("Resep berhasil dihapus");
           window.location.reload(true);
         },
         onError: (err) => {

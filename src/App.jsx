@@ -31,6 +31,9 @@ import Home from "./pages/customer/Home/Home.jsx";
 import Shop from "./pages/customer/Shop/Shop.jsx";
 import About from "./pages/customer/About/About.jsx";
 import Contact from "./pages/customer/Contact/Contact.jsx";
+import Resep from "./pages/dashboard/ADMIN/Resep/Resep.jsx";
+import Tambah_Edit_Resep from "./pages/dashboard/ADMIN/Resep/Tambah_Edit_Resep.jsx";
+
 
 
 function App() {
@@ -117,6 +120,21 @@ function App() {
               />
 
               <Route path="/dashboard/Admin/customer" element={<Customer />} />
+
+              <Route
+                path="/dashboard/Admin/resep"
+                element={<Resep />}
+              />
+
+              <Route
+                path="/dashboard/Admin/resep/:id"
+                element={<Tambah_Edit_Resep />}
+              />
+
+              <Route
+                path="/dashboard/Admin/resep/tambah"
+                element={<Tambah_Edit_Resep />}
+              />
             </Route>
 
             <Route path="/dashboard/MO" element={<MORoutes />}>

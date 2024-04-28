@@ -8,6 +8,7 @@ import { IoPerson } from "react-icons/io5";
 import { FaMoneyBillAlt } from "react-icons/fa"
 import { BsPersonFillCheck } from "react-icons/bs";
 import { PiEggCrackFill } from "react-icons/pi"
+import { FaBook } from "react-icons/fa";
 
 export const ADMIN_FEATURES = {
   DASHBOARD: {
@@ -44,6 +45,16 @@ export const ADMIN_FEATURES = {
     name: "Customer",
     logo: <IoPerson />,
     route: "/dashboard/admin/customer",
+  },
+  RESEP:{
+    name: "Resep",
+    logo: <FaBook />,
+    route: "/dashboard/admin/Resep",
+  },
+  KARYAWAN:{
+    name: "Karyawan",
+    logo: <IoPerson />,
+    route: "/dashboard/admin/Karyawan",
   }
   
 };

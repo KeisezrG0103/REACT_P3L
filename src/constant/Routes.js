@@ -19,6 +19,8 @@ export const ADMIN_ROUTES = {
     BAHAN_BAKU : BASEURL + "/api/bahan_baku",
     PENGELUARAN: BASEURL + "/api/pengeluaran",
     CUSTOMER: BASEURL + "/api/customer",
+    Resep: BASEURL + "/api/resep",
+    Detail_resep: BASEURL + "/api/resep_nama",
 }
 
 export const MO_ROUTES = {
