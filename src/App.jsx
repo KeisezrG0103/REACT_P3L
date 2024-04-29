@@ -33,7 +33,10 @@ import Shop from "./pages/customer/Shop/Shop.jsx";
 import About from "./pages/customer/About/About.jsx";
 import Contact from "./pages/customer/Contact/Contact.jsx";
 import ViewProduk from "./pages/customer/Shop/ViewProduk.jsx";
-import Checkout from "./pages/customer/Shop/Checkout.jsx";
+import Checkout from "./pages/customer/Checkout/Checkout.jsx";
+import ForgotPassword from "./pages/customer/Forgot_Password/Forgot_Password.jsx";
+import VerifyOTP from "./pages/customer/Forgot_Password/Verify_OTP.jsx";
+import ResetPassword from "./pages/customer/Forgot_Password/Reset_Password.jsx";
 
 function App() {
   return (
@@ -55,6 +58,11 @@ function App() {
               <Route path="signinKaryawan" element={<SignIn />} />
             </Route>
           </Route>
+
+          <Route path="/forgot-password" element={<ForgotPassword />}/>
+          <Route path="/verify-otp" element={<VerifyOTP />}/>
+          <Route path="/reset-password" element={<ResetPassword />}/>
+
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard/Admin" element={<AdminRoutes />}>
               <Route path="/dashboard/Admin/" element={<Index_Admin />} />
