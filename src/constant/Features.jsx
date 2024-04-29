@@ -30,16 +30,7 @@ export const ADMIN_FEATURES = {
     logo: <PiEggCrackFill />,
     route: "/dashboard/admin/bahan_baku",
   },
-  PENITIP: {
-    name: "Penitip",
-    logo: <BsFillBoxFill />,
-    route: "/dashboard/admin/penitip",
-  },
-  PENGELUARAN:{
-    name: "Pengeluaran",
-    logo: <FaMoneyBillAlt/>,
-    route: "/dashboard/admin/pengeluaran",
-  },
+ 
   CUSTOMER:{
     name: "Customer",
     logo: <IoPerson />,
@@ -63,6 +54,17 @@ export const MO_FEATURES = {
     name: "Pengadaan bahan baku",
     logo: <IoReceiptOutline />,
     route: "/dashboard/MO/pengadaanBahanBaku",
+  },
+
+  PENITIP: {
+    name: "Penitip",
+    logo: <BsFillBoxFill />,
+    route: "/dashboard/MO/penitip",
+  },
+  PENGELUARAN:{
+    name: "Pengeluaran",
+    logo: <FaMoneyBillAlt/>,
+    route: "/dashboard/MO/pengeluaran",
   },
 };
 

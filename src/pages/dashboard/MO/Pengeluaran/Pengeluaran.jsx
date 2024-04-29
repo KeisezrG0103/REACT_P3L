@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getPenitip } from "../../../../api/penitip/penitip_query";
+import { getPengeluaran } from "../../../../api/pengeluaran/pengeluaran_query";
 import { useEffect } from "react";
 import Modal_Delete from "../../../../components/Modal_Delete";
-
 import {
   setItems,
   setModal,
@@ -12,23 +11,24 @@ import {
 } from "../../../../slicer/slicer_modal";
 
 import { useDispatch } from "react-redux";
+
 import { setIsEdit } from "../../../../slicer/slicer_IsEdit";
-import { setItem as setPenitip } from "../../../../slicer/slicer_IsEdit";
+import { setItem as setPengeluaran } from "../../../../slicer/slicer_IsEdit";
 import { resetState } from "../../../../slicer/slicer_IsEdit";
 
 
-const Penitip = () => {
+const Pengeluaran = () => {
 
   const dispatch = useDispatch();
 
   const {
-    data: penitipData,
+    data: pengeluaranData,
     isLoading,
     refetch,
-  } = useQuery("penitip", getPenitip);
+  } = useQuery("pengeluaran", getPengeluaran);
     
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPenitip, setFilteredPenitip] = useState([]);
+  const [filteredPengeluaran, setFilteredPengeluaran] = useState([]);
 
   useEffect(() => {
     refetch();
@@ -39,25 +39,25 @@ const Penitip = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (penitipData && penitipData.data) {
-      const filtered = penitipData.data.filter((penitip) =>
-        penitip.Nama_Penitip.toLowerCase().includes(searchQuery.toLowerCase())
+    if (pengeluaranData && pengeluaranData.data) {
+      const filtered = pengeluaranData.data.filter((pengeluaran) =>
+        pengeluaran.Nama_Pengeluaran.toLowerCase().includes(searchQuery.toLowerCase())
       );
-      setFilteredPenitip(filtered);
+      setFilteredPengeluaran(filtered);
     }
-  }, [penitipData, searchQuery]);
+  }, [pengeluaranData, searchQuery]);
 
   
   const openModal = (item) => {
     dispatch(setModal(true));
     dispatch(setItems(item));
-    dispatch(setModalKey("penitip"));
+    dispatch(setModalKey("pengeluaran"));
   };
 
 
 
   const isEdit = (item) => {
-    dispatch(setPenitip(item));
+    dispatch(setPengeluaran(item));
     dispatch(setIsEdit(true));
   };
 
@@ -67,11 +67,11 @@ const Penitip = () => {
   const [limit, setLimit] = useState(10);
 
   const startIndex = (page - 1) * limit;
-  const endIndex = Math.min(startIndex + limit, filteredPenitip.length);
+  const endIndex = Math.min(startIndex + limit, filteredPengeluaran.length);
 
-  const currentData = filteredPenitip.slice(startIndex, endIndex);
+  const currentData = filteredPengeluaran.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(filteredPenitip.length / limit);
+  const totalPages = Math.ceil(filteredPengeluaran.length / limit);
 
   const changePage = (page) => {
     setPage(Math.max(1, Math.min(page, totalPages)));
@@ -81,7 +81,7 @@ const Penitip = () => {
     <div>
       <div className="flex justify-between place-items-end lg:place-items-center">
         <div className="flex items-start space-y-4 flex-col">
-          <h1 className="font-bold text-2xl">Penitip</h1>
+          <h1 className="font-bold text-2xl">Pengeluaran</h1>
           <div className="form-control">
             <input
               type="text"
@@ -93,9 +93,9 @@ const Penitip = () => {
           </div>
         </div>
         <div>
-        <Link to="/dashboard/Admin/penitip/tambah">
+        <Link to="/dashboard/MO/pengeluaran/tambah">
           <button className="btn btn-success text-white mt-5">
-            Tambah Penitip
+            Tambah Pengeluaran
           </button>
         </Link>
         </div>
@@ -113,31 +113,33 @@ const Penitip = () => {
                   <thead>
                     <tr className="text-center">
                       <th>No</th>
-                      <th>ID</th>
                       <th>Nama</th>
-                      <th>Komisi</th>
+                      <th>Harga</th>
+                      <th>Satuan</th>
+                      <th>Qty</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {currentData.map((penitip, index) => (
+                    {currentData.map((pengeluaran, index) => (
                       <tr key={index} className="text-center">
                         <td>{startIndex + index + 1}</td>
-                        <td>{penitip.Id}</td>
-                        <td>{penitip.Nama_Penitip}</td>
-                        <td>{penitip.komisi}</td>
+                        <td>{pengeluaran.Nama_Pengeluaran}</td>
+                        <td>{pengeluaran.Harga}</td>
+                        <td>{pengeluaran.Satuan}</td>
+                        <td>{pengeluaran.Qty}</td>
                         <td>
-                        <Link to={`/dashboard/Admin/penitip/${penitip.id}`}>
+                        <Link to={`/dashboard/MO/pengeluaran/${pengeluaran.id}`}>
                             <button
                               className="btn btn-sm btn-primary text-base-100 ml-2 w-20"
-                              onClick={() => isEdit(penitip)}
+                              onClick={() => isEdit(pengeluaran)}
                             >
                               Edit
                             </button>
                           </Link>
                         <button
                             className="btn btn-sm btn-error text-base-100 ml-2 w-20"
-                            onClick={() => openModal(penitip)}
+                            onClick={() => openModal(pengeluaran)}
                           >
                             Delete
                           </button>
@@ -169,4 +171,4 @@ const Penitip = () => {
   );
 }
 
-export default Penitip;
+export default Pengeluaran;

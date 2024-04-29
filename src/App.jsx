@@ -13,7 +13,7 @@ import Pengadaan_Bahan_Baku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/Peng
 import Hampers from "./pages/dashboard/ADMIN/Hampers/Hampers.jsx";
 import Produk from "./pages/dashboard/ADMIN/Produk/Produk.jsx";
 import Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Bahan_Baku.jsx";
-import Penitip from "./pages/dashboard/ADMIN/Penitip/Penitip.jsx";
+import Penitip from "./pages/dashboard/MO/Penitip/Penitip.jsx";
 import AdminRoutes from "./utils/AdminRoutes.jsx";
 import MORoutes from "./utils/MORoutes.jsx";
 import OwnerRoutes from "./utils/OwnerRoutes.jsx";
@@ -22,9 +22,9 @@ import Tambah_Edit_PengadaanBahanBaku from "./pages/dashboard/MO/Pengadaan_Bahan
 import Tambah_Edit_Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Tambah_Edit_Bahan_Baku.jsx";
 import Tambah_Edit_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Edit_Produk.jsx";
 import IsAuthRoute from "./utils/IsAuthRoute.jsx";
-import Tambah_Edit_Penitip from "./pages/dashboard/ADMIN/Penitip/Tambah_Edit_Penitip.jsx";
-import Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Pengeluaran.jsx";
-import Tambah_Edit_Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
+import Tambah_Edit_Penitip from "./pages/dashboard/MO/Penitip/Tambah_Edit_Penitip.jsx";
+import Pengeluaran from "./pages/dashboard/MO/Pengeluaran/Pengeluaran.jsx";
+import Tambah_Edit_Pengeluaran from "./pages/dashboard/MO/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
 import Customer from "./pages/dashboard/ADMIN/Customer/Customer.jsx";
 import History from "./pages/dashboard/ADMIN/History/History.jsx"
 import HomePage_layout from "./pages/customer/HomePage_layout.jsx";
@@ -99,35 +99,10 @@ function App() {
                 element={<Tambah_Edit_Bahan_Baku />}
               />
 
-              <Route path="/dashboard/Admin/penitip" element={<Penitip />} />
-
-              <Route
-                path="/dashboard/Admin/Penitip/tambah"
-                element={<Tambah_Edit_Penitip />}
-              />
-
-              <Route
-                path="/dashboard/Admin/Penitip/:id"
-                element={<Tambah_Edit_Penitip />}
-              />
-
-              <Route
-                path="/dashboard/Admin/pengeluaran"
-                element={<Pengeluaran />}
-              />
-
+          
               <Route path="/dashboard/Admin/history" element={<History/>} />
               
-              <Route
-                path="/dashboard/Admin/pengeluaran/tambah"
-                element={<Tambah_Edit_Pengeluaran />}
-              />
-
-              <Route
-                path="/dashboard/Admin/pengeluaran/:id"
-                element={<Tambah_Edit_Pengeluaran />}
-              />
-              
+         
               <Route path="/dashboard/Admin/customer" element={<Customer/>} />
 
             </Route>
@@ -147,6 +122,34 @@ function App() {
                 path="/dashboard/MO/pengadaanBahanBaku/tambah"
                 element={<Tambah_Edit_PengadaanBahanBaku />}
               />
+
+              <Route path="/dashboard/MO/penitip" element={<Penitip />} />
+
+              <Route
+                path="/dashboard/MO/Penitip/tambah"
+                element={<Tambah_Edit_Penitip />}
+              />
+
+              <Route
+                path="/dashboard/MO/Penitip/:id"
+                element={<Tambah_Edit_Penitip />}
+              />
+
+              <Route
+                path="/dashboard/MO/pengeluaran"
+                element={<Pengeluaran />}
+              />
+
+              <Route
+                path="/dashboard/MO/pengeluaran/tambah"
+                element={<Tambah_Edit_Pengeluaran />}
+              />
+
+              <Route
+                path="/dashboard/MO/pengeluaran/:id"
+                element={<Tambah_Edit_Pengeluaran />}
+              />
+
             </Route>
 
             <Route path="/dashboard/Owner" element={<OwnerRoutes />}>

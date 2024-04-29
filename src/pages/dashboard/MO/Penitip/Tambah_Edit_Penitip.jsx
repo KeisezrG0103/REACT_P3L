@@ -20,7 +20,7 @@ const Tambah_Edit_Penitip = () => {
     try {
       await mutation.mutateAsync({ data: formData });
       toast.success("Penitip Berhasil Ditambahkan");
-      Navigate("/dashboard/Admin/penitip");
+      Navigate("/dashboard/MO/penitip");
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -36,7 +36,7 @@ const Tambah_Edit_Penitip = () => {
     try {
       await editPenitip({ data: formData, id: penitip.Id }).then(() => {
         toast.success("Penitip berhasil diubah");
-        Navigate("/dashboard/Admin/penitip");
+        Navigate("/dashboard/MO/penitip");
       });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -82,7 +82,7 @@ const Tambah_Edit_Penitip = () => {
               </label>
             )}
             <div className="flex justify-end mt-5">
-              <button className="btn btn-error text-white mr-2" onClick={() => Navigate("/dashboard/Admin/penitip")}>
+              <button className="btn btn-error text-white mr-2" onClick={() => Navigate("/dashboard/MO/penitip")}>
                 Batal
               </button>
               <button className="btn btn-primary text-white">
