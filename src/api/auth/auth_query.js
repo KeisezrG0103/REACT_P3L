@@ -18,3 +18,12 @@ export const loginPelanggan = async ({ Email, Password }) => {
         return error;
     }
 }
+
+export const registerCustomer = async (data) => {
+    try {
+        const res = await Axios.post(ROUTES.SIGNUPCUSTOMER, data);
+        return res.data;
+    } catch (error) {
+        return error;
+    }
+}

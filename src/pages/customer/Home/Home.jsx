@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setFilter } from "../../../slicer/slicer_FIltered";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import Roti from "../../../assets/roti.avif";
 import Minuman from "../../../assets/minuman.avif";
@@ -208,41 +208,37 @@ const Home = () => {
                   </div>
                 ))
               : filteredProdukData?.slice(0, itemsToShow).map((item, index) => (
-                  <div
-                    key={index}
-                    className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden"
-                  >
+                  <Link to={`/Produk/${item.Id}`} key={index} onClick={() => handleView(item)}>
                     <div
-                      className="flex items-end justify-end h-56 w-full bg-cover"
-                      style={{
-                        backgroundImage: `url(${item.Gambar})`,
-                      }}
+                      key={index}
+                      className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden focus:shadow-lg focus:scale-105 transition-transform duration-200 hover:shadow-lg hover:scale-105 cursor-pointer"
                     >
-                      <button
-                        className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                        onClick={() => handleView(item)}
+                      <div
+                        className="flex items-end justify-end h-56 w-full bg-cover"
+                        style={{
+                          backgroundImage: `url(${item.Gambar})`,
+                        }}
                       >
-                        View
-                      </button>
+                        <button
+                          className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
+                          onClick={() => handleView(item)}
+                        >
+                          View
+                        </button>
+                      </div>
+                      <div className="px-5 py-3">
+                        <h3 className="text-gray-700 uppercase">
+                          {item.Nama_Produk}
+                        </h3>
+                        <span className="text-gray-500 mt-2">
+                          Rp. {item.Harga_Produk}
+                        </span>
+                        <p className="text-gray-500 mt-2">
+                          Stok: {item.Stok_Produk}
+                        </p>
+                      </div>
                     </div>
-                    <div className="px-5 py-3">
-                      <h3 className="text-gray-700 uppercase">
-                        {item.Nama_Produk}
-                      </h3>
-                      <span className="text-gray-500 mt-2">
-                        Rp. {item.Harga_Produk}
-                      </span>
-                      <p className="text-gray-500 mt-2">
-                        Stok: {item.Stok_Produk}
-                      </p>
-                      <button
-                        className="block text-center w-full p-3 mt-4 bg-primary text-white uppercase font-semibold rounded"
-                        onClick={() => navigate(`/shop/${item.Id}`)}
-                      >
-                        Add to cart
-                      </button>
-                    </div>
-                  </div>
+                  </Link>
                 ))}
           </div>
           {data?.data.length > itemsToShow && (
