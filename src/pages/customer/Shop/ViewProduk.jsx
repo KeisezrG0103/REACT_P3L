@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ReactDatePicker from "react-datepicker";
 import { useQuery } from "react-query";
@@ -16,6 +16,7 @@ const ViewProduk = () => {
   const [Produk_Provider, setProduk_Provider] = useState(null);
   const Produk = useSelector((state) => state.customer_view_produk.produk);
   const type = useSelector((state) => state.customer_view_produk.type);
+  const customer = localStorage.getItem("customer");
 
   const [jumlah, setJumlah] = useState(0);
   const [startDate, setStartDate] = useState(() => {
@@ -64,7 +65,9 @@ const ViewProduk = () => {
         toStringDate(startDate)
       ),
     {
-      enabled: !(type === "produkPenitip" || type === "Add to cart"),
+      //enable when customer is not null
+      enabled:
+        !(type === "produkPenitip" || type === "Add to cart") || !customer,
     }
   );
 
@@ -77,6 +80,10 @@ const ViewProduk = () => {
       }
     }
   }, [kuotaProduk]);
+
+  const handleCheckoutProduk = () => {
+    navigate("/Checkout");
+  };
 
   const handlePreOrderorOrder = () => {
     const today = new Date();
@@ -96,8 +103,10 @@ const ViewProduk = () => {
         toast.error("Jumlah Produk Tidak Boleh 0 atau Kurang dari 0");
         return;
       }
+      handleCheckoutProduk();
     } else {
       toast.success("Order Berhasil");
+      handleCheckoutProduk();
     }
   };
 
@@ -145,6 +154,8 @@ const ViewProduk = () => {
     dispatch(setProduk(cartProduk));
   };
 
+  const navigate = useNavigate();
+
   // Render view
   return (
     <div>
@@ -190,52 +201,54 @@ const ViewProduk = () => {
                   Rp. {Produk_Provider?.Harga || Produk_Provider?.Harga_Produk}
                 </h2>
               </div>
-              <div className="flex flex-col xl:flex-row gap-4">
-                <div className="flex flex-col gap-4">
-                  <label className="text-gray-700">Jumlah</label>
-                  <input
-                    type="number"
-                    className="p-2 border border-gray-300 rounded-md"
-                    value={jumlah}
-                    onChange={(e) => setJumlah(parseInt(e.target.value))}
-                  />
-                </div>
-                <div className="flex flex-col gap-4">
-                  <label className="text-gray-700">Tanggal Pengiriman</label>
-                  <ReactDatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    minDate={new Date()}
-                    dateFormat="yyyy-MM-dd"
-                    className="p-2 border border-gray-300 rounded-md"
-                  />
-                </div>
-                <div className="flex justify-start items-start md:justify-end md:items-end">
-                  <div className="grid grid-cols-2 gap-2">
-                    {Produk_Provider?.Stok === 0 ? (
+              {customer ? (
+                <div className="flex flex-col xl:flex-row gap-4">
+                  <div className="flex flex-col gap-4">
+                    <label className="text-gray-700">Jumlah</label>
+                    <input
+                      type="number"
+                      className="p-2 border border-gray-300 rounded-md"
+                      value={jumlah}
+                      onChange={(e) => setJumlah(parseInt(e.target.value))}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <label className="text-gray-700">Tanggal Pengiriman</label>
+                    <ReactDatePicker
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      minDate={new Date()}
+                      dateFormat="yyyy-MM-dd"
+                      className="p-2 border border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div className="flex justify-start items-start md:justify-end md:items-end">
+                    <div className="grid grid-cols-2 gap-2">
+                      {Produk_Provider?.Stok === 0 ? (
+                        <button
+                          className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded"
+                          onClick={handlePreOrderorOrder}
+                        >
+                          Pre Order
+                        </button>
+                      ) : (
+                        <button
+                          className="block text-center w-full p-3 mt-4 bg-primary text-white uppercase font-semibold rounded"
+                          onClick={handlePreOrderorOrder}
+                        >
+                          Buy
+                        </button>
+                      )}
                       <button
                         className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded"
-                        onClick={handlePreOrderorOrder}
+                        onClick={() => handleAddToCart(Produk_Provider)}
                       >
-                        Pre Order
+                        <FaCartPlus className="inline-block" />
                       </button>
-                    ) : (
-                      <button
-                        className="block text-center w-full p-3 mt-4 bg-primary text-white uppercase font-semibold rounded"
-                        onClick={handlePreOrderorOrder}
-                      >
-                        Buy
-                      </button>
-                    )}
-                    <button
-                      className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded"
-                      onClick={() => handleAddToCart(Produk_Provider)}
-                    >
-                      <FaCartPlus className="inline-block" />
-                    </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
