@@ -14,60 +14,66 @@ import {
   setType,
 } from "../../../slicer/slicer_customer_view_produk";
 
+import { getHampersWithKuota } from "../../../api/hampers/hampers_query";
+
 const Home = () => {
-  const [filteredProdukData, setFilteredProdukData] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
+  const today = new Date();
+
+  const toStringDate = (date) => date.toISOString().split("T")[0];
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, isLoading } = useQuery("produkPenitip", getProdukPenitip);
 
-  // State to track the number of items to display
-  const [itemsToShow, setItemsToShow] = useState(5);
+  // States
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [itemsToShow, setItemsToShow] = useState(5); 
+
+  // Queries
+  const { data: produkPenitipData, isLoading: isProdukLoading } = useQuery(
+    "produkPenitip",
+    getProdukPenitip
+  );
+  const { data: hampersData, isLoading: isHampersLoading } = useQuery(
+    ["hampers", toStringDate(today)],
+    () => getHampersWithKuota(toStringDate(today))
+  );
+
+  const filteredHampersData = hampersData?.data?.filter((hamper) =>
+    hamper.Nama_Hampers.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredProdukData = produkPenitipData?.data?.filter((produk) =>
+    produk.Nama_Produk.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const loadMoreItems = () => {
+    setItemsToShow((prev) => prev + 5);
+  };
+
+  useEffect(() => {
+    dispatch(setFilter({ isFiltered: false, Value: "" }));
+    dispatch(resetStateView());
+  }, [dispatch]);
+
+  const handleView = (item) => {
+    dispatch(setProduk(item));
+    dispatch(setType(item.Type || "produkPenitip"));
+    navigate(`/Produk/${item.Id}`);
+  };
 
   const handleFilter = (Value) => {
     dispatch(setFilter({ isFiltered: true, Value: Value }));
     navigate("/shop");
   };
 
-  useEffect(() => {
-    dispatch(setFilter({ isFiltered: false, Value: "" }));
-  }, [dispatch]);
-
-  const loadMoreItems = () => {
-    // Increase the number of items to show by 5
-    setItemsToShow((prevItems) => prevItems + 5);
-  };
-
-  useEffect(() => {
-    dispatch(resetStateView());
-  }, [dispatch]);
-
-  useEffect(() => {
-    let filteredData = data?.data;
-
-    if (searchQuery.trim() !== "") {
-      filteredData = filteredData.filter((produk) =>
-        produk.Nama_Produk.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    setFilteredProdukData(filteredData);
-  }, [setFilteredProdukData, data, searchQuery]);
-
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleView = (item) => {
-    dispatch(setProduk(item));
-    dispatch(setType("produkPenitip"));
-    navigate(`/Produk/${item.Id}`);
-  };
-
   return (
     <div>
       <div className="container mx-auto px-6">
+        {/* Search bar */}
         <div className="relative mt-6 max-w-lg mx-auto mb-4">
           <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
             <svg
@@ -84,16 +90,16 @@ const Home = () => {
               />
             </svg>
           </span>
-
           <input
             className="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline"
             type="text"
-            placeholder="Search"
+            placeholder="Search Hampers & Penitip"
             value={searchQuery}
-            onChange={handleSearch}
+            onChange={handleSearchChange}
           />
         </div>
-        {/* Hero section */}
+
+        {/* Hero section for Cake */}
         <div
           className="h-64 rounded-md overflow-hidden bg-cover bg-center"
           style={{
@@ -125,7 +131,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Sections for Minuman and Roti */}
+        {/* Minuman and Roti sections */}
         <div className="md:flex mt-8 md:-mx-4">
           <div
             className="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:w-1/2"
@@ -188,12 +194,83 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Produk Lainnya section */}
+        {/* Hampers section */}
+        <div className="mt-16">
+          <h3 className="text-gray-600 text-2xl font-medium">Hampers</h3>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-6">
+            {isHampersLoading
+              ? // Show skeleton cards while loading
+                Array.from({ length: 5 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden p-4"
+                  >
+                    <div className="flex flex-col gap-4 w-52">
+                      <div className="skeleton h-32 w-full"></div>
+                      <div className="skeleton h-4 w-28"></div>
+                      <div className="skeleton h-4 w-full"></div>
+                      <div className="skeleton h-4 w-full"></div>
+                    </div>
+                  </div>
+                ))
+              : filteredHampersData
+                  ?.slice(0, itemsToShow)
+                  .map((item, index) => (
+                    <Link
+                      to={`/Produk/${item.Id}`}
+                      key={index}
+                      onClick={() => handleView(item)}
+                    >
+                      <div
+                        key={index}
+                        className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden focus:shadow-lg focus:scale-105 transition-transform duration-200 hover:shadow-lg hover:scale-105 cursor-pointer"
+                      >
+                        <div
+                          className="flex items-end justify-end h-56 w-full bg-center bg-cover"
+                          style={{
+                            backgroundImage: `url(${item.Gambar})`,
+                          }}
+                        >
+                          <button
+                            className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
+                            onClick={() => handleView(item)}
+                          >
+                            View
+                          </button>
+                        </div>
+                        <div className="px-5 py-3">
+                          <h3 className="text-gray-700 uppercase">
+                            {item.Nama_Hampers}
+                          </h3>
+                          <span className="text-gray-500 mt-2">
+                            Rp. {item.Harga}
+                          </span>
+                          <p className="text-gray-500 mt-2">
+                            Stok: {item.Kuota}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+          </div>
+          {filteredHampersData?.length > itemsToShow && (
+            <div className="flex justify-center mt-6">
+              <button
+                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary"
+                onClick={loadMoreItems}
+              >
+                Load More
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Produk Lainnya (Produk Penitip) section */}
         <div className="mt-16">
           <h3 className="text-gray-600 text-2xl font-medium">Produk Penitip</h3>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-6">
-            {isLoading
-              ? // make 5 skeleton cards
+            {isProdukLoading
+              ? // Show skeleton cards while loading
                 Array.from({ length: 5 }).map((_, index) => (
                   <div
                     key={index}
@@ -208,7 +285,11 @@ const Home = () => {
                   </div>
                 ))
               : filteredProdukData?.slice(0, itemsToShow).map((item, index) => (
-                  <Link to={`/Produk/${item.Id}`} key={index} onClick={() => handleView(item)}>
+                  <Link
+                    to={`/Produk/${item.Id}`}
+                    key={index}
+                    onClick={() => handleView(item)}
+                  >
                     <div
                       key={index}
                       className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden focus:shadow-lg focus:scale-105 transition-transform duration-200 hover:shadow-lg hover:scale-105 cursor-pointer"
@@ -241,7 +322,7 @@ const Home = () => {
                   </Link>
                 ))}
           </div>
-          {data?.data.length > itemsToShow && (
+          {filteredProdukData?.length > itemsToShow && (
             <div className="flex justify-center mt-6">
               <button
                 className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary"

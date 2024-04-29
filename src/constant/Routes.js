@@ -35,6 +35,7 @@ export const CUSTOMER_ROUTES = {
     GET_PRODUKNONPENITIPWITHKUOTA: BASEURL + "/api/produkNonPenitipWithKuota",
     GET_KUOTAPRODUKBYIDANDDATE: BASEURL + "/api/produkKuota",
     GET_GETPRODUKBYIDBYDATE: BASEURL + "/api/getProdukByIdWithQuota",
+    GET_HAMPERSWITHKUOTA: BASEURL + "/api/getHampersWithProdukAndKuota",
 
 }
 
