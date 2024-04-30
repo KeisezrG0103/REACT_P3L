@@ -50,3 +50,18 @@ export const getHampersWithKuota = async (date) => {
     const response = await Axios.get(`${CUSTOMER_ROUTES.GET_HAMPERSWITHKUOTA}/${date}`)
     return response.data;
 }
+
+export const getHampersByIdWithKuota = async (id, date) => {
+    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_HAMPERSBYIDWITHKUOTA}/${id}/${date}`)
+    return response.data;
+}
+
+export const getProdukInHampersWithKuota = async (id, date) => {
+    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_PRODUKBYHAMPERS}/${id}/${date}`)
+    return response.data;
+}
+
+export const getHampersKuota = async (id, date) => {
+    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_HAMPERSBYIDKUOTA}/${id}/${date}`)
+    return response.data;
+}

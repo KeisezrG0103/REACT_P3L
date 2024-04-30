@@ -64,5 +64,9 @@ export const getProdukByIdWithQuota = async (id, date) => {
   return response.data;
 }
 
+export const getProdukByHampers = async (id,date) => {
+  const response = await Axios.get(`${CUSTOMER_ROUTES.GET_PRODUKBYHAMPERS}/${id}/${date}`);
+  return response.data;
+}
 
 

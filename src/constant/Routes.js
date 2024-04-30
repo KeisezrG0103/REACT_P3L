@@ -36,7 +36,9 @@ export const CUSTOMER_ROUTES = {
     GET_KUOTAPRODUKBYIDANDDATE: BASEURL + "/api/produkKuota",
     GET_GETPRODUKBYIDBYDATE: BASEURL + "/api/getProdukByIdWithQuota",
     GET_HAMPERSWITHKUOTA: BASEURL + "/api/getHampersWithProdukAndKuota",
-
+    GET_PRODUKBYHAMPERS: BASEURL + "/api/getProdukInHampersWithKuota",
+    GET_HAMPERSBYIDWITHKUOTA: BASEURL + "/api/getHampersByIdWithKuota",
+    GET_HAMPERSBYIDKUOTA: BASEURL + "/api/getKuotaHampersById",
 }
 
 export const OWNER_ROUTES = {

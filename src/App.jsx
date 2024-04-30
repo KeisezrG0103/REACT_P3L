@@ -37,6 +37,8 @@ import Checkout from "./pages/customer/Shop/Checkout.jsx";
 import ForgotPassword from "./pages/customer/Forgot_Password/Forgot_Password.jsx";
 import VerifyOTP from "./pages/customer/Forgot_Password/Verify_OTP.jsx";
 import ResetPassword from "./pages/customer/Forgot_Password/Reset_Password.jsx";
+import ViewHampers from "./pages/customer/Shop/ViewHampers.jsx";
+
 
 function App() {
   return (
@@ -50,6 +52,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/Produk/:id" element={<ViewProduk />} />
             <Route path="/Checkout" element={<Checkout />} />
+            <Route path="/Hampers/:id" element={<ViewHampers />} />
           </Route>
           <Route path="/auth" element={<IsAuthRoute />}>
             <Route element={<Layout />}>

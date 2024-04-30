@@ -59,10 +59,16 @@ const Home = () => {
     dispatch(resetStateView());
   }, [dispatch]);
 
-  const handleView = (item) => {
+  const handleViewProduk = (item, Type) => {
+    dispatch(setType(Type));
     dispatch(setProduk(item));
-    dispatch(setType(item.Type || "produkPenitip"));
     navigate(`/Produk/${item.Id}`);
+  };
+
+  const handleViewHampers = (item, Type) => {
+    dispatch(setType(Type));
+    dispatch(setProduk(item));
+    navigate(`/Hampers/${item.Id}`);
   };
 
   const handleFilter = (Value) => {
@@ -217,9 +223,9 @@ const Home = () => {
                   ?.slice(0, itemsToShow)
                   .map((item, index) => (
                     <Link
-                      to={`/Produk/${item.Id}`}
+                      to={`/Hampers/${item.Id}`}
                       key={index}
-                      onClick={() => handleView(item)}
+                      onClick={() => handleViewHampers(item, "hampers")}
                     >
                       <div
                         key={index}
@@ -233,7 +239,7 @@ const Home = () => {
                         >
                           <button
                             className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                            onClick={() => handleView(item)}
+                            onClick={() => handleViewHampers(item, "hampers")}
                           >
                             View
                           </button>
@@ -246,7 +252,7 @@ const Home = () => {
                             Rp. {item.Harga}
                           </span>
                           <p className="text-gray-500 mt-2">
-                            Stok: {item.Kuota}
+                            Kuota: {item.Kuota}
                           </p>
                         </div>
                       </div>
@@ -288,7 +294,7 @@ const Home = () => {
                   <Link
                     to={`/Produk/${item.Id}`}
                     key={index}
-                    onClick={() => handleView(item)}
+                    onClick={() => handleViewProduk(item, "produkPenitip")}
                   >
                     <div
                       key={index}
@@ -302,7 +308,7 @@ const Home = () => {
                       >
                         <button
                           className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                          onClick={() => handleView(item)}
+                          onClick={() => handleViewProduk(item, "produkPenitip")}
                         >
                           View
                         </button>

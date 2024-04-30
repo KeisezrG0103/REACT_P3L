@@ -116,6 +116,7 @@ const ViewProduk = () => {
     const twoDaysAfterToday = new Date(today);
     twoDaysAfterToday.setDate(today.getDate() + 2);
     const cartProduk = {
+      key: "produk",
       Id: Produk_Provider.Id || Produk_Provider.Id_Produk,
       Nama: Produk_Provider.Nama || Produk_Provider.Nama_Produk,
       Harga: Produk_Provider.Harga || Produk_Provider.Harga_Produk,
@@ -151,6 +152,7 @@ const ViewProduk = () => {
         return;
       }
     }
+    toast.success("Produk berhasil ditambahkan ke keranjang");
     dispatch(setProduk(cartProduk));
   };
 
