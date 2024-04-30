@@ -3,16 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsOpen } from "../slicer/slicer_cart";
 import { editJumlahProduk, removeProduk } from "../slicer/slicer_cartProduk";
 import { FaTrashAlt } from "react-icons/fa";
+import { setProduk } from "../slicer/slicer_checkout";
+import { editJumlahProduk as editJumlahProdukCheckout } from "../slicer/slicer_checkout";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const cartOpen = useSelector((state) => state.cart.isOpen);
   const cartProduk = useSelector((state) => state.cartProduk.Produk);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // Local state to track input quantities for each cart item
   const [quantities, setQuantities] = useState({});
 
-  // Initialize quantities from the cart products
   useEffect(() => {
     const initialQuantities = {};
     cartProduk.forEach((item) => {
@@ -21,28 +23,39 @@ const Cart = () => {
     setQuantities(initialQuantities);
   }, [cartProduk]);
 
-  // Function to open/close the cart
   const openCloseCart = () => {
     dispatch(setIsOpen(!cartOpen));
   };
 
-  // Update Redux store with new quantity
   useEffect(() => {
     for (const itemId in quantities) {
       const quantity = quantities[itemId];
       if (quantity > 0) {
         dispatch(editJumlahProduk({ Id: itemId, Jumlah: quantity }));
-      } 
+        dispatch(editJumlahProdukCheckout({ Id: itemId, Jumlah: quantity }));
+      }
     }
   }, [quantities, dispatch]);
 
-  // Function to handle input changes
   const handleQuantityChange = (event, itemId) => {
     const newQuantity = parseInt(event.target.value, 10);
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
       [itemId]: newQuantity,
     }));
+  };
+
+  const checkoutProduk = useSelector((state) => state.checkout.Produk);
+  const handleCheckout = () => {
+    const existingIds = new Set(checkoutProduk.map((item) => item.Id));
+
+    const newProducts = cartProduk.filter((item) => !existingIds.has(item.Id));
+
+    newProducts.forEach((item) => {
+      dispatch(setProduk(item));
+    });
+
+    navigate("/checkout");
   };
 
   return (
@@ -73,7 +86,7 @@ const Cart = () => {
         </div>
         <hr className="my-3" />
         {/* Cart items */}
-        {cartProduk.map((item, index) => (
+        {cartProduk?.map((item, index) => (
           <div className="flex justify-between mt-6" key={index}>
             <div className="flex">
               <img
@@ -96,7 +109,10 @@ const Cart = () => {
             </div>
             <div className="flex flex-col justify-between items-end">
               <span className="text-gray-600">Rp. {item.Harga}</span>
-              <FaTrashAlt className="text-red-500 cursor-pointer" onClick={() => dispatch(removeProduk(item.Id))} />
+              <FaTrashAlt
+                className="text-red-500 cursor-pointer"
+                onClick={() => dispatch(removeProduk(item.Id))}
+              />
             </div>
           </div>
         ))}
@@ -114,7 +130,10 @@ const Cart = () => {
             </button>
           </form>
         </div>
-        <button className="flex items-center justify-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary">
+        <button
+          className="flex items-center justify-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary"
+          onClick={handleCheckout}
+        >
           <span>Checkout</span>
           <svg
             className="h-5 w-5 mx-2"
