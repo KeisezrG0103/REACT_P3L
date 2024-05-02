@@ -22,8 +22,7 @@ const HomePage_layout = () => {
 
   const customer = localStorage?.getItem("customer");
   const karyawan = localStorage?.getItem("karyawan");
-  console.log(JSON.parse(customer));
-  console.log(JSON.parse(karyawan));
+ 
 
   const openCloseCart = () => {
     if (cartOpen) {

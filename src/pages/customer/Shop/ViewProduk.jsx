@@ -11,6 +11,7 @@ import { FaCartPlus } from "react-icons/fa";
 import { setProduk } from "../../../slicer/slicer_cartProduk";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router-dom";
+import { setProduk as setProdukCheckout } from "../../../slicer/slicer_checkout";
 
 const ViewProduk = () => {
   const [Produk_Provider, setProduk_Provider] = useState(null);
@@ -82,6 +83,17 @@ const ViewProduk = () => {
   }, [kuotaProduk]);
 
   const handleCheckoutProduk = () => {
+    dispatch(
+      setProdukCheckout({
+        key: "produk",
+        Id: Produk_Provider.Id || Produk_Provider.Id_Produk,
+        Nama: Produk_Provider.Nama || Produk_Provider.Nama_Produk,
+        Harga: Produk_Provider.Harga || Produk_Provider.Harga_Produk,
+        Gambar: Produk_Provider.Gambar || Produk_Provider.Gambar_Produk,
+        Jumlah: jumlah,
+        Tanggal_Pengiriman: toStringDate(startDate),
+      })
+    );
     navigate("/Checkout");
   };
 
