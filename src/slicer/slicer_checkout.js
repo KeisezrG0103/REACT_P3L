@@ -31,6 +31,14 @@ const CheckoutSlice = createSlice({
             // Filter the state.Produk array to remove the item with the specified Id
             state.Produk = state.Produk.filter((item) => item.Id !== itemIdToRemove);
         },
+        sortProduk: (state) => {
+            state.Produk.sort((a, b) => {
+                const dateA = new Date(a.Tanggal_Pengiriman);
+                const dateB = new Date(b.Tanggal_Pengiriman);
+
+                return dateA - dateB;
+            });
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(REHYDRATE, (state, action) => {
@@ -47,5 +55,6 @@ const CheckoutSlice = createSlice({
     },
 });
 
-export const { setProduk, resetProduk, editJumlahProduk, removeProduk } = CheckoutSlice.actions;
+
+export const { setProduk, resetProduk, editJumlahProduk, removeProduk, sortProduk } = CheckoutSlice.actions;
 export default CheckoutSlice.reducer;

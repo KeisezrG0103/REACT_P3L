@@ -14,6 +14,7 @@ import {
 
 import { setProduk as setProdukCart } from "../../../slicer/slicer_cartProduk";
 
+
 const Shop = () => {
   const Today = new Date();
 
@@ -120,6 +121,8 @@ const Shop = () => {
 
     dispatch(setProdukCart(cartProduk));
   };
+
+  
 
   return (
     <div className="flex justify-center content-center mx-2">
