@@ -33,6 +33,7 @@ const Customer = () => {
         customer.Nama.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredCustomer(filtered);
+      setPage(1); 
     }
   }, [customerData, searchQuery]);
 

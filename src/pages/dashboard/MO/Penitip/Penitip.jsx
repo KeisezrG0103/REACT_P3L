@@ -44,6 +44,7 @@ const Penitip = () => {
         penitip.Nama_Penitip.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredPenitip(filtered);
+      setPage(1);
     }
   }, [penitipData, searchQuery]);
 
