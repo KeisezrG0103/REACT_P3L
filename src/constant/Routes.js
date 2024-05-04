@@ -10,6 +10,7 @@ export const ROUTES = {
     VERIFY: BASEURL + "/api/verify/pin",
     RESET: BASEURL + "/api/reset-password",
     SIGNUPCUSTOMER: BASEURL + "/api/register_customer",
+    LOGOUT: BASEURL + "/api/logout",
 }
 
 
@@ -39,6 +40,8 @@ export const CUSTOMER_ROUTES = {
     GET_PRODUKBYHAMPERS: BASEURL + "/api/getProdukInHampersWithKuota",
     GET_HAMPERSBYIDWITHKUOTA: BASEURL + "/api/getHampersByIdWithKuota",
     GET_HAMPERSBYIDKUOTA: BASEURL + "/api/getKuotaHampersById",
+    GET_POINPERCUSTOMER: BASEURL + "/api/poin",
+    GET_TanggalLahir: BASEURL + "/api/Tanggal_Lahir_Customer",
 }
 
 export const OWNER_ROUTES = {

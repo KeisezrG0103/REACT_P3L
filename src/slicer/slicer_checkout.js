@@ -11,6 +11,7 @@ const CheckoutSlice = createSlice({
     reducers: {
         setProduk: (state, action) => {
             if (Array.isArray(state.Produk)) {
+
                 state.Produk.push(action.payload);
             } else {
 
@@ -26,10 +27,13 @@ const CheckoutSlice = createSlice({
         },
         removeProduk: (state, action) => {
             // action.payload should contain the Id of the item to be removed
-            const itemIdToRemove = action.payload;
-
+            // const itemIdToRemove = action.payload;
+            const indexToRemove = action.payload
             // Filter the state.Produk array to remove the item with the specified Id
-            state.Produk = state.Produk.filter((item) => item.Id !== itemIdToRemove);
+            if (indexToRemove >= 0 && indexToRemove < state.Produk.length) {
+                // Use the splice method to remove the item at the specified index
+                state.Produk.splice(indexToRemove, 1);
+            }
         },
         sortProduk: (state) => {
             state.Produk.sort((a, b) => {

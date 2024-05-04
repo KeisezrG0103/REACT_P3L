@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 import SidebarContent from "./SidebarContent";
 import "./Dashboard.css";
@@ -75,6 +75,11 @@ const DashboardLayout = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
+              <Link to="/">
+                <a>Home</a>
+              </Link>
+            </li>
+            <li>
               <a className="justify-between">
                 Profile
                 <span className="badge">New</span>
@@ -100,7 +105,7 @@ const DashboardLayout = () => {
             <Outlet />
           </div>
 
-          <Footer/>
+          <Footer />
         </div>
 
         <div className="drawer-side">

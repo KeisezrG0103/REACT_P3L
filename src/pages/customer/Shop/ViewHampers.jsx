@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import { FaCartPlus } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   getHampersByIdWithKuota,
   getHampersKuota,
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import Hampers from "../../dashboard/ADMIN/Hampers/Hampers";
 import { setProduk } from "../../../slicer/slicer_cartProduk";
+import { setProduk as setProdukCheckout } from "../../../slicer/slicer_checkout";
 
 const ViewHampers = () => {
   const [startDate, setStartDate] = useState(() => {
@@ -21,10 +22,13 @@ const ViewHampers = () => {
     return twoDaysAfterToday;
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const toStringDate = (date) => date.toISOString().split("T")[0];
   const location = useLocation();
   const [jumlah, setJumlah] = useState(0);
   const id = location.pathname.split("/")[2];
+
+  const customer = localStorage.getItem("customer");
 
   const { data: ProdukData, isLoading: isLoadingProduk } = useQuery(
     ["produkInHampers", id],
@@ -80,6 +84,32 @@ const ViewHampers = () => {
   };
 
   console.log("Produk:", HampersData);
+
+  const handlePreOrderorOrder = () => {
+    dispatch(
+      setProdukCheckout({
+        key: "produk",
+        Id: HampersData?.data.Id,
+        Nama: HampersData?.data.Nama_Hampers,
+        Harga: HampersData?.data.Harga,
+        Gambar: HampersData?.data.Gambar,
+        Jumlah: jumlah,
+        Tanggal_Pengiriman: toStringDate(startDate),
+      })
+    );
+
+    if (kuotaHampers?.Kuota === 0) {
+      toast.error("Kuota Hampers Sudah Habis");
+      return;
+    }
+
+    if (jumlah <= 0) {
+      toast.error("Jumlah Hampers Tidak Boleh 0 atau Kurang dari 0");
+      return;
+    }
+
+    navigate("/checkout");
+  };
 
   return (
     <div>
@@ -161,49 +191,53 @@ const ViewHampers = () => {
                 </div>
               </div>
             </div>
-            <div className="grid grid-span-1">
-              <div className="flex flex-col xl:flex-col gap-4 xl:justify-between">
-                <div>
-                  <div className="flex flex-col gap-4">
-                    <label className="text-gray-700">Jumlah</label>
-                    <input
-                      type="number"
-                      className="p-2 border border-gray-300 rounded-md"
-                      value={jumlah}
-                      onChange={(e) => setJumlah(parseInt(e.target.value))}
-                    />
+            {customer ? (
+              <div className="grid grid-span-1">
+                <div className="flex flex-col xl:flex-col gap-4 xl:justify-between">
+                  <div>
+                    <div className="flex flex-col gap-4">
+                      <label className="text-gray-700">Jumlah</label>
+                      <input
+                        type="number"
+                        className="p-2 border border-gray-300 rounded-md"
+                        value={jumlah}
+                        onChange={(e) => setJumlah(parseInt(e.target.value))}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <label className="text-gray-700">
+                        Tanggal Pengiriman
+                      </label>
+                      <ReactDatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                        minDate={new Date()}
+                        dateFormat="yyyy-MM-dd"
+                        className="p-2 border border-gray-300 rounded-md w-full"
+                      />
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-4">
-                    <label className="text-gray-700">Tanggal Pengiriman</label>
-                    <ReactDatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      minDate={new Date()}
-                      dateFormat="yyyy-MM-dd"
-                      className="p-2 border border-gray-300 rounded-md w-full"
-                    />
-                  </div>
-                </div>
 
-                <div className="flex justify-start items-start md:justify-end md:items-end">
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded"
-                      // onClick={handlePreOrderorOrder}
-                    >
-                      Pre Order
-                    </button>
+                  <div className="flex justify-start items-start md:justify-end md:items-end">
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded"
+                        onClick={handlePreOrderorOrder}
+                      >
+                        Pre Order
+                      </button>
 
-                    <button
-                      className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded"
-                      onClick={() => handleAddToCart()}
-                    >
-                      <FaCartPlus className="inline-block" />
-                    </button>
+                      <button
+                        className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded"
+                        onClick={() => handleAddToCart()}
+                      >
+                        <FaCartPlus className="inline-block" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </div>
       </div>

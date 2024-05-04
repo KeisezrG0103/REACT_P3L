@@ -32,7 +32,6 @@ const Cart = () => {
       const quantity = quantities[itemId];
       if (quantity > 0) {
         dispatch(editJumlahProduk({ Id: itemId, Jumlah: quantity }));
-        dispatch(editJumlahProdukCheckout({ Id: itemId, Jumlah: quantity }));
       }
     }
   }, [quantities, dispatch]);
@@ -46,6 +45,7 @@ const Cart = () => {
   };
 
   const checkoutProduk = useSelector((state) => state.checkout.Produk);
+
   const handleCheckout = () => {
     const existingIds = new Set(checkoutProduk.map((item) => item.Id));
 
@@ -118,18 +118,7 @@ const Cart = () => {
         ))}
 
         {/* Apply Promo code and Checkout button */}
-        <div className="mt-8">
-          <form className="flex items-center justify-center">
-            <input
-              className="form-input w-48"
-              type="text"
-              placeholder="Add promo code"
-            />
-            <button className="ml-3 flex items-center px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary">
-              <span>Apply</span>
-            </button>
-          </form>
-        </div>
+
         <button
           className="flex items-center justify-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary"
           onClick={handleCheckout}

@@ -1,6 +1,5 @@
 import Logo from "../../assets/logo.png";
 import Footer from "../../components/Footer";
-
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setIsOpen } from "../../slicer/slicer_cart";
@@ -12,6 +11,12 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
 import { resetProduk } from "../../slicer/slicer_cartProduk";
+import { CiCoins1 } from "react-icons/ci";
+import { useMutation } from "react-query";
+import { Logout } from "../../api/auth/auth_query";
+import { resetProduk as resetCheckout } from "../../slicer/slicer_checkout";
+import { getPoinPerCustomer } from "../../api/poin/poin_query";
+import { useQuery } from "react-query";
 
 const HomePage_layout = () => {
   const [navResponsive, setNavResponsive] = useState(false);
@@ -20,23 +25,38 @@ const HomePage_layout = () => {
   const cartOpen = useSelector((state) => state.cart.isOpen);
   const navigate = useNavigate();
 
-  const customer = localStorage?.getItem("customer");
-  const karyawan = localStorage?.getItem("karyawan");
- 
+  const customer = JSON.parse(localStorage?.getItem("customer"));
+  const karyawan = JSON.parse(localStorage.getItem("karyawan"));
+
+  const { data: poinCustomer } = useQuery(
+    ["poin", customer?.Email],
+    () => getPoinPerCustomer(customer?.Email),
+    {
+      enabled: customer?.Email ? true : false,
+    }
+  );
+
+  console.log("poinCustomer", poinCustomer);
+
+  console.log("customer", karyawan);
+
+  const { mutate: logout } = useMutation(Logout, {
+    onSuccess: (res) => {
+      console.log("data : ", res?.data);
+      localStorage.removeItem("token");
+      localStorage.removeItem("karyawan");
+      localStorage.removeItem("customer");
+      dispatch(resetCheckout());
+      dispatch(resetProduk());
+      navigate("/auth/signin");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   const openCloseCart = () => {
-    if (cartOpen) {
-      dispatch(setIsOpen(false));
-    } else {
-      dispatch(setIsOpen(true));
-    }
-  };
-  const doLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("karyawan");
-    localStorage.removeItem("customer");
-    dispatch(resetProduk());
-    navigate("/auth/signin");
+    dispatch(setIsOpen(!cartOpen));
   };
 
   return (
@@ -76,7 +96,17 @@ const HomePage_layout = () => {
                 </p>
               </a>
             </div>
-            <div className="flex items-center justify-end w-full">
+            <div className="flex items-center justify-end w-full space-x-0 md:space-x-4">
+              {customer ? (
+                <div className="flex items-center justify-center sm:mx-0">
+                  <CiCoins1 className="w-6 h-6" />
+                  {/* make a Poin */}
+                  <span className="text-lg font-semibold text-gray-600">
+                    {poinCustomer?.Total_Poin}
+                  </span>
+                </div>
+              ) : null}
+
               {customer ? (
                 <button
                   onClick={() => openCloseCart()}
@@ -91,7 +121,7 @@ const HomePage_layout = () => {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 4 0 1 4"></path>
                   </svg>
                 </button>
               ) : null}
@@ -105,12 +135,12 @@ const HomePage_layout = () => {
                   <div className="w-10 rounded-full">
                     {customer || karyawan ? (
                       <img
-                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                        src="https://cdn-8.motorsport.com/images/mgl/YP3wdKQ2/s800/fabio-quartararo-yamaha-factor.jpg"
                         alt="profile"
                         className="w-10 h-10 rounded-full"
                       />
                     ) : (
-                      // login icon and button here
+                      // Login icon and button here
                       <Link to="/auth/signin">
                         <div className="w-10 h-10 rounded-full flex items-center justify-center">
                           <FiLogIn className="w-6 h-8" />
@@ -123,17 +153,37 @@ const HomePage_layout = () => {
                   tabIndex={0}
                   className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
                 >
+                  {customer ? (
+                    <>
+                      <li>
+                        <Link to="/checkout">Checkout</Link>
+                      </li>
+                      <li>
+                        <Link to="/profile">Profile</Link>
+                      </li>
+                      <li>
+                        <Link to="/settings">Settings</Link>
+                      </li>
+                    </>
+                  ) : null}
+
+                  {karyawan ? (
+                    <>
+                      <li>
+                        <Link to={`/Dashboard/${karyawan.role}`}>
+                          Dashboard {karyawan.role}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/settings">Settings</Link>
+                      </li>
+                      {/* Add other employee options here */}
+                    </>
+                  ) : null}
+
+                  {/* Always include the logout option for both customer and karyawan */}
                   <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>Settings</a>
-                  </li>
-                  <li>
-                    <a className="btn btn-ghost btn-sm" onClick={doLogout}>
+                    <a className="btn btn-ghost btn-sm" onClick={logout}>
                       Logout
                     </a>
                   </li>

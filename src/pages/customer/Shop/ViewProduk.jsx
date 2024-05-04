@@ -94,6 +94,7 @@ const ViewProduk = () => {
         Tanggal_Pengiriman: toStringDate(startDate),
       })
     );
+
     navigate("/Checkout");
   };
 
