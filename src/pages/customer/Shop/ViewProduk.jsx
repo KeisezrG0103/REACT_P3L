@@ -98,7 +98,7 @@ const ViewProduk = () => {
     navigate("/Checkout");
   };
 
-  const handlePreOrderorOrder = () => {
+  const handlePreOrderorOrder = (Produk) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const twoDaysAfterToday = new Date(today);
@@ -118,6 +118,14 @@ const ViewProduk = () => {
       }
       handleCheckoutProduk();
     } else {
+      if (jumlah <= 0) {
+        toast.error("Jumlah Produk Tidak Boleh 0 atau Kurang dari 0");
+        return;
+      }
+      if (Produk_Provider.Stok < jumlah || Produk_Provider.Stok_Produk < jumlah) {
+        toast.error("Stok Produk Tidak Cukup");
+        return;
+      }
       toast.success("Order Berhasil");
       handleCheckoutProduk();
     }
@@ -242,14 +250,14 @@ const ViewProduk = () => {
                       {Produk_Provider?.Stok === 0 ? (
                         <button
                           className="block text-center w-full p-3 mt-4 bg-accent text-white uppercase font-semibold rounded"
-                          onClick={handlePreOrderorOrder}
+                          onClick={() => handlePreOrderorOrder(Produk_Provider)}
                         >
                           Pre Order
                         </button>
                       ) : (
                         <button
                           className="block text-center w-full p-3 mt-4 bg-primary text-white uppercase font-semibold rounded"
-                          onClick={handlePreOrderorOrder}
+                          onClick={() => handlePreOrderorOrder(Produk_Provider)}
                         >
                           Buy
                         </button>

@@ -42,6 +42,10 @@ export const CUSTOMER_ROUTES = {
     GET_HAMPERSBYIDKUOTA: BASEURL + "/api/getKuotaHampersById",
     GET_POINPERCUSTOMER: BASEURL + "/api/poin",
     GET_TanggalLahir: BASEURL + "/api/Tanggal_Lahir_Customer",
+    GET_LATEST_NOTA: BASEURL + "/api/latestNota",
+    GET_NO_NOTA: BASEURL + "/api/generateNoNota",
+    PESAN_PRODUK: BASEURL + "/api/pesanProduk",
+    DETAIL_PESANAN: BASEURL + "/api/AddDetailPemesanan",
 }
 
 export const OWNER_ROUTES = {

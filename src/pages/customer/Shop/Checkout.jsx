@@ -5,18 +5,33 @@ import { removeProduk, sortProduk } from "../../../slicer/slicer_checkout";
 import { Poin } from "../../../utils/Poin";
 import { getTanggalLahir } from "../../../api/customer/customer_query";
 import { useQuery } from "react-query";
+import { removeProduk as removeCart } from "../../../slicer/slicer_cartProduk";
+import {
+  getLatestNota,
+  generateNoNota,
+} from "../../../api/pesanan/pesanan_query";
+import { pesanProduk } from "../../../api/pesanan/pesanan_query";
+import { useMutation } from "react-query";
+import toast from "react-hot-toast";
+import { AddDetailPemesanan } from "../../../api/detail_pesanan/detail_pesanan_query";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const checkout = useSelector((state) => state?.checkout.Produk);
+  const today = new Date();
+
+  const month = today.getMonth() + 1;
+
+  const { data: NoNota } = useQuery(["NoNota", month], () =>
+    generateNoNota(month)
+  );
+
   const customer = JSON.parse(localStorage.getItem("customer"));
 
   const { data: TanggalLahirData } = useQuery(
     ["tanggalLahir", customer.Email],
     () => getTanggalLahir(customer.Email)
   );
-
-  console.log(TanggalLahirData);
 
   const PoinCustomer = new Poin(TanggalLahirData?.Tanggal_Lahir);
 
@@ -58,6 +73,16 @@ const Checkout = () => {
   };
 
   const [openDates, setOpenDates] = useState({});
+  const mutatePesanan = useMutation(pesanProduk, {
+    onSuccess: () => {
+      toast.success("Berhasil menambahkan pesanan");
+    },
+    onError: (error) => {
+      toast.error("Gagal menambahkan pesanan");
+    },
+  });
+
+  const mutateDetailPesanan = useMutation(AddDetailPemesanan);
 
   const toggleDateGroup = (date) => {
     setOpenDates((prevState) => ({
@@ -65,12 +90,60 @@ const Checkout = () => {
       [date]: !prevState[date],
     }));
   };
+  const toStringDate = (date) => {
+    return date.toISOString().split("T")[0];
+  };
 
-  const handlePesanan = (date, items) => {
+  const handlePesanan = (date, items, index) => {
+    console.log(NoNota?.no_nota);
     console.log(`Handling order for date: ${date}`);
     console.log(`Items:`, items);
     const JsonItem = JSON.stringify(items);
     console.log(JsonItem);
+    const dataToSend = {
+      Id: NoNota?.no_nota,
+      Total: calculateCostAndPoints(items).totalCost,
+      Tanggal_Diambil: date,
+      Tanggal_Pesan: toStringDate(today),
+      Customer_Email: customer.Email,
+      Poin_Didapat: calculateCostAndPoints(items).totalPoints,
+    };
+    console.log(dataToSend);
+
+    mutatePesanan.mutate(dataToSend);
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].key === "produk") {
+        const dataDetail = {
+          Pesanan_Id: NoNota?.no_nota,
+          SubTotal: items[i].Harga * items[i].Jumlah,
+          Total_Produk: items[i].Jumlah,
+          Produk_Id: items[i].Id,
+        };
+
+        console.log(dataDetail);
+        mutateDetailPesanan.mutate(dataDetail);
+      }
+      if (items[i].key === "Hampers") {
+        const dataDetail = {
+          Pesanan_Id: NoNota?.no_nota,
+          SubTotal: items[i].Harga * items[i].Jumlah,
+          Total_Produk: items[i].Jumlah,
+          Hampers_Id: items[i].Id,
+        };
+
+        console.log(dataDetail);
+        mutateDetailPesanan.mutate(dataDetail);
+      }
+    }
+
+    for (let i = 0; i < items.length; i++) {
+      dispatch(removeProduk(index));
+    }
+
+    for (let i = 0; i < items.length; i++) {
+      dispatch(removeCart(items[i].Id));
+    }
   };
 
   return (
@@ -88,7 +161,7 @@ const Checkout = () => {
               <input
                 type="checkbox"
                 id={`collapse-${date}`}
-                checked={openDates[date]}
+                defaultChecked={openDates[date]}
                 onChange={() => toggleDateGroup(date)}
                 className="hidden"
               />
@@ -136,7 +209,7 @@ const Checkout = () => {
                   </div>
                   <button
                     className="btn btn-primary text-white"
-                    onClick={() => handlePesanan(date, items)}
+                    onClick={() => handlePesanan(date, items, dateIndex)}
                   >
                     Pesan
                   </button>
