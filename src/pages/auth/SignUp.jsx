@@ -1,43 +1,46 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { registerPelanggan } from "../../api/auth/auth_query";
+import toast, { Toaster } from "react-hot-toast";
 import Logo from "../../assets/logo.png";
-import { useMutation } from "react-query";
-import { registerCustomer } from "../../api/auth/auth_query";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { Button } from "flowbite-react";
 
-const SignIn = () => {
-  const { register, handleSubmit } = useForm();
-  const navigate = useNavigate();
+const SignUp = () => {
+  const navigate = useNavigate()
 
-  const mutation = useMutation(registerCustomer);
+  const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [nama, setNama] = useState("")
 
-  const onSubmit = (data) => {
-    if (data.Password != data.Password_confirm) {
-      toast.error("Password tidak sama");
-      return;
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true)
+      if (password !== confirmPassword) {
+        return toast.error('Password tidak sama', { duration: 3000 })
+      }
+      const data = { Email: email, Password: password, Nama: nama }
+      const res = await registerPelanggan(data);
+
+      if (res.success === true) {
+        toast.success('Berhasil Mendaftar', { duration: 3000 })
+        setTimeout(() => {
+          navigate('/auth/signin')
+        }, 2000);
+      } else {
+        return toast.error('Gagal Mendaftar', { duration: 3000 })
+      }
+    } catch (error) {
+      toast.error('Gagal Mendaftar', { duration: 3000 })
+    } finally {
+      setIsLoading(false)
     }
-    const dataSend = {
-      Nama: data.Nama,
-      Email: data.Email,
-      Password: data.Password,
-    };
-
-    mutation.mutate(dataSend, {
-      onSuccess: (res) => {
-        console.log(res);
-        toast.success("Register Berhasil");
-        navigate("/auth/signin");
-      },
-      onError: (err) => {
-        console.log(err);
-        toast.error("Register Gagal");
-      },
-    });
-  };
+  }
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="card p-4 w-96 mx-auto">
+      <Toaster></Toaster>
         <div className="text-center">
           <img src={Logo} alt="logo" className="w-40 mx-auto" />
         </div>
@@ -51,7 +54,8 @@ const SignIn = () => {
             placeholder="Type your name here"
             className="input input-bordered w-full"
             required
-            {...register("Nama", { required: true })}
+            value={nama}
+            onChange={(e) => setNama(e.target.value)}
           />
         </label>
         <label className="form-control w-full">
@@ -59,11 +63,12 @@ const SignIn = () => {
             <span className="label-text font-bold">Email</span>
           </div>
           <input
-            type="type your email here"
+            type="text"
             placeholder="Type your email here"
             className="input input-bordered w-full"
             required
-            {...register("Email", { required: true })}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </label>
         <label className="form-control w-full">
@@ -71,11 +76,12 @@ const SignIn = () => {
             <span className="label-text font-bold">Password</span>
           </div>
           <input
-            type="text"
+            type="password"
             placeholder="Type your password here"
             className="input input-bordered w-full"
             required
-            {...register("Password", { required: true })}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </label>
         <label className="form-control w-full">
@@ -83,16 +89,17 @@ const SignIn = () => {
             <span className="label-text font-bold"> Confirm Password</span>
           </div>
           <input
-            type="text"
+            type="password"
             placeholder="Type your password here"
             className="input input-bordered w-full"
             required
-            {...register("Password_confirm", { required: true })}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
 
         <div className="mt-4">
-          <button className="btn btn-primary w-full text-white">Sign Up</button>
+          <Button isProcessing={isLoading} className="btn btn-primary w-full text-white" onClick={handleSubmit}>Sign Up</Button>
         </div>
 
         <div className="text-center mt-4">
@@ -101,9 +108,8 @@ const SignIn = () => {
             Sign In
           </Link>
         </div>
-      </form>
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;

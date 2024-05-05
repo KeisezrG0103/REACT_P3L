@@ -13,7 +13,7 @@ import Pengadaan_Bahan_Baku from "./pages/dashboard/MO/Pengadaan_Bahan_Baku/Peng
 import Hampers from "./pages/dashboard/ADMIN/Hampers/Hampers.jsx";
 import Produk from "./pages/dashboard/ADMIN/Produk/Produk.jsx";
 import Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Bahan_Baku.jsx";
-import Penitip from "./pages/dashboard/MO/Penitip/Penitip.jsx";
+import Penitip from "./pages/dashboard/ADMIN/Penitip/Penitip.jsx";
 import AdminRoutes from "./utils/AdminRoutes.jsx";
 import MORoutes from "./utils/MORoutes.jsx";
 import OwnerRoutes from "./utils/OwnerRoutes.jsx";
@@ -22,23 +22,20 @@ import Tambah_Edit_PengadaanBahanBaku from "./pages/dashboard/MO/Pengadaan_Bahan
 import Tambah_Edit_Bahan_Baku from "./pages/dashboard/ADMIN/Bahan_Baku/Tambah_Edit_Bahan_Baku.jsx";
 import Tambah_Edit_Produk from "./pages/dashboard/ADMIN/Produk/Tambah_Edit_Produk.jsx";
 import IsAuthRoute from "./utils/IsAuthRoute.jsx";
-import Tambah_Edit_Penitip from "./pages/dashboard/MO/Penitip/Tambah_Edit_Penitip.jsx";
-import Pengeluaran from "./pages/dashboard/MO/Pengeluaran/Pengeluaran.jsx";
-import Tambah_Edit_Pengeluaran from "./pages/dashboard/MO/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
+import Tambah_Edit_Penitip from "./pages/dashboard/ADMIN/Penitip/Tambah_Edit_Penitip.jsx";
+import Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Pengeluaran.jsx";
+import Tambah_Edit_Pengeluaran from "./pages/dashboard/ADMIN/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
 import Customer from "./pages/dashboard/ADMIN/Customer/Customer.jsx";
-import History from "./pages/dashboard/ADMIN/History/History.jsx"
 import HomePage_layout from "./pages/customer/HomePage_layout.jsx";
 import Home from "./pages/customer/Home/Home.jsx";
 import Shop from "./pages/customer/Shop/Shop.jsx";
 import About from "./pages/customer/About/About.jsx";
 import Contact from "./pages/customer/Contact/Contact.jsx";
-import ViewProduk from "./pages/customer/Shop/ViewProduk.jsx";
-import Checkout from "./pages/customer/Shop/Checkout.jsx";
-import ForgotPassword from "./pages/customer/Forgot_Password/Forgot_Password.jsx";
-import VerifyOTP from "./pages/customer/Forgot_Password/Verify_OTP.jsx";
-import ResetPassword from "./pages/customer/Forgot_Password/Reset_Password.jsx";
-import ViewHampers from "./pages/customer/Shop/ViewHampers.jsx";
-
+import Resep from "./pages/dashboard/ADMIN/Resep/Resep.jsx";
+import Profile from "./pages/customer/Profile.jsx";
+import ProfileKaryawan from './pages/dashboard/ProfileKaryawan.jsx'
+import KaryawanPage from "./pages/dashboard/MO/Karyawan/KaryawanPage.jsx";
+import GajiBonusPage from "./pages/dashboard/OWNER/Gaji_dan_Bonus/GajiBonusPage.jsx";
 
 function App() {
   return (
@@ -50,9 +47,7 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/Produk/:id" element={<ViewProduk />} />
-            <Route path="/Checkout" element={<Checkout />} />
-            <Route path="/Hampers/:id" element={<ViewHampers />} />
+            <Route path="/profile" element={<Profile />}></Route>
           </Route>
           <Route path="/auth" element={<IsAuthRoute />}>
             <Route element={<Layout />}>
@@ -61,11 +56,6 @@ function App() {
               <Route path="signinKaryawan" element={<SignIn />} />
             </Route>
           </Route>
-
-          <Route path="/forgot-password" element={<ForgotPassword />}/>
-          <Route path="/verify-otp" element={<VerifyOTP />}/>
-          <Route path="/reset-password" element={<ResetPassword />}/>
-
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard/Admin" element={<AdminRoutes />}>
               <Route path="/dashboard/Admin/" element={<Index_Admin />} />
@@ -104,12 +94,39 @@ function App() {
                 element={<Tambah_Edit_Bahan_Baku />}
               />
 
-          
-              <Route path="/dashboard/Admin/history" element={<History/>} />
-              
-         
-              <Route path="/dashboard/Admin/customer" element={<Customer/>} />
+              <Route path="/dashboard/Admin/penitip" element={<Penitip />} />
 
+              <Route
+                path="/dashboard/Admin/Penitip/tambah"
+                element={<Tambah_Edit_Penitip />}
+              />
+
+              <Route
+                path="/dashboard/Admin/Penitip/:id"
+                element={<Tambah_Edit_Penitip />}
+              />
+
+              <Route
+                path="/dashboard/Admin/pengeluaran"
+                element={<Pengeluaran />}
+              />
+
+              <Route
+                path="/dashboard/Admin/pengeluaran/tambah"
+                element={<Tambah_Edit_Pengeluaran />}
+              />
+
+              <Route
+                path="/dashboard/Admin/pengeluaran/:id"
+                element={<Tambah_Edit_Pengeluaran />}
+              />
+
+              <Route path="/dashboard/Admin/customer" element={<Customer />} />
+
+              <Route
+                path="/dashboard/Admin/resep"
+                element={<Resep />}
+              />
             </Route>
 
             <Route path="/dashboard/MO" element={<MORoutes />}>
@@ -127,39 +144,18 @@ function App() {
                 path="/dashboard/MO/pengadaanBahanBaku/tambah"
                 element={<Tambah_Edit_PengadaanBahanBaku />}
               />
-
-              <Route path="/dashboard/MO/penitip" element={<Penitip />} />
-
-              <Route
-                path="/dashboard/MO/Penitip/tambah"
-                element={<Tambah_Edit_Penitip />}
+              <Route 
+                path="/dashboard/MO/karyawan"
+                element={<KaryawanPage></KaryawanPage>}
               />
-
-              <Route
-                path="/dashboard/MO/Penitip/:id"
-                element={<Tambah_Edit_Penitip />}
-              />
-
-              <Route
-                path="/dashboard/MO/pengeluaran"
-                element={<Pengeluaran />}
-              />
-
-              <Route
-                path="/dashboard/MO/pengeluaran/tambah"
-                element={<Tambah_Edit_Pengeluaran />}
-              />
-
-              <Route
-                path="/dashboard/MO/pengeluaran/:id"
-                element={<Tambah_Edit_Pengeluaran />}
-              />
-
             </Route>
 
             <Route path="/dashboard/Owner" element={<OwnerRoutes />}>
               <Route path="/dashboard/Owner/" element={<Index_Owner />} />
+              <Route path="/dashboard/Owner/gaji_dan_bonus" element={<GajiBonusPage></GajiBonusPage>}></Route>
             </Route>
+
+            <Route path="/dashboard/profile" element={<ProfileKaryawan></ProfileKaryawan>}></Route>
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -102,7 +102,7 @@ const Pengeluaran = () => {
       </div>
       <div className="overflow-x-auto w-full mt-5">
         <div className="card shadow-md bg-base-100" style={{ width: "100%" }}>
-          <div className="card-body relative" style={{ width: "100%", height: "70vh" }}>
+          <div className="card-body relative" style={{ width: "100%", height: "100vh" }}>
             {isLoading ? (
               <div className="h-full w-full flex justify-center items-center absolute top-0 left-0 right-0 bottom-0">
                 <span className="loading loading-spinner loading-lg"></span>

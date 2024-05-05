@@ -1,66 +1,45 @@
 import Logo from "../../assets/logo.png";
 import Footer from "../../components/Footer";
+import { HiUser, HiLogout } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setIsOpen } from "../../slicer/slicer_cart";
 import Cart from "../../components/Cart";
 import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ROUTES_HOMEPAGE } from "../../constant/Routes";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { FiLogIn } from "react-icons/fi";
-import { resetProduk } from "../../slicer/slicer_cartProduk";
-import { CiCoins1 } from "react-icons/ci";
-import { useMutation } from "react-query";
-import { Logout } from "../../api/auth/auth_query";
-import { resetProduk as resetCheckout } from "../../slicer/slicer_checkout";
-import { getPoinPerCustomer } from "../../api/poin/poin_query";
-import { useQuery } from "react-query";
+import { Toaster, toast } from "react-hot-toast";
 
 const HomePage_layout = () => {
   const [navResponsive, setNavResponsive] = useState(false);
-  const location = useLocation();
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartOpen = useSelector((state) => state.cart.isOpen);
-  const navigate = useNavigate();
-
-  const customer = JSON.parse(localStorage?.getItem("customer"));
-  const karyawan = JSON.parse(localStorage.getItem("karyawan"));
-
-  const { data: poinCustomer } = useQuery(
-    ["poin", customer?.Email],
-    () => getPoinPerCustomer(customer?.Email),
-    {
-      enabled: customer?.Email ? true : false,
-    }
-  );
-
-  console.log("poinCustomer", poinCustomer);
-
-  console.log("customer", karyawan);
-
-  const { mutate: logout } = useMutation(Logout, {
-    onSuccess: (res) => {
-      console.log("data : ", res?.data);
-      localStorage.removeItem("token");
-      localStorage.removeItem("karyawan");
-      localStorage.removeItem("customer");
-      dispatch(resetCheckout());
-      dispatch(resetProduk());
-      navigate("/auth/signin");
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
 
   const openCloseCart = () => {
-    dispatch(setIsOpen(!cartOpen));
+    if (cartOpen) {
+      dispatch(setIsOpen(false));
+    } else {
+      dispatch(setIsOpen(true));
+    }
   };
+
+  const logout = () => {
+    toast.success("Berhasil logout", { duration: 3000 });
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("customer");
+
+    setTimeout(() => {
+      navigate("/");
+    }, 1500);
+  }
 
   return (
     <div className="bg-base-100">
+      <Toaster></Toaster>
       <header>
         <div className="container mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
@@ -87,7 +66,7 @@ const HomePage_layout = () => {
               <span className="mx-1 text-sm">Indonesia</span>
             </div>
             <div className="w-full text-gray-700 md:text-center text-2xl font-semibold flex justify-center content-center">
-              <a className=" text-xl flex items-center space-x-2" href="#">
+              <a className=" text-xl flex items-center space-x-2" href="/">
                 <img src={Logo} alt="logo" className="w-20" />
                 <p>
                   <span className="text-lg text-black font-bold">
@@ -96,98 +75,31 @@ const HomePage_layout = () => {
                 </p>
               </a>
             </div>
-            <div className="flex items-center justify-end w-full space-x-0 md:space-x-4">
-              {customer ? (
-                <div className="flex items-center justify-center sm:mx-0">
-                  <CiCoins1 className="w-6 h-6" />
-                  {/* make a Poin */}
-                  <span className="text-lg font-semibold text-gray-600">
-                    {poinCustomer?.Total_Poin}
-                  </span>
-                </div>
-              ) : null}
-
-              {customer ? (
-                <button
-                  onClick={() => openCloseCart()}
-                  className="text-gray-600 focus:outline-none mx-4 sm:mx-0"
+            <div className="flex items-center justify-end w-full gap-2">
+              <button
+                onClick={() => openCloseCart()}
+                className="text-gray-600 focus:outline-none mx-4 sm:mx-0"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 4 0 1 4"></path>
-                  </svg>
+                  <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </button>
+              
+              <div className={`flex gap-1 ${localStorage.getItem('token') ? 'block' : 'hidden'}`}>
+                <button className="btn btn-primary text-white" onClick={() => navigate('/profile')}>
+                  <HiUser></HiUser>
                 </button>
-              ) : null}
-
-              <div className="dropdown dropdown-end mx-2">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar"
-                >
-                  <div className="w-10 rounded-full">
-                    {customer || karyawan ? (
-                      <img
-                        src="https://cdn-8.motorsport.com/images/mgl/YP3wdKQ2/s800/fabio-quartararo-yamaha-factor.jpg"
-                        alt="profile"
-                        className="w-10 h-10 rounded-full"
-                      />
-                    ) : (
-                      // Login icon and button here
-                      <Link to="/auth/signin">
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center">
-                          <FiLogIn className="w-6 h-8" />
-                        </div>
-                      </Link>
-                    )}
-                  </div>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-                >
-                  {customer ? (
-                    <>
-                      <li>
-                        <Link to="/checkout">Checkout</Link>
-                      </li>
-                      <li>
-                        <Link to="/profile">Profile</Link>
-                      </li>
-                      <li>
-                        <Link to="/settings">Settings</Link>
-                      </li>
-                    </>
-                  ) : null}
-
-                  {karyawan ? (
-                    <>
-                      <li>
-                        <Link to={`/Dashboard/${karyawan.role}`}>
-                          Dashboard {karyawan.role}
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/settings">Settings</Link>
-                      </li>
-                      {/* Add other employee options here */}
-                    </>
-                  ) : null}
-
-                  {/* Always include the logout option for both customer and karyawan */}
-                  <li>
-                    <a className="btn btn-ghost btn-sm" onClick={logout}>
-                      Logout
-                    </a>
-                  </li>
-                </ul>
+                <button className="btn opacity-80 bg-red-600 text-white" onClick={logout}>
+                  <HiLogout></HiLogout>
+                </button>
               </div>
 
               <div className="flex sm:hidden">
@@ -215,20 +127,38 @@ const HomePage_layout = () => {
           >
             <div className="flex flex-col sm:flex-row">
               {Object.values(ROUTES_HOMEPAGE).map((route) => (
-                <Link
-                  to={route.route}
+                <Link to={route.route}
                   key={route.route}
-                  className={`${
-                    location.pathname === route.route
-                      ? "bg-gray-200 text-gray-900"
-                      : "text-gray-600"
-                  } px-4 py-2 mt-2 text-sm font-semibold rounded hover:text-primary hover:bg-gray-100 focus:outline-none focus:text-primary focus:bg-gray-100`}
+                  className="mt-3 text-sm text-gray-600 hover:text-gray-500 sm:mx-3 sm:mt-0"
                 >
                   {route.name}
                 </Link>
               ))}
             </div>
           </nav>
+          <div className="relative mt-6 max-w-lg mx-auto">
+            <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
+              <svg
+                className="h-5 w-5 text-gray-500"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+
+            <input
+              className="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline"
+              type="text"
+              placeholder="Search"
+            />
+          </div>
         </div>
       </header>
 
@@ -238,6 +168,7 @@ const HomePage_layout = () => {
       <main className="my-8">
         <Outlet />
       </main>
+      {/* Footer component make always in the bottom*/}
       <div className="flex flex-col items-center justify-between p-4 bg-base-100 text-base-content">
         <Footer />
       </div>

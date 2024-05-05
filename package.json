@@ -11,11 +11,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
-    "@tanstack/react-query-devtools": "^4.36.1",
     "axios": "^1.6.8",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.8.0",
-    "immer": "^10.0.4",
     "react": "^18.2.0",
     "react-datepicker": "^6.8.0",
     "react-dom": "^18.2.0",
