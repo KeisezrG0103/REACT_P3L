@@ -137,13 +137,13 @@ const Checkout = () => {
       }
     }
 
-    for (let i = 0; i < items.length; i++) {
-      dispatch(removeProduk(index));
-    }
+    // for (let i = 0; i < items.length; i++) {
+    //   dispatch(removeProduk(index));
+    // }
 
-    for (let i = 0; i < items.length; i++) {
-      dispatch(removeCart(items[i].Id));
-    }
+    // for (let i = 0; i < items.length; i++) {
+    //   dispatch(removeCart(items[i].Id));
+    // }
   };
 
   return (
