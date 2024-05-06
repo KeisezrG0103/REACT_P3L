@@ -44,6 +44,7 @@ const Pengeluaran = () => {
         pengeluaran.Nama_Pengeluaran.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredPengeluaran(filtered);
+      setPage(1);
     }
   }, [pengeluaranData, searchQuery]);
 

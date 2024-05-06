@@ -44,8 +44,11 @@ const Bahan_Baku = () => {
         bahan_baku.Nama.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredBahanBaku(filtered);
+     
+      setPage(1);
     }
   }, [bahanBakuData, searchQuery]);
+  
 
   
   const openModal = (item) => {

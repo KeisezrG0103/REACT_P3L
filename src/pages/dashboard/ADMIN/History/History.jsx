@@ -35,6 +35,7 @@ const History = () => {
         customer.Nama.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredCustomer(filtered);
+      setPage(1);
     }
   }, [customerData, searchQuery]);
 

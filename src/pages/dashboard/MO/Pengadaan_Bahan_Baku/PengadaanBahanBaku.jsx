@@ -49,6 +49,12 @@ const PengadaanBahanBaku = () => {
     dispatch(setIsEdit(true));
   };
 
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    setSearchQuery(value);
+    setPage(1); 
+  };
+  
   const pengadaanBahanBaku = data?.data;
   const filteredData = pengadaanBahanBaku?.filter((item) =>
     item.BahanBaku_Nama.toLowerCase().includes(searchQuery.toLowerCase())
@@ -74,9 +80,9 @@ const PengadaanBahanBaku = () => {
               placeholder="Search"
               className="input input-bordered w-60 md:w-auto"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleSearch} 
             />
-          </div>
+        </div>
         </div>
         <Link to="/dashboard/MO/pengadaanBahanBaku/tambah">
           <button className="btn btn-success text-white mt-5">
