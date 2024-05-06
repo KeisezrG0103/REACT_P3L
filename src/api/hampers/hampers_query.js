@@ -1,5 +1,5 @@
-import Axios from "axios";
-import { ADMIN_ROUTES, CUSTOMER_ROUTES } from "../../constant/Routes";
+import Axios  from "axios";
+import { ADMIN_ROUTES } from "../../constant/Routes";
 
 
 export const getHampers = async () => {
@@ -12,10 +12,10 @@ export const getHampers = async () => {
     return response.data;
 }
 
-export const addHampers = async ({ data }) => {
+export const addHampers = async ({data}) => {
 
-
-
+    
+    
     const token = localStorage.getItem("token");
     const response = await Axios.post(ADMIN_ROUTES.HAMPERS, data, {
         headers: {
@@ -43,25 +43,5 @@ export const deleteHampers = async (id) => {
             Authorization: `Bearer ${token}`,
         },
     });
-    return response.data;
-}
-
-export const getHampersWithKuota = async (date) => {
-    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_HAMPERSWITHKUOTA}/${date}`)
-    return response.data;
-}
-
-export const getHampersByIdWithKuota = async (id, date) => {
-    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_HAMPERSBYIDWITHKUOTA}/${id}/${date}`)
-    return response.data;
-}
-
-export const getProdukInHampersWithKuota = async (id, date) => {
-    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_PRODUKBYHAMPERS}/${id}/${date}`)
-    return response.data;
-}
-
-export const getHampersKuota = async (id, date) => {
-    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_HAMPERSBYIDKUOTA}/${id}/${date}`)
     return response.data;
 }

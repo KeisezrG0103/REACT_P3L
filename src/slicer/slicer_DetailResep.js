@@ -6,8 +6,8 @@ const initialState = {
     isOpen: false,
 };
 
-const History = createSlice({
-    name: 'History',
+const DetailResep = createSlice({
+    name: 'DetailResep',
     initialState,
     reducers: {
         setOpen: (state, action) => {
@@ -28,6 +28,6 @@ const History = createSlice({
     }
 });
 
-export const { setOpen, setItem, resetState } = History.actions;
+export const { setOpen, setItem, resetState } = DetailResep.actions;
 
-export default History.reducer;
+export default DetailResep.reducer;

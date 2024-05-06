@@ -1,8 +1,3 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { setFilter } from "../../../slicer/slicer_FIltered";
-import { Link, useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
 import Roti from "../../../assets/roti.avif";
 import Minuman from "../../../assets/minuman.avif";
 import Cake from "../../../assets/cake.avif";
@@ -86,33 +81,6 @@ const Home = () => {
   return (
     <div>
       <div className="container mx-auto px-6">
-        {/* Search bar */}
-        <div className="relative mt-6 max-w-lg mx-auto mb-4">
-          <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
-            <svg
-              className="h-5 w-5 text-gray-500"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-          <input
-            className="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline"
-            type="text"
-            placeholder="Search Hampers & Penitip"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-        </div>
-
-        {/* Hero section for Cake */}
         <div
           className="h-64 rounded-md overflow-hidden bg-cover bg-center"
           style={{
@@ -123,10 +91,8 @@ const Home = () => {
           <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
             <div className="px-10 max-w-xl">
               <h2 className="text-2xl text-white font-semibold">Cake</h2>
-              <button
-                className="flex items-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary"
-                onClick={() => handleFilter("Cake")}
-              >
+
+              <button className="flex items-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-blue-500">
                 <span>Shop Now</span>
                 <svg
                   className="h-5 w-5 mx-2"
@@ -144,8 +110,10 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Minuman and Roti sections */}
+        {/* Additional product sections can be added here similar to the above section */}
+
         <div className="md:flex mt-8 md:-mx-4">
+          {/* More product sections */}
           <div
             className="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:w-1/2"
             style={{
@@ -156,10 +124,7 @@ const Home = () => {
             <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
               <div className="px-10 max-w-xl">
                 <h2 className="text-2xl text-white font-semibold">Minuman</h2>
-                <button
-                  className="flex items-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary"
-                  onClick={() => handleFilter("Minuman")}
-                >
+                <button className="flex items-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-blue-500">
                   <span>Shop Now</span>
                   <svg
                     className="h-5 w-5 mx-2"
@@ -185,10 +150,8 @@ const Home = () => {
             <div className="bg-gray-900 bg-opacity-50 flex items-center h-full">
               <div className="px-10 max-w-xl">
                 <h2 className="text-2xl text-white font-semibold">Roti</h2>
-                <button
-                  className="flex items-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary"
-                  onClick={() => handleFilter("Roti")}
-                >
+
+                <button className="flex items-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-blue-500">
                   <span>Shop Now</span>
                   <svg
                     className="h-5 w-5 mx-2"
@@ -206,8 +169,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-
-        {/* Hampers section */}
         <div className="mt-16">
           <h3 className="text-gray-600 text-2xl font-medium">Hampers</h3>
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-6">

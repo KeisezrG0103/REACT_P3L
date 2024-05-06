@@ -1,4 +1,4 @@
-import Axios from "axios";
+import  Axios  from "axios";
 import { ROUTES } from "../../constant/Routes";
 
 export const loginKaryawan = async ({ Nama, Password }) => {
@@ -19,26 +19,21 @@ export const loginPelanggan = async ({ Email, Password }) => {
     }
 }
 
-export const registerCustomer = async (data) => {
+export const registerPelanggan = async (data) => {
     try {
-        const res = await Axios.post(ROUTES.SIGNUPCUSTOMER, data);
-        return res.data;
-    } catch (error) {
-        return error;
-    }
-}
-
-export const Logout = async () => {
-    const token = localStorage.getItem("token");
-    try {
-        const res = await Axios.post(ROUTES.LOGOUT, null, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        return res.data;
-    } catch (error) {
-        return error;
+        const res = await Axios.post(ROUTES.REGISTER, {
+            Nama: data.Nama,
+            Email: data.Email, 
+            Password: data.Password
+        })
+        return {
+            success: true,
+            data: res.data
+        }
+    } catch(error) {
+        return {
+            success: false,
+            error: error
+        }
     }
 }

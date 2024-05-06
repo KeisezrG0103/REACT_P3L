@@ -85,8 +85,8 @@ const PengadaanBahanBaku = () => {
         </div>
         </div>
         <Link to="/dashboard/MO/pengadaanBahanBaku/tambah">
-          <button className="btn btn-success text-white mt-5">
-            Tambah Pengadaan
+          <button className="btn btn-primary text-white mt-5">
+            Tambah Hampers
           </button>
         </Link>
       </div>

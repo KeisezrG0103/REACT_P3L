@@ -17,6 +17,7 @@ const SignIn = () => {
 
   const navigate = useNavigate();
 
+
   const dispatch = useDispatch();
 
   const location = useLocation();
@@ -27,11 +28,10 @@ const SignIn = () => {
     if (isKaryawan) {
       mutation.mutate(data, {
         onSuccess: (res) => {
-          console.log("data : ", res?.data);
           dispatch(setKaryawan(res.data));
 
           localStorage.setItem("karyawan", JSON.stringify(res.data));
-          console.log(res);
+
           localStorage.setItem("token", res.data.token);
           toast.success("Login Berhasil");
 
@@ -53,18 +53,20 @@ const SignIn = () => {
     } else {
       mutationPelanggan.mutate(data, {
         onSuccess: (res) => {
-          console.log("data : ", res?.data);
-
-          if (res.data == undefined) {
+          console.log(res.data);
+          
+          if(res.data == undefined){
             toast.error("Login Gagal");
-          } else {
+          }else{
             dispatch(setCustomer(res.data));
             localStorage.setItem("customer", JSON.stringify(res.data));
             localStorage.setItem("token", res.data.token);
             toast.success("Login Berhasil");
             navigate("/");
           }
+          
         },
+        
       });
     }
   };
@@ -133,14 +135,6 @@ const SignIn = () => {
           <Link to="/auth/signup" relative="path" className="text-primary">
             Sign Up
           </Link>
-        </div>
-
-        <div className="text-center mt-4">
-          {!isKaryawan && (
-            <Link to="/forgot-password" relative="path">
-              Forgot Password
-            </Link>
-          )}
         </div>
 
         <div className="text-right mt-4">

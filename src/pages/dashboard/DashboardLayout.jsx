@@ -1,4 +1,5 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Logo from "../../assets/logo.png";
 import SidebarContent from "./SidebarContent";
 import "./Dashboard.css";
@@ -22,6 +23,7 @@ const DashboardLayout = () => {
   };
   return (
     <>
+      <Toaster />
       <div className="navbar bg-primary max-h-8">
         <div className="flex-none">
           <label
@@ -75,12 +77,7 @@ const DashboardLayout = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to="/">
-                <a>Home</a>
-              </Link>
-            </li>
-            <li>
-              <a className="justify-between">
+              <a className="justify-between" href="/dashboard/profile">
                 Profile
                 <span className="badge">New</span>
               </a>
@@ -105,7 +102,7 @@ const DashboardLayout = () => {
             <Outlet />
           </div>
 
-          <Footer />
+          <Footer/>
         </div>
 
         <div className="drawer-side">
