@@ -108,6 +108,11 @@ const ViewHampers = () => {
       return;
     }
 
+    if (jumlah > kuotaHampers?.Kuota) {
+      toast.error("Jumlah Hampers Melebihi Kuota");
+      return;
+    }
+
     navigate("/checkout");
   };
 

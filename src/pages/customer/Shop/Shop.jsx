@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { getKategori } from "../../../api/kategori/kategori_query";
 import { useQuery } from "react-query";
@@ -12,15 +12,9 @@ import {
   resetStateView,
 } from "../../../slicer/slicer_customer_view_produk";
 
-import { setProduk as setProdukCart } from "../../../slicer/slicer_cartProduk";
-
+import { Custom_Date } from "../../../utils/Date";
 
 const Shop = () => {
-  const Today = new Date();
-
-  const toStringDate = (date) => {
-    return date.toISOString().split("T")[0];
-  };
   const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [filteredProdukData, setFilteredProdukData] = useState(null); // State to hold filtered products
   const [searchQuery, setSearchQuery] = useState(""); // State to hold search query
@@ -39,14 +33,15 @@ const Shop = () => {
     dispatch(resetStateView());
   }, [dispatch]);
 
-  const dateNow = new Date();
-  const dateNowString = dateNow.toISOString().split("T")[0];
+  const CustomerDate = new Custom_Date();
+
+  const TwodaysAfterToday = CustomerDate.twoDaysAfterTodayToString();
 
   const {
     data: ProdukData,
     isLoading: produkLoading,
     isError: produkError,
-  } = useQuery(["produk", dateNowString], getProdukNonPenitipWithKuota);
+  } = useQuery(["produk", TwodaysAfterToday], getProdukNonPenitipWithKuota);
 
   useEffect(() => {
     let filteredData = ProdukData?.data;
@@ -108,21 +103,6 @@ const Shop = () => {
 
     navigate(`/Produk/${id}`);
   };
-
-  const handleAddToCart = (Produk) => {
-    const cartProduk = {
-      Id: Produk.Id || Produk.Id_Produk,
-      Nama: Produk.Nama || Produk.Nama_Produk,
-      Harga: Produk.Harga || Produk.Harga_Produk,
-      Gambar: Produk.Gambar || Produk.Gambar_Produk,
-      Jumlah: 1,
-      Tanggal_Pengiriman: toStringDate(Today),
-    };
-
-    dispatch(setProdukCart(cartProduk));
-  };
-
-  
 
   return (
     <div className="flex justify-center content-center mx-2">

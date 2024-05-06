@@ -41,11 +41,20 @@ const Checkout = () => {
     dispatch(sortProduk());
   }, [dispatch]);
 
-  const handleRemoveProduk = (date, index) => {
-    const itemIndex = checkout.findIndex(
-      (item, idx) => idx === index && item.Tanggal_Pengiriman === date
-    );
-    dispatch(removeProduk(itemIndex));
+  const handleRemoveProduk = (date, index, itemToRemove) => {
+    const itemsForDate = groupedByDate[date];
+
+    if (itemsForDate) {
+      if (itemsForDate[index]?.Id === itemToRemove.Id) {
+        const globalIndex = checkout.findIndex(
+          (item) =>
+            item.Id === itemToRemove.Id && item.Tanggal_Pengiriman === date
+        );
+        console.log("Global index:", globalIndex);
+
+        dispatch(removeProduk(globalIndex));
+      }
+    }
   };
 
   const groupedByDate = checkout.reduce((groups, item) => {
@@ -82,17 +91,15 @@ const Checkout = () => {
     },
   });
 
-  const mutateDetailPesanan = useMutation(AddDetailPemesanan,
-    {
-      onSuccess: () => {
-        toast.success("Berhasil menambahkan detail pesanan");
-      },
-      onError: (error) => {
-        toast.error("Gagal menambahkan detail pesanan");
-        console.log(error);
-      },
-    }
-  );
+  const mutateDetailPesanan = useMutation(AddDetailPemesanan, {
+    onSuccess: () => {
+      toast.success("Berhasil menambahkan detail pesanan");
+    },
+    onError: (error) => {
+      toast.error("Gagal menambahkan detail pesanan");
+      console.log(error);
+    },
+  });
 
   const toggleDateGroup = (date) => {
     setOpenDates((prevState) => ({
@@ -147,13 +154,13 @@ const Checkout = () => {
       }
     }
 
-    // for (let i = 0; i < items.length; i++) {
-    //   dispatch(removeProduk(index));
-    // }
+    for (let i = 0; i < items.length; i++) {
+      dispatch(removeProduk(index));
+    }
 
-    // for (let i = 0; i < items.length; i++) {
-    //   dispatch(removeCart(items[i].Id));
-    // }
+    for (let i = 0; i < items.length; i++) {
+      dispatch(removeCart(items[i].Id));
+    }
   };
 
   return (
@@ -202,7 +209,7 @@ const Checkout = () => {
                       <div className="ml-auto">
                         <FaTrashAlt
                           className="text-red-500 cursor-pointer"
-                          onClick={() => handleRemoveProduk(date, index)}
+                          onClick={() => handleRemoveProduk(date, index, item)}
                         />
                       </div>
                     </div>

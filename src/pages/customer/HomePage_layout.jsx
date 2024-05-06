@@ -17,6 +17,7 @@ import { Logout } from "../../api/auth/auth_query";
 import { resetProduk as resetCheckout } from "../../slicer/slicer_checkout";
 import { getPoinPerCustomer } from "../../api/poin/poin_query";
 import { useQuery } from "react-query";
+import { FaShoppingCart } from "react-icons/fa";
 
 const HomePage_layout = () => {
   const [navResponsive, setNavResponsive] = useState(false);
@@ -112,17 +113,7 @@ const HomePage_layout = () => {
                   onClick={() => openCloseCart()}
                   className="text-gray-600 focus:outline-none mx-4 sm:mx-0"
                 >
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 4 0 1 4"></path>
-                  </svg>
+                  <FaShoppingCart className="w-6 h-6" />
                 </button>
               ) : null}
 
@@ -157,6 +148,9 @@ const HomePage_layout = () => {
                     <>
                       <li>
                         <Link to="/checkout">Checkout</Link>
+                      </li>
+                      <li>
+                        <Link to="/Pembelian">Pembelian</Link>
                       </li>
                       <li>
                         <Link to="/profile">Profile</Link>

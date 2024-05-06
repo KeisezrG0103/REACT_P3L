@@ -14,19 +14,22 @@ import {
   setType,
 } from "../../../slicer/slicer_customer_view_produk";
 
+import { Custom_Date } from "../../../utils/Date";
+
 import { getHampersWithKuota } from "../../../api/hampers/hampers_query";
 
 const Home = () => {
-  const today = new Date();
 
-  const toStringDate = (date) => date.toISOString().split("T")[0];
 
+  const CustomerDate = new Custom_Date();
+
+  const twoDaysAfterToday = CustomerDate.twoDaysAfterTodayToString();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // States
-  const [searchQuery, setSearchQuery] = useState(""); 
-  const [itemsToShow, setItemsToShow] = useState(5); 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [itemsToShow, setItemsToShow] = useState(5);
 
   // Queries
   const { data: produkPenitipData, isLoading: isProdukLoading } = useQuery(
@@ -34,9 +37,13 @@ const Home = () => {
     getProdukPenitip
   );
   const { data: hampersData, isLoading: isHampersLoading } = useQuery(
-    ["hampers", toStringDate(today)],
-    () => getHampersWithKuota(toStringDate(today))
+    ["hampers", twoDaysAfterToday],
+    () => getHampersWithKuota(twoDaysAfterToday)
   );
+
+  console.log("Hampers",hampersData);
+
+  console.log(hampersData);
 
   const filteredHampersData = hampersData?.data?.filter((hamper) =>
     hamper.Nama_Hampers.toLowerCase().includes(searchQuery.toLowerCase())
@@ -252,7 +259,7 @@ const Home = () => {
                             Rp. {item.Harga}
                           </span>
                           <p className="text-gray-500 mt-2">
-                            Kuota: {item.Kuota}
+                            Kuota PreOrder : {item.Kuota}
                           </p>
                         </div>
                       </div>
@@ -308,7 +315,9 @@ const Home = () => {
                       >
                         <button
                           className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                          onClick={() => handleViewProduk(item, "produkPenitip")}
+                          onClick={() =>
+                            handleViewProduk(item, "produkPenitip")
+                          }
                         >
                           View
                         </button>

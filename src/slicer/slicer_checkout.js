@@ -26,10 +26,10 @@ const CheckoutSlice = createSlice({
             state.Produk[index].Jumlah = action.payload.Jumlah;
         },
         removeProduk: (state, action) => {
-            // action.payload should contain the Id of the item to be removed
-            // const itemIdToRemove = action.payload;
-            const indexToRemove = action.payload
-            // Filter the state.Produk array to remove the item with the specified Id
+            // action.payload should contain the index of the item to be removed
+            const indexToRemove = action.payload;
+
+            // Ensure the index is within bounds
             if (indexToRemove >= 0 && indexToRemove < state.Produk.length) {
                 // Use the splice method to remove the item at the specified index
                 state.Produk.splice(indexToRemove, 1);

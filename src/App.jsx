@@ -26,7 +26,7 @@ import Tambah_Edit_Penitip from "./pages/dashboard/MO/Penitip/Tambah_Edit_Peniti
 import Pengeluaran from "./pages/dashboard/MO/Pengeluaran/Pengeluaran.jsx";
 import Tambah_Edit_Pengeluaran from "./pages/dashboard/MO/Pengeluaran/Tambah_Edit_Pengeluaran.jsx";
 import Customer from "./pages/dashboard/ADMIN/Customer/Customer.jsx";
-import History from "./pages/dashboard/ADMIN/History/History.jsx"
+import History from "./pages/dashboard/ADMIN/History/History.jsx";
 import HomePage_layout from "./pages/customer/HomePage_layout.jsx";
 import Home from "./pages/customer/Home/Home.jsx";
 import Shop from "./pages/customer/Shop/Shop.jsx";
@@ -38,21 +38,22 @@ import ForgotPassword from "./pages/customer/Forgot_Password/Forgot_Password.jsx
 import VerifyOTP from "./pages/customer/Forgot_Password/Verify_OTP.jsx";
 import ResetPassword from "./pages/customer/Forgot_Password/Reset_Password.jsx";
 import ViewHampers from "./pages/customer/Shop/ViewHampers.jsx";
-
+import Pembelian from "./pages/customer/Pembelian/Pembelian.jsx";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route  element={<HomePage_layout />}>
-            <Route path="/" element={<Home/>} />
+          <Route element={<HomePage_layout />}>
+            <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/Produk/:id" element={<ViewProduk />} />
             <Route path="/Checkout" element={<Checkout />} />
             <Route path="/Hampers/:id" element={<ViewHampers />} />
+            <Route path="/Pembelian" element={<Pembelian />} />
           </Route>
           <Route path="/auth" element={<IsAuthRoute />}>
             <Route element={<Layout />}>
@@ -62,9 +63,9 @@ function App() {
             </Route>
           </Route>
 
-          <Route path="/forgot-password" element={<ForgotPassword />}/>
-          <Route path="/verify-otp" element={<VerifyOTP />}/>
-          <Route path="/reset-password" element={<ResetPassword />}/>
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard/Admin" element={<AdminRoutes />}>
@@ -104,12 +105,9 @@ function App() {
                 element={<Tambah_Edit_Bahan_Baku />}
               />
 
-          
-              <Route path="/dashboard/Admin/history" element={<History/>} />
-              
-         
-              <Route path="/dashboard/Admin/customer" element={<Customer/>} />
+              <Route path="/dashboard/Admin/history" element={<History />} />
 
+              <Route path="/dashboard/Admin/customer" element={<Customer />} />
             </Route>
 
             <Route path="/dashboard/MO" element={<MORoutes />}>
@@ -154,7 +152,6 @@ function App() {
                 path="/dashboard/MO/pengeluaran/:id"
                 element={<Tambah_Edit_Pengeluaran />}
               />
-
             </Route>
 
             <Route path="/dashboard/Owner" element={<OwnerRoutes />}>
