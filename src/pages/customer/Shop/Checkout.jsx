@@ -82,7 +82,17 @@ const Checkout = () => {
     },
   });
 
-  const mutateDetailPesanan = useMutation(AddDetailPemesanan);
+  const mutateDetailPesanan = useMutation(AddDetailPemesanan,
+    {
+      onSuccess: () => {
+        toast.success("Berhasil menambahkan detail pesanan");
+      },
+      onError: (error) => {
+        toast.error("Gagal menambahkan detail pesanan");
+        console.log(error);
+      },
+    }
+  );
 
   const toggleDateGroup = (date) => {
     setOpenDates((prevState) => ({
@@ -137,19 +147,18 @@ const Checkout = () => {
       }
     }
 
-    for (let i = 0; i < items.length; i++) {
-      dispatch(removeProduk(index));
-    }
+    // for (let i = 0; i < items.length; i++) {
+    //   dispatch(removeProduk(index));
+    // }
 
-    for (let i = 0; i < items.length; i++) {
-      dispatch(removeCart(items[i].Id));
-    }
+    // for (let i = 0; i < items.length; i++) {
+    //   dispatch(removeCart(items[i].Id));
+    // }
   };
 
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-4">
       <div className="p-2 lg:p-0 flex flex-col gap-4 w-full lg:w-1/3">
-        {/* Render grouped items by date */}
         {Object.entries(groupedByDate).map(([date, items], dateIndex) => {
           const { totalCost, totalPoints } = calculateCostAndPoints(items);
 

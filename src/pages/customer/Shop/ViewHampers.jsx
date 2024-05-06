@@ -88,7 +88,7 @@ const ViewHampers = () => {
   const handlePreOrderorOrder = () => {
     dispatch(
       setProdukCheckout({
-        key: "produk",
+        key: "Hampers",
         Id: HampersData?.data.Id,
         Nama: HampersData?.data.Nama_Hampers,
         Harga: HampersData?.data.Harga,
