@@ -13,23 +13,20 @@ import {
   setProduk,
   setType,
 } from "../../../slicer/slicer_customer_view_produk";
-
 import { Custom_Date } from "../../../utils/Date";
-
 import { getHampersWithKuota } from "../../../api/hampers/hampers_query";
 
 const Home = () => {
-
-
   const CustomerDate = new Custom_Date();
-
   const twoDaysAfterToday = CustomerDate.twoDaysAfterTodayToString();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // States
+  // States for search query and items to show
   const [searchQuery, setSearchQuery] = useState("");
-  const [itemsToShow, setItemsToShow] = useState(5);
+  // Create separate state variables for items to show in hampers and produk penitip
+  const [itemsToShowHampers, setItemsToShowHampers] = useState(5);
+  const [itemsToShowProduk, setItemsToShowProduk] = useState(5);
 
   // Queries
   const { data: produkPenitipData, isLoading: isProdukLoading } = useQuery(
@@ -41,10 +38,7 @@ const Home = () => {
     () => getHampersWithKuota(twoDaysAfterToday)
   );
 
-  console.log("Hampers",hampersData);
-
-  console.log(hampersData);
-
+  // Filter the data based on the search query
   const filteredHampersData = hampersData?.data?.filter((hamper) =>
     hamper.Nama_Hampers.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -53,12 +47,18 @@ const Home = () => {
     produk.Nama_Produk.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Handlers for search and view actions
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
-  const loadMoreItems = () => {
-    setItemsToShow((prev) => prev + 5);
+  // Handlers to load more items in hampers and produk penitip
+  const loadMoreItemsHampers = () => {
+    setItemsToShowHampers((prev) => prev + 5);
+  };
+
+  const loadMoreItemsProduk = () => {
+    setItemsToShowProduk((prev) => prev + 5);
   };
 
   useEffect(() => {
@@ -221,13 +221,13 @@ const Home = () => {
                     <div className="flex flex-col gap-4 w-52">
                       <div className="skeleton h-32 w-full"></div>
                       <div className="skeleton h-4 w-28"></div>
-                      <div className="skeleton h-4 w-full"></div>
+                      <div class="skeleton h-4 w-full"></div>
                       <div className="skeleton h-4 w-full"></div>
                     </div>
                   </div>
                 ))
               : filteredHampersData
-                  ?.slice(0, itemsToShow)
+                  ?.slice(0, itemsToShowHampers)
                   .map((item, index) => (
                     <Link
                       to={`/Hampers/${item.Id}`}
@@ -266,11 +266,11 @@ const Home = () => {
                     </Link>
                   ))}
           </div>
-          {filteredHampersData?.length > itemsToShow && (
+          {filteredHampersData?.length > itemsToShowHampers && (
             <div className="flex justify-center mt-6">
               <button
                 className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary"
-                onClick={loadMoreItems}
+                onClick={loadMoreItemsHampers}
               >
                 Load More
               </button>
@@ -297,51 +297,53 @@ const Home = () => {
                     </div>
                   </div>
                 ))
-              : filteredProdukData?.slice(0, itemsToShow).map((item, index) => (
-                  <Link
-                    to={`/Produk/${item.Id}`}
-                    key={index}
-                    onClick={() => handleViewProduk(item, "produkPenitip")}
-                  >
-                    <div
+              : filteredProdukData
+                  ?.slice(0, itemsToShowProduk)
+                  .map((item, index) => (
+                    <Link
+                      to={`/Produk/${item.Id}`}
                       key={index}
-                      className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden focus:shadow-lg focus:scale-105 transition-transform duration-200 hover:shadow-lg hover:scale-105 cursor-pointer"
+                      onClick={() => handleViewProduk(item, "produkPenitip")}
                     >
                       <div
-                        className="flex items-end justify-end h-56 w-full bg-cover"
-                        style={{
-                          backgroundImage: `url(${item.Gambar})`,
-                        }}
+                        key={index}
+                        className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden focus:shadow-lg focus:scale-105 transition-transform duration-200 hover:shadow-lg hover:scale-105 cursor-pointer"
                       >
-                        <button
-                          className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                          onClick={() =>
-                            handleViewProduk(item, "produkPenitip")
-                          }
+                        <div
+                          className="flex items-end justify-end h-56 w-full bg-cover"
+                          style={{
+                            backgroundImage: `url(${item.Gambar})`,
+                          }}
                         >
-                          View
-                        </button>
+                          <button
+                            className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
+                            onClick={() =>
+                              handleViewProduk(item, "produkPenitip")
+                            }
+                          >
+                            View
+                          </button>
+                        </div>
+                        <div className="px-5 py-3">
+                          <h3 className="text-gray-700 uppercase">
+                            {item.Nama_Produk}
+                          </h3>
+                          <span className="text-gray-500 mt-2">
+                            Rp. {item.Harga_Produk}
+                          </span>
+                          <p className="text-gray-500 mt-2">
+                            Stok: {item.Stok_Produk}
+                          </p>
+                        </div>
                       </div>
-                      <div className="px-5 py-3">
-                        <h3 className="text-gray-700 uppercase">
-                          {item.Nama_Produk}
-                        </h3>
-                        <span className="text-gray-500 mt-2">
-                          Rp. {item.Harga_Produk}
-                        </span>
-                        <p className="text-gray-500 mt-2">
-                          Stok: {item.Stok_Produk}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  ))}
           </div>
-          {filteredProdukData?.length > itemsToShow && (
+          {filteredProdukData?.length > itemsToShowProduk && (
             <div className="flex justify-center mt-6">
               <button
                 className="px-4 py-2 bg-primary text-white rounded-md hover:bg-secondary"
-                onClick={loadMoreItems}
+                onClick={loadMoreItemsProduk}
               >
                 Load More
               </button>
