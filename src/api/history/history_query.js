@@ -1,11 +1,11 @@
 import Axios from "axios";
 
-import { ADMIN_ROUTES, CUSTOMER_ROUTES } from "../../constant/Routes";
+import { ADMIN_ROUTES } from "../../constant/Routes";
 
 
-export const getCustomer = async () => {
+export const getHistoryByEmail = async (customerEmail) => {
     const token = localStorage.getItem("token");
-    const response = await Axios.get(ADMIN_ROUTES.CUSTOMER, {
+    const response = await Axios.get(`${ADMIN_ROUTES.HISTORY}/${customerEmail}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -13,9 +13,9 @@ export const getCustomer = async () => {
     return response.data;
 }
 
-export const getTanggalLahir = async (Email) => {
+export const getAllHistory = async () => {
     const token = localStorage.getItem("token");
-    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_TanggalLahir}/${Email}`, {
+    const response = await Axios.get(ADMIN_ROUTES.HISTORY, {
         headers: {
             Authorization: `Bearer ${token}`,
         },

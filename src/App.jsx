@@ -41,7 +41,7 @@ import ViewHampers from "./pages/customer/Shop/ViewHampers.jsx";
 import Pembelian from "./pages/customer/Pembelian/Pembelian.jsx";
 import Resep from "./pages/dashboard/ADMIN/Resep/Resep.jsx";
 import Profile from "./pages/customer/Profile.jsx";
-import ProfileKaryawan from './pages/dashboard/ProfileKaryawan.jsx'
+import ProfileKaryawan from "./pages/dashboard/ProfileKaryawan.jsx";
 import KaryawanPage from "./pages/dashboard/MO/Karyawan/KaryawanPage.jsx";
 import GajiBonusPage from "./pages/dashboard/OWNER/Gaji_dan_Bonus/GajiBonusPage.jsx";
 
@@ -137,10 +137,7 @@ function App() {
 
               <Route path="/dashboard/Admin/customer" element={<Customer />} />
 
-              <Route
-                path="/dashboard/Admin/resep"
-                element={<Resep />}
-              />
+              <Route path="/dashboard/Admin/resep" element={<Resep />} />
               <Route path="/dashboard/Admin/history" element={<History />} />
 
               <Route path="/dashboard/Admin/customer" element={<Customer />} />
@@ -161,7 +158,7 @@ function App() {
                 path="/dashboard/MO/pengadaanBahanBaku/tambah"
                 element={<Tambah_Edit_PengadaanBahanBaku />}
               />
-              <Route 
+              <Route
                 path="/dashboard/MO/karyawan"
                 element={<KaryawanPage></KaryawanPage>}
               />
@@ -169,10 +166,16 @@ function App() {
 
             <Route path="/dashboard/Owner" element={<OwnerRoutes />}>
               <Route path="/dashboard/Owner/" element={<Index_Owner />} />
-              <Route path="/dashboard/Owner/gaji_dan_bonus" element={<GajiBonusPage></GajiBonusPage>}></Route>
+              <Route
+                path="/dashboard/Owner/gaji_dan_bonus"
+                element={<GajiBonusPage></GajiBonusPage>}
+              ></Route>
             </Route>
 
-            <Route path="/dashboard/profile" element={<ProfileKaryawan></ProfileKaryawan>}></Route>
+            <Route
+              path="/dashboard/profile"
+              element={<ProfileKaryawan></ProfileKaryawan>}
+            ></Route>
           </Route>
 
           <Route path="*" element={<NotFound />} />

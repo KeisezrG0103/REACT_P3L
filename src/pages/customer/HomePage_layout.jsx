@@ -36,7 +36,7 @@ const HomePage_layout = () => {
     setTimeout(() => {
       navigate("/");
     }, 1500);
-  }
+  };
 
   return (
     <div className="bg-base-100">
@@ -188,7 +188,8 @@ const HomePage_layout = () => {
           >
             <div className="flex flex-col sm:flex-row">
               {Object.values(ROUTES_HOMEPAGE).map((route) => (
-                <Link to={route.route}
+                <Link
+                  to={route.route}
                   key={route.route}
                   className="mt-3 text-sm text-gray-600 hover:text-gray-500 sm:mx-3 sm:mt-0"
                 >
