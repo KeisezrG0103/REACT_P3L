@@ -8,6 +8,8 @@ import { IoPerson } from "react-icons/io5";
 import { FaMoneyBillAlt } from "react-icons/fa"
 import { FaHistory } from "react-icons/fa";
 import { PiEggCrackFill } from "react-icons/pi"
+import { BsPersonFillCheck } from "react-icons/bs";
+import { FaBook } from "react-icons/fa";
 
 export const ADMIN_FEATURES = {
   DASHBOARD: {
@@ -40,7 +42,12 @@ export const ADMIN_FEATURES = {
     name: "Histori Pesanan",
     logo: <FaHistory />,
     route: "/dashboard/admin/history",
-  }
+  },
+  RESEP:{
+    name: "Resep",
+    logo: <FaBook />,
+    route: "/dashboard/admin/Resep",
+  },
   
 };
 
@@ -66,8 +73,27 @@ export const MO_FEATURES = {
     logo: <FaMoneyBillAlt/>,
     route: "/dashboard/MO/pengeluaran",
   },
+  MANAGE_KARYAWAN: {
+    name: "Karyawan",
+    logo: <BsPersonFillCheck />,
+    route: '/dashboard/MO/karyawan'
+  }
 };
 
 export const OWNER_FEATURES = {
-  LAPORAN: "Laporan",
+  DASHBOARD: {
+    name: "Dashboard",
+    logo: <RxDashboard />,
+    route: "/dashboard/owner/"
+  },
+  LAPORAN: {
+    name: "Laporan",
+    logo: <FcViewDetails />,
+    route: "/dashboard/owner/laporan",
+  },
+  GAJI_DAN_BONUS: {
+    name: "Gaji dan Bonus",
+    logo: <FaMoneyBillAlt />,
+    route: "/dashboard/owner/gaji_dan_bonus",
+  }
 };
