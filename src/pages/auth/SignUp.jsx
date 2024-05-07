@@ -9,7 +9,21 @@ const SignIn = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  const mutation = useMutation(registerCustomer);
+  const mutation = useMutation(registerCustomer, {
+    onSuccess: (res) => {
+      console.log("data : ", res?.data);
+      if (res.data == undefined) {
+        console.log("error : ", res.response);
+        toast.error(res.response.data.message); 
+      } else {
+        toast.success("Register Berhasil");
+        navigate("/auth/signin");
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   const onSubmit = (data) => {
     if (data.Password != data.Password_confirm) {
@@ -22,17 +36,7 @@ const SignIn = () => {
       Password: data.Password,
     };
 
-    mutation.mutate(dataSend, {
-      onSuccess: (res) => {
-        console.log(res);
-        toast.success("Register Berhasil");
-        navigate("/auth/signin");
-      },
-      onError: (err) => {
-        console.log(err);
-        toast.error("Register Gagal");
-      },
-    });
+    mutation.mutate(dataSend);
   };
 
   return (
@@ -63,7 +67,7 @@ const SignIn = () => {
             placeholder="Type your email here"
             className="input input-bordered w-full"
             required
-            {...register("Email", { required: true })}
+            {...register("Email", { required: true, pattern: /^\S+@\S+$/i })}
           />
         </label>
         <label className="form-control w-full">
