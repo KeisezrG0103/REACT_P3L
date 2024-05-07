@@ -13,6 +13,11 @@ export const ROUTES = {
     LOGOUT: BASEURL + "/api/logout",
 }
 
+export const KARYAWAN_ROUTES = {
+    DETAIL_PROFILE: `${BASEURL}/api/karyawan_nama`,
+    UPDATE_PROFILE: `${BASEURL}/api/password_karyawan`
+}
+
 
 export const ADMIN_ROUTES = {
     PRODUK: BASEURL + "/api/produk",
@@ -23,15 +28,21 @@ export const ADMIN_ROUTES = {
     BAHAN_BAKU: BASEURL + "/api/bahan_baku",
     PENGELUARAN: BASEURL + "/api/pengeluaran",
     CUSTOMER: BASEURL + "/api/customer",
-    HISTORY: BASEURL + "/api/history"
+    HISTORY: BASEURL + "/api/history",
+    Resep: BASEURL + "/api/resep",
+    Detail_resep: BASEURL + "/api/resep",
 }
 
 export const MO_ROUTES = {
     PENGADAAN_BAHAN_BAKU: BASEURL + "/api/pengadaan_bahan_baku",
+    KARYAWAN: `${BASEURL}/api/karyawan`
 }
 
 
 export const CUSTOMER_ROUTES = {
+    DETAIL_PROFILE: `${BASEURL}/api/customers_email`,
+    UPDATE_PROFILE: `${BASEURL}/api/customerss`,
+    HISTORY: `${BASEURL}/api/customers`,
     PRODUK_PENITIP: BASEURL + "/api/ProdukPenitip",
     GET_PRODUKNONPENITIPWITHKUOTA: BASEURL + "/api/produkNonPenitipWithKuota",
     GET_KUOTAPRODUKBYIDANDDATE: BASEURL + "/api/produkKuota",
@@ -50,6 +61,7 @@ export const CUSTOMER_ROUTES = {
 
 export const OWNER_ROUTES = {
     LAPORAN: BASEURL + "/api/laporan",
+    GAJI_BONUS: `${BASEURL}/api/gaji_karyawan`
 }
 
 
