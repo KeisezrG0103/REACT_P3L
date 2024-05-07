@@ -80,7 +80,7 @@ const DashboardLayout = () => {
               </Link>
             </li>
             <li>
-              <a className="justify-between">
+              <a className="justify-between" href="/dashboard/profile">
                 Profile
                 <span className="badge">New</span>
               </a>
