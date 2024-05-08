@@ -16,6 +16,8 @@ const Tambah_Edit_Penitip = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("Nama_Penitip", data.Nama_Penitip);
+    formData.append("email", data.email);
+    formData.append("no_telp", data.no_telp);
 
     try {
       await mutation.mutateAsync({ data: formData });
@@ -29,7 +31,8 @@ const Tambah_Edit_Penitip = () => {
   const onEdit = async (data) => {
     const formData = new FormData();
     formData.append("Nama_Penitip", data.Nama_Penitip);
-    formData.append("komisi", data.komisi);
+    formData.append("email", data.email);
+    formData.append("no_telp", data.no_telp);
 
     formData.append("_method", "PUT");
 
@@ -66,18 +69,59 @@ const Tambah_Edit_Penitip = () => {
                 defaultValue={isEdit ? penitip.Nama_Penitip : ""}
               />
             </label>
+            <label className="form-control w-full">
+              <div className="label">
+                <span className="label-text font-bold">Email</span>
+              </div>
+              <input
+                type="email"
+                placeholder="Email"
+                className="input input-bordered w-full"
+                required
+                {...register("email", { required: true })}
+                defaultValue={isEdit ? penitip.email : ""}
+              />
+            </label>
+            <label className="form-control w-full">
+              <div className="label">
+                <span className="label-text font-bold">Nomor Telepon</span>
+              </div>
+              <input
+                type="text"
+                placeholder="Nomor Telepon"
+                className="input input-bordered w-full"
+                required
+                {...register("no_telp", { required: true })}
+                defaultValue={isEdit ? penitip.no_telp : ""}
+              />
+            </label>
             {isEdit && (
               <label className="form-control w-full">
                 <div className="label">
-                  <span className="label-text font-bold">Komisi</span>
+                  <span className="label-text font-bold">Email</span>
+                </div>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="input input-bordered w-full"
+                  required
+                  {...register("email", { required: true })}
+                  defaultValue={isEdit ? penitip.email : ""}
+                />
+              </label>
+            )}
+            {isEdit && (
+              <label className="form-control w-full">
+                <div className="label">
+                  <span className="label-text font-bold">Nomor Telepon</span>
                 </div>
                 <input
                   type="number"
-                  placeholder="Komisi"
+                  placeholder="Nomor Telepon"
                   className="input input-bordered w-full"
                   required
-                  {...register("komisi", { required: true })}
-                  defaultValue={isEdit ? penitip.komisi : ""}
+                  {...register("no_telp", { required: true })}
+                  defaultValue={isEdit ? penitip.no_telp : ""}
                 />
               </label>
             )}

@@ -117,6 +117,8 @@ const Penitip = () => {
                       <th>ID</th>
                       <th>Nama</th>
                       <th>Komisi</th>
+                      <th>Email</th>
+                      <th>No Telpon</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -127,6 +129,8 @@ const Penitip = () => {
                         <td>{penitip.Id}</td>
                         <td>{penitip.Nama_Penitip}</td>
                         <td>{penitip.komisi}</td>
+                        <td>{penitip.email}</td>
+                        <td>{penitip.no_telp}</td>
                         <td>
                         <Link to={`/dashboard/MO/penitip/${penitip.id}`}>
                             <button
