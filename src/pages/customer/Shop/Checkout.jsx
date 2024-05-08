@@ -41,11 +41,20 @@ const Checkout = () => {
     dispatch(sortProduk());
   }, [dispatch]);
 
-  const handleRemoveProduk = (date, index) => {
-    const itemIndex = checkout.findIndex(
-      (item, idx) => idx === index && item.Tanggal_Pengiriman === date
-    );
-    dispatch(removeProduk(itemIndex));
+  const handleRemoveProduk = (date, index, itemToRemove) => {
+    const itemsForDate = groupedByDate[date];
+
+    if (itemsForDate) {
+      if (itemsForDate[index]?.Id === itemToRemove.Id) {
+        const globalIndex = checkout.findIndex(
+          (item) =>
+            item.Id === itemToRemove.Id && item.Tanggal_Pengiriman === date
+        );
+        console.log("Global index:", globalIndex);
+
+        dispatch(removeProduk(globalIndex));
+      }
+    }
   };
 
   const groupedByDate = checkout.reduce((groups, item) => {
@@ -82,7 +91,15 @@ const Checkout = () => {
     },
   });
 
-  const mutateDetailPesanan = useMutation(AddDetailPemesanan);
+  const mutateDetailPesanan = useMutation(AddDetailPemesanan, {
+    onSuccess: () => {
+      toast.success("Berhasil menambahkan detail pesanan");
+    },
+    onError: (error) => {
+      toast.error("Gagal menambahkan detail pesanan");
+      console.log(error);
+    },
+  });
 
   const toggleDateGroup = (date) => {
     setOpenDates((prevState) => ({
@@ -137,19 +154,18 @@ const Checkout = () => {
       }
     }
 
-    // for (let i = 0; i < items.length; i++) {
-    //   dispatch(removeProduk(index));
-    // }
+    for (let i = 0; i < items.length; i++) {
+      dispatch(removeProduk(index));
+    }
 
-    // for (let i = 0; i < items.length; i++) {
-    //   dispatch(removeCart(items[i].Id));
-    // }
+    for (let i = 0; i < items.length; i++) {
+      dispatch(removeCart(items[i].Id));
+    }
   };
 
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-4">
       <div className="p-2 lg:p-0 flex flex-col gap-4 w-full lg:w-1/3">
-        {/* Render grouped items by date */}
         {Object.entries(groupedByDate).map(([date, items], dateIndex) => {
           const { totalCost, totalPoints } = calculateCostAndPoints(items);
 
@@ -193,7 +209,7 @@ const Checkout = () => {
                       <div className="ml-auto">
                         <FaTrashAlt
                           className="text-red-500 cursor-pointer"
-                          onClick={() => handleRemoveProduk(date, index)}
+                          onClick={() => handleRemoveProduk(date, index, item)}
                         />
                       </div>
                     </div>

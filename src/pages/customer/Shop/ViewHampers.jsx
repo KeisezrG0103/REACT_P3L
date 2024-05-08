@@ -88,7 +88,7 @@ const ViewHampers = () => {
   const handlePreOrderorOrder = () => {
     dispatch(
       setProdukCheckout({
-        key: "produk",
+        key: "Hampers",
         Id: HampersData?.data.Id,
         Nama: HampersData?.data.Nama_Hampers,
         Harga: HampersData?.data.Harga,
@@ -105,6 +105,11 @@ const ViewHampers = () => {
 
     if (jumlah <= 0) {
       toast.error("Jumlah Hampers Tidak Boleh 0 atau Kurang dari 0");
+      return;
+    }
+
+    if (jumlah > kuotaHampers?.Kuota) {
+      toast.error("Jumlah Hampers Melebihi Kuota");
       return;
     }
 

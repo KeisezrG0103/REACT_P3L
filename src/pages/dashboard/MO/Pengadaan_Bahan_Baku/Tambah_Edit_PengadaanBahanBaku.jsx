@@ -55,7 +55,7 @@ const Tambah_Edit_PengadaanBahanBaku = () => {
 
     try {
       await mutation.mutateAsync({ data: formData });
-      toast.success("Produk berhasil ditambahkan");
+      toast.success("Pengadaan berhasil ditambahkan");
       Navigate("/dashboard/MO/pengadaanBahanBaku");
     } catch (error) {
       console.log(error.response.data);
@@ -69,7 +69,7 @@ const Tambah_Edit_PengadaanBahanBaku = () => {
 
     try {
       await mutationEdit.mutateAsync({ id: Pengadaan_edit.Id, data });
-      toast.success("Produk berhasil diubah");
+      toast.success("Pengadaan berhasil diubah");
       Navigate("/dashboard/MO/pengadaanBahanBaku");
     } catch (error) {
       console.log(error);
