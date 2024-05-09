@@ -105,7 +105,7 @@ function App() {
                 element={<Tambah_Edit_Bahan_Baku />}
               />
 
-              <Route path="/dashboard/Admin/history" element={<History />} />
+        
 
               <Route path="/dashboard/Admin/customer" element={<Customer />} />
             </Route>

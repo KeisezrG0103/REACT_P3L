@@ -36,11 +36,6 @@ export const ADMIN_FEATURES = {
     logo: <IoPerson />,
     route: "/dashboard/admin/customer",
   },
-  HISTORY:{
-    name: "Histori Pesanan",
-    logo: <FaHistory />,
-    route: "/dashboard/admin/history",
-  }
   
 };
 

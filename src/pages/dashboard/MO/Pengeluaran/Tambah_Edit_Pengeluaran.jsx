@@ -14,6 +14,13 @@ const Tambah_Edit_Pengeluaran = () => {
   const isEdit = useSelector((state) => state.isEdit.isEdit);
 
 
+  const changeDateFormate = (date) => {
+    const newDate = new Date(date);
+    const formatedDate = `${newDate.getFullYear()}-${
+      newDate.getMonth() + 1
+    }-${newDate.getDate()}`;
+    return formatedDate;
+  };
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -21,6 +28,7 @@ const Tambah_Edit_Pengeluaran = () => {
     formData.append("Harga", data.Harga);
     formData.append("Satuan", data.Satuan);
     formData.append("Qty", data.Qty);
+    formData.append("tanggal", changeDateFormate(startDate));
     
     try {
       await mutation.mutateAsync({ data: formData });
@@ -38,6 +46,7 @@ const Tambah_Edit_Pengeluaran = () => {
     formData.append("Harga", data.Harga);
     formData.append("Satuan", data.Satuan);
     formData.append("Qty", data.Qty);
+    formData.append("tanggal", changeDateFormate(startDate));
 
     formData.append("_method", "PUT");
     
@@ -116,6 +125,21 @@ const Tambah_Edit_Pengeluaran = () => {
                 defaultValue={isEdit ? pengeluaran.Qty : 0}
               />
             </label>
+
+            <label className="form-control">
+                <div className="label">
+                  <span className="label-text font-bold">
+                    Tanggal Pengadaan
+                  </span>
+                </div>
+
+                <ReactDatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  className="input input-bordered w-full"
+                  dateFormat="dd/MM/yyyy"
+                />
+              </label>
 
             <div className="flex justify-end mt-5">
               <button className="btn btn-error text-white mr-2" onClick={() => Navigate("/dashboard/MO/pengeluaran")}>

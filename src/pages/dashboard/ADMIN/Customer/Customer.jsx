@@ -3,7 +3,9 @@ import { useQuery } from "react-query";
 import { getCustomer } from "../../../../api/customer/customer_query";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { resetState } from "../../../../slicer/slicer_IsEdit";
+import { setItem, setOpen } from "../../../../slicer/slicer_history";
+import { resetState } from "../../../../slicer/slicer_history";
+import Modal_History from "../../../../components/Modal_History";
 
 
 const Customer = () => {
@@ -18,6 +20,11 @@ const Customer = () => {
     
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCustomer, setFilteredCustomer] = useState([]);
+
+  const openHistory = (item) => {
+    dispatch(setItem(item));
+    dispatch(setOpen(true));
+  };
 
   useEffect(() => {
     refetch();
@@ -84,12 +91,6 @@ const Customer = () => {
                       <th>No</th>
                       <th>Email</th>
                       <th>Nama</th>
-                      <th>Total Poin</th>
-                      <th>Total Saldo</th>
-                      <th>Is PengajuanSaldo</th>
-                      <th>Nama Bank</th>
-                      <th>Nomor Rekening</th>
-                      <th>Tanggal Lahir</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -99,25 +100,15 @@ const Customer = () => {
                         <td>{customer.Email}</td>
                         <td>{customer.Nama}</td>
                         <td>
-                          {customer.Total_Poin == null ? <td>-</td> : <td>{customer.Total_Poin}</td>}
+                        <button
+                            className="btn btn-sm btn-primary text-white ml-2 w-40"
+                            onClick={() => openHistory(customer)}
+                          >
+                            History Pesanan
+                          </button>
+                          <Modal_History />  
                         </td>
-                        <td>
-                          {customer.Total_Saldo == null ? <td>-</td> : <td>{customer.Total_Saldo}</td>}
-                        </td>
-                        <td>
-                          {customer.IsPengajuanSaldo == null ? <td>-</td> : <td>{customer.IsPengajuanSaldo}</td>}
-                        </td>
-                        <td>
-                          {customer.Nama_Bank == null ? <td>-</td> : <td>{customer.Nama_Bank}</td>}
-                        </td>
-                        <td>
-                         {customer.Nomor_Rekening == null ? <td>-</td> : <td>{customer.Nomor_Rekening}</td>}
-                        </td>
-                        <td>
-                          {customer.Tanggal_Lahir == null ? <td>-</td> : <td>{customer.Tanggal_Lahir}</td>}
-                        </td>
-                        <td>
-                        </td>
+                        
                       </tr>
                     ))}
                   </tbody>
