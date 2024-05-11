@@ -85,6 +85,9 @@ const Cart = () => {
           </button>
         </div>
         <hr className="my-3" />
+        {cartProduk.length == 0 && (
+          <p className="text-gray-400">No items in the cart</p>
+        )}
         {/* Cart items */}
         {cartProduk?.map((item, index) => (
           <div className="flex justify-between mt-6" key={index}>
@@ -119,23 +122,25 @@ const Cart = () => {
 
         {/* Apply Promo code and Checkout button */}
 
-        <button
-          className="flex items-center justify-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary"
-          onClick={handleCheckout}
-        >
-          <span>Checkout</span>
-          <svg
-            className="h-5 w-5 mx-2"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        {cartProduk.length > 0 && (
+          <button
+            className="flex items-center justify-center mt-4 px-3 py-2 bg-primary text-white text-sm uppercase font-medium rounded hover:bg-secondary focus:outline-none focus:bg-secondary"
+            onClick={handleCheckout}
           >
-            <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-          </svg>
-        </button>
+            <span>Checkout</span>
+            <svg
+              className="h-5 w-5 mx-2"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   );

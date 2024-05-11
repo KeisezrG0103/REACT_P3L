@@ -7,7 +7,6 @@ import Roti from "../../../assets/roti.avif";
 import Minuman from "../../../assets/minuman.avif";
 import Cake from "../../../assets/cake.avif";
 import { getProdukPenitip } from "../../../api/produkPenitip/Produk_penitip_query";
-import { useSelector } from "react-redux";
 import {
   resetStateView,
   setProduk,
@@ -243,14 +242,7 @@ const Home = () => {
                           style={{
                             backgroundImage: `url(${item.Gambar})`,
                           }}
-                        >
-                          <button
-                            className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                            onClick={() => handleViewHampers(item, "hampers")}
-                          >
-                            View
-                          </button>
-                        </div>
+                        ></div>
                         <div className="px-5 py-3">
                           <h3 className="text-gray-700 uppercase">
                             {item.Nama_Hampers}
@@ -314,16 +306,7 @@ const Home = () => {
                           style={{
                             backgroundImage: `url(${item.Gambar})`,
                           }}
-                        >
-                          <button
-                            className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                            onClick={() =>
-                              handleViewProduk(item, "produkPenitip")
-                            }
-                          >
-                            View
-                          </button>
-                        </div>
+                        ></div>
                         <div className="px-5 py-3">
                           <h3 className="text-gray-700 uppercase">
                             {item.Nama_Produk}

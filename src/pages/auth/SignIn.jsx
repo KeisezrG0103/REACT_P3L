@@ -97,7 +97,7 @@ const SignIn = () => {
               <span className="label-text font-bold">Email</span>
             </div>
             <input
-              type="email"
+              type="text"
               placeholder="Type your email here"
               className="input input-bordered w-full"
               {...register("Email", { required: true })}

@@ -183,14 +183,7 @@ const Shop = () => {
                       <div
                         className="flex items-end justify-end h-56 w-full bg-cover bg-center"
                         style={{ backgroundImage: `url(${item.Gambar})` }}
-                      >
-                        <button
-                          className="px-3 py-1 bg-gray-800 text-white text-sm rounded-md m-2"
-                          onClick={() => handleViewProduk(item.Id, item)}
-                        >
-                          View
-                        </button>
-                      </div>
+                      ></div>
                       <div className="px-5 py-3">
                         <h3 className="text-gray-700 uppercase">{item.Nama}</h3>
                         <span className="text-gray-500 mt-2">
