@@ -39,6 +39,10 @@ import VerifyOTP from "./pages/customer/Forgot_Password/Verify_OTP.jsx";
 import ResetPassword from "./pages/customer/Forgot_Password/Reset_Password.jsx";
 import ViewHampers from "./pages/customer/Shop/ViewHampers.jsx";
 import Pembelian from "./pages/customer/Pembelian/Pembelian.jsx";
+import Profile from "./pages/customer/Profile/Profile.jsx";
+import Selesai from "./pages/customer/Pembelian/Selesai/Selesai.jsx";
+import OnGoing from "./pages/customer/Pembelian/OnGoing/OnGoing.jsx";
+import Ditolak from "./pages/customer/Pembelian/Ditolak/Ditolak.jsx";
 
 function App() {
   return (
@@ -53,7 +57,12 @@ function App() {
             <Route path="/Produk/:id" element={<ViewProduk />} />
             <Route path="/Checkout" element={<Checkout />} />
             <Route path="/Hampers/:id" element={<ViewHampers />} />
-            <Route path="/Pembelian" element={<Pembelian />} />
+            <Route element={<Pembelian />}>
+              <Route path="/Pembelian/OnGoing" element={<OnGoing />} />
+              <Route path="/Pembelian/Selesai" element={<Selesai />} />
+              <Route path="/Pembelian/Ditolak" element={<Ditolak />} />
+            </Route>
+            <Route path="/Profile" element={<Profile />} />
           </Route>
           <Route path="/auth" element={<IsAuthRoute />}>
             <Route element={<Layout />}>
@@ -104,8 +113,6 @@ function App() {
                 path="/dashboard/Admin/bahan_baku/:id"
                 element={<Tambah_Edit_Bahan_Baku />}
               />
-
-        
 
               <Route path="/dashboard/Admin/customer" element={<Customer />} />
             </Route>

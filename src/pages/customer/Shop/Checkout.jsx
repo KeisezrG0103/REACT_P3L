@@ -166,6 +166,12 @@ const Checkout = () => {
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-4">
       <div className="p-2 lg:p-0 flex flex-col gap-4 w-full lg:w-1/3">
+        {checkout.length === 0 && (
+          <div className="text-center text-xl font-semibold">
+            Mohon Berbelanja terlebih dahulu
+          </div>
+        )}
+
         {Object.entries(groupedByDate).map(([date, items], dateIndex) => {
           const { totalCost, totalPoints } = calculateCostAndPoints(items);
 

@@ -150,7 +150,7 @@ const HomePage_layout = () => {
                         <Link to="/checkout">Checkout</Link>
                       </li>
                       <li>
-                        <Link to="/Pembelian">Pembelian</Link>
+                        <Link to="/Pembelian/OnGoing">Pembelian</Link>
                       </li>
                       <li>
                         <Link to="/profile">Profile</Link>

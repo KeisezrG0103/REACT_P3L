@@ -46,6 +46,7 @@ export const CUSTOMER_ROUTES = {
     GET_NO_NOTA: BASEURL + "/api/generateNoNota",
     PESAN_PRODUK: BASEURL + "/api/pesanProduk",
     DETAIL_PESANAN: BASEURL + "/api/AddDetailPemesanan",
+    GET_USER_BY_EMAIL: BASEURL + "/api/customer",
 }
 
 export const OWNER_ROUTES = {
@@ -71,3 +72,18 @@ export const ROUTES_HOMEPAGE = {
         route: "/about",
     }
 }
+
+export const NavigationPembelian = [
+    {
+        name: "Home",
+        link: "/",
+    },
+    {
+        name: "Checkout",
+        link: "/checkout",
+    },
+    {
+        name: "Shop",
+        link: "/shop",
+    },
+];
