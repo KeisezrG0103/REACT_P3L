@@ -56,9 +56,9 @@ const Selesai = () => {
           {item.Detail_Pesanan.map((detailPesanan) => (
             <div
               key={detailPesanan.id}
-              className="flex flex-col items-start card-body space-y-4"
+              className="flex flex-col items-start card-body"
             >
-              <div className="flex flex-row items-start card border-gray-50-2 border-gray-600 shadow-md p-4 rounded-sm w-full">
+              <div className="flex flex-row items-start card border-gray-50-2 border-gray-600 shadow-md rounded-sm w-full">
                 <img
                   src={
                     detailPesanan.Gambar_Produk || detailPesanan.Gambar_Hampers
@@ -67,13 +67,13 @@ const Selesai = () => {
                   className="w-32 h-32"
                 />
                 <div className="flex flex-col items-start ml-4">
-                  <h1 className="text-2xl font-semibold text-black ml-4">
+                  <h1 className="text-2xl font-normal text-black ml-4">
                     {detailPesanan.Nama_Produk || detailPesanan.Nama_Hampers}
                   </h1>
-                  <h2 className="text-lg font-semibold text-black ml-4">
+                  <h2 className="text-lg font-normal text-black ml-4">
                     Rp. {detailPesanan.SubTotal}
                   </h2>
-                  <h2 className="text-lg font-semibold text-black ml-4">
+                  <h2 className="text-lg font-normal text-black ml-4">
                     Jumlah : {detailPesanan.Total_Produk}
                   </h2>
                 </div>
