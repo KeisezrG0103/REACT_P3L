@@ -53,9 +53,9 @@ const Selesai = () => {
             </h1>
           </div>
 
-          {item.Detail_Pesanan.map((detailPesanan) => (
+          {item.Detail_Pesanan.map((detailPesanan,index) => (
             <div
-              key={detailPesanan.id}
+              key={index}
               className="flex flex-col items-start card-body"
             >
               <div className="flex flex-row items-start card border-gray-50-2 border-gray-600 shadow-md rounded-sm w-full">
