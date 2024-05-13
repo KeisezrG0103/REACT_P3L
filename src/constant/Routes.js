@@ -47,6 +47,7 @@ export const CUSTOMER_ROUTES = {
     PESAN_PRODUK: BASEURL + "/api/pesanProduk",
     DETAIL_PESANAN: BASEURL + "/api/AddDetailPemesanan",
     GET_USER_BY_EMAIL: BASEURL + "/api/customer",
+    GET_PesananSelesaiWithDetailPesananAndTanggal: BASEURL + "/api/PesananSelesaiWithDetailPesananAndTanggal",
 }
 
 export const OWNER_ROUTES = {

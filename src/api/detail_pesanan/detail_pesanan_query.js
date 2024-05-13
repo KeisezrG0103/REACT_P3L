@@ -10,3 +10,14 @@ export const AddDetailPemesanan = async (data) => {
     });
     return res.data;
 }
+
+
+export const getPesananSelesaiByCustomer = async (Email) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${CUSTOMER_ROUTES.GET_PesananSelesaiWithDetailPesananAndTanggal}/${Email}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return res.data;
+}

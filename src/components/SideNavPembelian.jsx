@@ -22,7 +22,7 @@ const SideNavPembelian = () => {
         <img
           src="https://cdn-8.motorsport.com/images/mgl/YP3wdKQ2/s800/fabio-quartararo-yamaha-factor.jpg"
           alt="profile"
-          className="p-2 w-20 h-20 rounded-full"
+          className="p-2 w-16 h-16 rounded-full"
         />
         {isLoading ? (
           <div className="skeleton h-4 w-28"></div>

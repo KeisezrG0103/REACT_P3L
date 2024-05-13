@@ -58,7 +58,7 @@ const ViewProduk = () => {
   }, [ProdukData, Produk]);
 
   // Query for kuotaProduk
-  const { data: kuotaProduk } = useQuery(
+  const { data: kuotaProduk, isLoading } = useQuery(
     ["kuota", Produk_Provider?.Id || id, toStringDate(startDate)],
     () =>
       getKuotaProdukByIdAndDate(
@@ -71,6 +71,9 @@ const ViewProduk = () => {
         !(type === "produkPenitip" || type === "Add to cart") || !customer,
     }
   );
+
+  console.log("kuota", kuotaProduk);
+  console.log("produk", Produk_Provider);
 
   // Update kuotaProduk_ state
   useEffect(() => {
@@ -122,7 +125,10 @@ const ViewProduk = () => {
         toast.error("Jumlah Produk Tidak Boleh 0 atau Kurang dari 0");
         return;
       }
-      if (Produk_Provider.Stok < jumlah || Produk_Provider.Stok_Produk < jumlah) {
+      if (
+        Produk_Provider.Stok < jumlah ||
+        Produk_Provider.Stok_Produk < jumlah
+      ) {
         toast.error("Stok Produk Tidak Cukup");
         return;
       }
@@ -209,9 +215,19 @@ const ViewProduk = () => {
               <div>
                 {type === "produkPenitip" || type === "Add to cart" ? (
                   <div className="badge badge-success text-white p-4">
-                    Stok {Produk_Provider?.Stok_Produk || Produk_Provider?.Stok}{" "}
-                    Produk
+                    {Produk_Provider?.Stok == 0 ||
+                    Produk_Provider?.Stok_Produk == 0 ? (
+                      <span className="text-white">Produk Habis</span>
+                    ) : (
+                      <span className="text-white">
+                        Stok{" "}
+                        {Produk_Provider?.Stok || Produk_Provider?.Stok_Produk}{" "}
+                        Produk
+                      </span>
+                    )}
                   </div>
+                ) : isLoading ? (
+                  <div className="skeleton h-6 w-20"></div>
                 ) : (
                   <div className="badge badge-success text-white p-4">
                     Kuota {kuotaProduk_} Produk
