@@ -88,3 +88,18 @@ export const NavigationPembelian = [
         link: "/shop",
     },
 ];
+
+export const breadCrumbPembelian = [
+    {
+      name: "Saat Ini",
+      link: "/Pembelian/OnGoing",
+    },
+    {
+      name: "Selesai",
+      link: "/Pembelian/Selesai",
+    },
+    {
+      name: "Ditolak",
+      link: "/Pembelian/Ditolak",
+    },
+  ];

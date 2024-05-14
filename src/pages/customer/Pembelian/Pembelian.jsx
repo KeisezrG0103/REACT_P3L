@@ -1,22 +1,8 @@
-import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import SideNavPembelian from "../../../components/SideNavPembelian";
+import { breadCrumbPembelian } from "../../../constant/Routes";
 
-export const breadCrumbPembelian = [
-  {
-    name: "Saat Ini",
-    link: "/Pembelian/OnGoing",
-  },
-  {
-    name: "Selesai",
-    link: "/Pembelian/Selesai",
-  },
-  {
-    name: "Ditolak",
-    link: "/Pembelian/Ditolak",
-  },
-];
 
 const Pembelian = () => {
   const location = useLocation();
@@ -57,5 +43,6 @@ const Pembelian = () => {
     </div>
   );
 };
+
 
 export default Pembelian;

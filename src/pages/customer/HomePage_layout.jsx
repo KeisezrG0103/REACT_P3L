@@ -103,7 +103,9 @@ const HomePage_layout = () => {
                   <CiCoins1 className="w-6 h-6" />
                   {/* make a Poin */}
                   <span className="text-lg font-semibold text-gray-600">
-                    {poinCustomer?.Total_Poin}
+                    {poinCustomer?.Total_Poin == null
+                      ? 0
+                      : poinCustomer?.Total_Poin}
                   </span>
                 </div>
               ) : null}

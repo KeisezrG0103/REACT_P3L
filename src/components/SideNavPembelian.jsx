@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { NavigationPembelian } from "../constant/Routes";
 import { getCustomerByEmail } from "../api/customer/customer_query";
@@ -43,7 +42,7 @@ const SideNavPembelian = () => {
         )}
 
         {isLoading ? (
-          <div className="skeleton h-4 w-28"></div>
+          <div className="skeleton h-4 w-28 my-4"></div>
         ) : (
           <h2 className="text-md font-normal text-black">
             Saldo : Rp.{" "}

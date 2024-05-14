@@ -1,4 +1,3 @@
-import React from "react";
 import { getPesananSelesaiByCustomer } from "../../../../api/detail_pesanan/detail_pesanan_query";
 import { useQuery } from "react-query";
 
