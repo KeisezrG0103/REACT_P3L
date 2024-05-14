@@ -19,6 +19,7 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const checkout = useSelector((state) => state?.checkout.Produk);
   const today = new Date();
+  console.log("today", today);
 
   const month = today.getMonth() + 1;
 
@@ -111,6 +112,12 @@ const Checkout = () => {
     return date.toISOString().split("T")[0];
   };
 
+  const toStringWithTime = (date) => {
+    return (
+      date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
+    );
+  };
+
   const handlePesanan = (date, items, index) => {
     console.log(NoNota?.no_nota);
     console.log(`Handling order for date: ${date}`);
@@ -121,7 +128,7 @@ const Checkout = () => {
       Id: NoNota?.no_nota,
       Total: calculateCostAndPoints(items).totalCost,
       Tanggal_Diambil: date,
-      Tanggal_Pesan: toStringDate(today),
+      Tanggal_Pesan: toStringWithTime(today),
       Customer_Email: customer.Email,
       Poin_Didapat: calculateCostAndPoints(items).totalPoints,
     };
