@@ -37,3 +37,13 @@ export const pesanProduk = async (data) => {
 
 }
 
+export const getNotaByNoNota = async (noNota) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${CUSTOMER_ROUTES.GET_NOTA_BY_NO_NOTA}/${noNota}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+}
+

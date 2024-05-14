@@ -48,6 +48,7 @@ export const CUSTOMER_ROUTES = {
     DETAIL_PESANAN: BASEURL + "/api/AddDetailPemesanan",
     GET_USER_BY_EMAIL: BASEURL + "/api/customer",
     GET_PesananSelesaiWithDetailPesananAndTanggal: BASEURL + "/api/PesananSelesaiWithDetailPesananAndTanggal",
+    GET_NOTA_BY_NO_NOTA: BASEURL + "/api/getNotaById",
 }
 
 export const OWNER_ROUTES = {
@@ -91,15 +92,15 @@ export const NavigationPembelian = [
 
 export const breadCrumbPembelian = [
     {
-      name: "Saat Ini",
-      link: "/Pembelian/OnGoing",
+        name: "Saat Ini",
+        link: "/Pembelian/OnGoing",
     },
     {
-      name: "Selesai",
-      link: "/Pembelian/Selesai",
+        name: "Selesai",
+        link: "/Pembelian/Selesai",
     },
     {
-      name: "Ditolak",
-      link: "/Pembelian/Ditolak",
+        name: "Ditolak",
+        link: "/Pembelian/Ditolak",
     },
-  ];
+];
