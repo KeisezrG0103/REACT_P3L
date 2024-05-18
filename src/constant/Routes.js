@@ -49,6 +49,8 @@ export const CUSTOMER_ROUTES = {
     GET_USER_BY_EMAIL: BASEURL + "/api/customer",
     GET_PesananSelesaiWithDetailPesananAndTanggal: BASEURL + "/api/PesananSelesaiWithDetailPesananAndTanggal",
     GET_NOTA_BY_NO_NOTA: BASEURL + "/api/getNotaById",
+    GET_ALAMAT : BASEURL + "/api/getAlamat",
+    ADD_ALAMAT : BASEURL + "/api/addAlamat",
 }
 
 export const OWNER_ROUTES = {
