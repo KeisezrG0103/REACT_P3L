@@ -14,11 +14,19 @@ import { pesanProduk } from "../../../api/pesanan/pesanan_query";
 import { useMutation } from "react-query";
 import toast from "react-hot-toast";
 import { AddDetailPemesanan } from "../../../api/detail_pesanan/detail_pesanan_query";
+import { GetAlamat } from "../../../api/alamat/alamat_query";
+import { FaRegSquarePlus } from "react-icons/fa6";
+import { setItems, setModal, setModalKey } from "../../../slicer/slicer_modal";
+import Modal_Alamat from "../../../components/Modal_Alamat";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const checkout = useSelector((state) => state?.checkout.Produk);
   const today = new Date();
+  console.log("today", today);
+  const [alamat, setAlamat] = useState(0);
+
+  const [isDelivery, setIsDelivery] = useState(false);
 
   const month = today.getMonth() + 1;
 
@@ -27,6 +35,14 @@ const Checkout = () => {
   );
 
   const customer = JSON.parse(localStorage.getItem("customer"));
+
+  const { data: alamatData } = useQuery(
+    ["alamat", customer.Email],
+    () => GetAlamat(customer.Email),
+    {
+      enabled: isDelivery,
+    }
+  );
 
   const { data: TanggalLahirData } = useQuery(
     ["tanggalLahir", customer.Email],
@@ -107,8 +123,11 @@ const Checkout = () => {
       [date]: !prevState[date],
     }));
   };
-  const toStringDate = (date) => {
-    return date.toISOString().split("T")[0];
+
+  const toStringWithTime = (date) => {
+    return (
+      date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
+    );
   };
 
   const handlePesanan = (date, items, index) => {
@@ -121,9 +140,11 @@ const Checkout = () => {
       Id: NoNota?.no_nota,
       Total: calculateCostAndPoints(items).totalCost,
       Tanggal_Diambil: date,
-      Tanggal_Pesan: toStringDate(today),
+      Tanggal_Pesan: toStringWithTime(today),
       Customer_Email: customer.Email,
       Poin_Didapat: calculateCostAndPoints(items).totalPoints,
+      Is_Deliver: isDelivery,
+      Alamat_Id: isDelivery ? alamat : null,
     };
     console.log(dataToSend);
 
@@ -162,10 +183,23 @@ const Checkout = () => {
       dispatch(removeCart(items[i].Id));
     }
   };
+  console.log(alamat);
+
+  const handleAddAlamat = () => {
+    dispatch(setModal(true));
+    dispatch(setItems("Alamat"));
+    dispatch(setModalKey("Alamat"));
+  };
 
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-4">
       <div className="p-2 lg:p-0 flex flex-col gap-4 w-full lg:w-1/3">
+        {checkout.length === 0 && (
+          <div className="text-center text-xl font-semibold">
+            Mohon Berbelanja terlebih dahulu
+          </div>
+        )}
+
         {Object.entries(groupedByDate).map(([date, items], dateIndex) => {
           const { totalCost, totalPoints } = calculateCostAndPoints(items);
 
@@ -215,6 +249,66 @@ const Checkout = () => {
                     </div>
                   </div>
                 ))}
+
+                <div className="mt-4 flex flex-col gap-2 w-36">
+                  <h3 className="text-md font-semibold">Pilih Delivery</h3>
+                  <div className="form-control">
+                    <label className="cursor-pointer flex flex-row items-center gap-2">
+                      <input
+                        type="radio"
+                        name="isDelivery"
+                        className="radio checked:bg-primary"
+                        checked={!isDelivery}
+                        onChange={() => setIsDelivery(false)}
+                      />
+                      <span className="label-text">Ambil di Toko</span>
+                    </label>
+                  </div>
+                  <div className="form-control">
+                    <label className="cursor-pointer flex flex-row items-center gap-2">
+                      <input
+                        type="radio"
+                        name="isDelivery"
+                        className="radio checked:bg-primary"
+                        checked={isDelivery}
+                        onChange={() => setIsDelivery(true)}
+                      />
+                      <span className="label-text">Delivery</span>
+                    </label>
+                  </div>
+
+                  {isDelivery && (
+                    <>
+                      <div className="form-control mt-4 flex flex-col gap-2">
+                        {/* dropDown */}
+                        <select
+                          className="select select-bordered select-primary"
+                          placeholder="Pilih Delivery"
+                          onChange={(e) => setAlamat(e.target.value)}
+                        >
+                          {alamatData?.data.length === 0 && (
+                            <option>Anda belum memiliki alamat</option>
+                          )}
+                          {alamatData?.data.map((alamat, index) => (
+                            <option key={index} value={alamat.Id}>
+                              {alamat.Alamat}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <h2
+                          className="text-sm font-semibold text-red-500 cursor-pointer underline"
+                          onClick={handleAddAlamat}
+                        >
+                          Tambah Alamat?
+                        </h2>
+
+                        <Modal_Alamat />
+                      </div>
+                    </>
+                  )}
+                </div>
 
                 <div className="mt-4 flex flex-row justify-between items-end">
                   <div className="flex flex-col gap-2">

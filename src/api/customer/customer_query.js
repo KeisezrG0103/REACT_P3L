@@ -23,3 +23,13 @@ export const getTanggalLahir = async (Email) => {
     return response.data;
 }
 
+export const getCustomerByEmail = async (Email) => {
+    const token = localStorage.getItem("token");
+    const response = await Axios.get(`${CUSTOMER_ROUTES.GET_USER_BY_EMAIL}/${Email}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data;
+}
+

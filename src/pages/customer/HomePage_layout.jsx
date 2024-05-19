@@ -103,7 +103,9 @@ const HomePage_layout = () => {
                   <CiCoins1 className="w-6 h-6" />
                   {/* make a Poin */}
                   <span className="text-lg font-semibold text-gray-600">
-                    {poinCustomer?.Total_Poin}
+                    {poinCustomer?.Total_Poin == null
+                      ? 0
+                      : poinCustomer?.Total_Poin}
                   </span>
                 </div>
               ) : null}
@@ -150,7 +152,7 @@ const HomePage_layout = () => {
                         <Link to="/checkout">Checkout</Link>
                       </li>
                       <li>
-                        <Link to="/Pembelian">Pembelian</Link>
+                        <Link to="/Pembelian/OnGoing">Pembelian</Link>
                       </li>
                       <li>
                         <Link to="/profile">Profile</Link>

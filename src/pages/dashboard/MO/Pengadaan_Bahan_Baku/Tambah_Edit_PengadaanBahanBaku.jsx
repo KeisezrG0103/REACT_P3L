@@ -89,7 +89,7 @@ const Tambah_Edit_PengadaanBahanBaku = () => {
         <div className="card shadow-lg bg-base-100">
           <div className="card-header">
             <h2 className="card-title text-xl font-semibold ml-4 mt-5">
-              Tambah Hampers
+              Tambah Pengadaan
             </h2>
           </div>
           <div className="card-body">

@@ -17,6 +17,7 @@ import reducer_Filter from "../slicer/slicer_FIltered";
 import reducer_customer_view_produk from "../slicer/slicer_customer_view_produk";
 import reducer_cartProduk from "../slicer/slicer_cartProduk";
 import reducer_checkout from "../slicer/slicer_checkout";
+import reducer_Nota from "../slicer/slicer_Nota";
 
 const persistConfig = {
     key: 'root',
@@ -36,13 +37,14 @@ const rootReducer = combineReducers({
     isEdit: persistReducer(persistConfig, reducer_isEdit),
     modal: reducer_modal,
     DetailHampers: reducer_DetailHampers,
-    History: persistReducer(persistConfig,reducer_History),
+    History: persistReducer(persistConfig, reducer_History),
     tambahEditDetailHampers: reducer_tambahEditDetailHampers,
     cart: reducer_cart,
-    Filter : persistReducer(persistConfig, reducer_Filter),
+    Filter: persistReducer(persistConfig, reducer_Filter),
     customer_view_produk: persistReducer(persistConfig2, reducer_customer_view_produk),
     cartProduk: persistReducer(persistConfig, reducer_cartProduk),
-    checkout: persistReducer(persistConfig, reducer_checkout),  
+    checkout: persistReducer(persistConfig, reducer_checkout),
+    Nota: persistReducer(persistConfig, reducer_Nota),
 });
 
 
