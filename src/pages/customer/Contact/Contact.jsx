@@ -62,7 +62,7 @@ const Contact = () => {
                 </div>
                 <div className="flex items-center space-x-4 mt-2">
                 <IoLogoWhatsapp size={18}></IoLogoWhatsapp>
-                <p className="p__opensans">+62 812-3456-7890 ( Whatsapp )</p>
+                <p className="p__opensans">+62 812-3456-7890 (Whatsapp)</p>
                 </div>
               </div>
             </div>
