@@ -51,7 +51,7 @@ const Proses_Pembelian = () => {
                   </thead>
                   <tbody>
                     {pesanan?.data.map((item, index) => (
-                      <tr key={item.id} className="text-center">
+                      <tr key={index} className="text-center">
                         <td>{index + 1}</td>
                         <td>{item.Id}</td>
                         <td>{item.Tanggal_Pesan}</td>
