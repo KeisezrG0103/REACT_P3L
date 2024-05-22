@@ -21,3 +21,13 @@ export const getPesananSelesaiByCustomer = async (Email) => {
     });
     return res.data;
 }
+
+export const getPesananOnGoingByCustomer = async (Email) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${CUSTOMER_ROUTES.GET_PesananOnGoing}/${Email}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return res.data;
+}

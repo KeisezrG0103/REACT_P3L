@@ -115,8 +115,12 @@ const Contact = () => {
                   Email
                 </p>
                 <div className="flex items-center space-x-4 mt-2">
-                  <MdEmail size={15}></MdEmail>
-                  <p className="p__opensans">atmakitchen898@gmail.com</p>
+                  <FaPhoneAlt size={15}></FaPhoneAlt>
+                  <p className="p__opensans">(022) 8765 4321</p>
+                </div>
+                <div className="flex items-center space-x-4 mt-2">
+                  <IoLogoWhatsapp size={18}></IoLogoWhatsapp>
+                  <p className="p__opensans">+62 812-3456-7890 (Whatsapp)</p>
                 </div>
               </div>
             </div>
