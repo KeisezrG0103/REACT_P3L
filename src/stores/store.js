@@ -19,6 +19,7 @@ import reducer_cartProduk from "../slicer/slicer_cartProduk";
 import reducer_checkout from "../slicer/slicer_checkout";
 import reducer_Nota from "../slicer/slicer_Nota";
 import reducer_resep from "../slicer/slicer_DetailResep";
+import reducer_bukti from "../slicer/slicer_bukti";
 
 const persistConfig = {
     key: 'root',
@@ -46,6 +47,7 @@ const rootReducer = combineReducers({
     cartProduk: persistReducer(persistConfig, reducer_cartProduk),
     checkout: persistReducer(persistConfig, reducer_checkout),
     Nota: persistReducer(persistConfig, reducer_Nota),
+    bukti: reducer_bukti,
     DetailResep: persistReducer(persistConfig, reducer_resep)
 
 });
