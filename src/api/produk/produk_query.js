@@ -47,7 +47,6 @@ export const deleteProduk = async (id) => {
 
 export const getProdukNonPenitipWithKuota = async (date) => {
   const date_ = date.queryKey[1];
-  console.log(date_);
   const response = await Axios.get(`${CUSTOMER_ROUTES.GET_PRODUKNONPENITIPWITHKUOTA}/${date_}`);
   return response.data;
 }
@@ -59,7 +58,6 @@ export const getKuotaProdukByIdAndDate = async (id, date) => {
 
 
 export const getProdukByIdWithQuota = async (id, date) => {
-  console.log(id, date);
   const response = await Axios.get(`${CUSTOMER_ROUTES.GET_GETPRODUKBYIDBYDATE}/${id}/${date}`);
   return response.data;
 }

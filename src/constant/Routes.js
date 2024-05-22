@@ -23,11 +23,13 @@ export const ADMIN_ROUTES = {
     BAHAN_BAKU: BASEURL + "/api/bahan_baku",
     PENGELUARAN: BASEURL + "/api/pengeluaran",
     CUSTOMER: BASEURL + "/api/customer",
-    HISTORY: BASEURL + "/api/history"
+    HISTORY: BASEURL + "/api/history",
+    GET_RESEP : BASEURL + "/api/resep"
 }
 
 export const MO_ROUTES = {
     PENGADAAN_BAHAN_BAKU: BASEURL + "/api/pengadaan_bahan_baku",
+    getDaftarPesananYangDiprosesHariIni: BASEURL + "/api/getDaftarPesananYangDiprosesHariIni",
 }
 
 

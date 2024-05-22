@@ -27,6 +27,16 @@ export class Custom_Date {
         return this.toStringDate(this.getTwoDaysAfterToday());
     }
 
+    GetTommorow() {
+        const tommorow = new Date(this.today);
+        tommorow.setDate(this.today.getDate() + 1);
+        return tommorow;
+    }
+
+    tommorowToString() {
+        return this.toStringDate(this.GetTommorow());
+    }
+
 
 
 }

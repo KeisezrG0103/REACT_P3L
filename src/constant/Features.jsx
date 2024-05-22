@@ -4,8 +4,8 @@ import { BsFillBoxFill } from "react-icons/bs";
 import { IoReceiptOutline } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
 import { IoPerson } from "react-icons/io5";
-import { FaMoneyBillAlt } from "react-icons/fa"
-import { PiEggCrackFill } from "react-icons/pi"
+import { FaMoneyBillAlt } from "react-icons/fa";
+import { PiEggCrackFill } from "react-icons/pi";
 
 export const ADMIN_FEATURES = {
   DASHBOARD: {
@@ -28,13 +28,18 @@ export const ADMIN_FEATURES = {
     logo: <PiEggCrackFill />,
     route: "/dashboard/admin/bahan_baku",
   },
- 
-  CUSTOMER:{
+
+  CUSTOMER: {
     name: "Customer",
     logo: <IoPerson />,
     route: "/dashboard/admin/customer",
   },
   
+  RESEP: {
+    name: "Resep",
+    logo: <IoReceiptOutline />,
+    route: "/dashboard/admin/resep",
+  },
 };
 
 export const MO_FEATURES = {
@@ -54,10 +59,15 @@ export const MO_FEATURES = {
     logo: <BsFillBoxFill />,
     route: "/dashboard/MO/penitip",
   },
-  PENGELUARAN:{
+  PENGELUARAN: {
     name: "Pengeluaran",
-    logo: <FaMoneyBillAlt/>,
+    logo: <FaMoneyBillAlt />,
     route: "/dashboard/MO/pengeluaran",
+  },
+  PROSES_PEMBELIAN: {
+    name: "Proses Pembelian",
+    logo: <IoReceiptOutline />,
+    route: "/dashboard/MO/prosespembelian",
   },
 };
 

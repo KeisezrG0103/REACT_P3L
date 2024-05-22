@@ -133,7 +133,6 @@ const HomePage_layout = () => {
                         className="w-10 h-10 rounded-full"
                       />
                     ) : (
-                      // Login icon and button here
                       <Link to="/auth/signin">
                         <div className="w-10 h-10 rounded-full flex items-center justify-center">
                           <FiLogIn className="w-6 h-8" />
@@ -173,11 +172,9 @@ const HomePage_layout = () => {
                       <li>
                         <Link to="/settings">Settings</Link>
                       </li>
-                      {/* Add other employee options here */}
                     </>
                   ) : null}
 
-                  {/* Always include the logout option for both customer and karyawan */}
                   <li>
                     <a className="btn btn-ghost btn-sm" onClick={logout}>
                       Logout

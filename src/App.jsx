@@ -43,6 +43,8 @@ import Profile from "./pages/customer/Profile/Profile.jsx";
 import Selesai from "./pages/customer/Pembelian/Selesai/Selesai.jsx";
 import OnGoing from "./pages/customer/Pembelian/OnGoing/OnGoing.jsx";
 import Ditolak from "./pages/customer/Pembelian/Ditolak/Ditolak.jsx";
+import Proses_Pembelian from "./pages/dashboard/MO/Proses_Pembelian/Proses_Pembelian.jsx";
+import Resep from "./pages/dashboard/ADMIN/Resep/Resep.jsx";
 
 function App() {
   return (
@@ -80,6 +82,7 @@ function App() {
             <Route path="/dashboard/Admin" element={<AdminRoutes />}>
               <Route path="/dashboard/Admin/" element={<Index_Admin />} />
               <Route path="/dashboard/Admin/produk" element={<Produk />} />
+              <Route path="/dashboard/Admin/resep" element={<Resep />} />
               <Route
                 path="/dashboard/Admin/produk/:id"
                 element={<Tambah_Edit_Produk />}
@@ -134,6 +137,10 @@ function App() {
               />
 
               <Route path="/dashboard/MO/penitip" element={<Penitip />} />
+              <Route
+                path="/dashboard/MO/prosesPembelian"
+                element={<Proses_Pembelian />}
+              />
 
               <Route
                 path="/dashboard/MO/Penitip/tambah"
