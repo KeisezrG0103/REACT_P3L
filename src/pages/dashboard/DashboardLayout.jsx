@@ -9,17 +9,17 @@ import Footer from "../../components/Footer";
 
 const DashboardLayout = () => {
   const karyawan_string = localStorage.getItem("karyawan");
-
   const user = JSON.parse(karyawan_string);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const doLogout = () => {
     dispatch(logoutKaryawan());
     localStorage.removeItem("token");
     localStorage.removeItem("karyawan");
     navigate("/auth/signin");
   };
+
   return (
     <>
       <div className="navbar bg-primary max-h-8">
@@ -45,53 +45,47 @@ const DashboardLayout = () => {
         </div>
 
         <div className="flex-1">
-          <a className=" text-xl flex items-center space-x-2" href="#">
+          <Link to="/" className="text-xl flex items-center space-x-2">
             <img src={Logo} alt="logo" className="w-20" />
             <p>
               <span className="text-lg text-white font-bold">Atma Kitchen</span>
             </p>
-          </a>
+          </Link>
         </div>
         <div className="dropdown dropdown-end">
-          <a href="#" className="inline-flex items-center">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
+          <div className="flex items-center space-x-2">
+            <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  alt="User Avatar"
+                  src="https://cdn-8.motorsport.com/images/mgl/YP3wdKQ2/s800/fabio-quartararo-yamaha-factor.jpg"
                 />
               </div>
             </div>
-            <div className="ml-2">
+            <div>
               <span className="text-sm text-white font-bold">{user?.Nama}</span>
             </div>
-          </a>
+          </div>
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to="/">
-                <a>Home</a>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/profile">
+                Profile
+                <span className="badge">New</span>
               </Link>
             </li>
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
+              <Link to="/settings">Settings</Link>
             </li>
             <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a className="btn btn-ghost btn-sm" onClick={doLogout}>
+              <button className="btn btn-ghost btn-sm" onClick={doLogout}>
                 Logout
-              </a>
+              </button>
             </li>
           </ul>
         </div>
@@ -100,20 +94,13 @@ const DashboardLayout = () => {
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col h-screen">
-          {/*  */}
           <div className="flex-1 p-4 bg-blue-50">
             <Outlet />
           </div>
-
           <Footer />
         </div>
-
         <div className="drawer-side">
-          <label
-            htmlFor="my-drawer-2"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          ></label>
+          <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 min-h-full bg-base-100 text-base-content">
             <SidebarContent role={user?.role} />
           </ul>

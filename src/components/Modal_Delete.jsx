@@ -33,15 +33,15 @@ function Modal_Delete() {
       return Item.BahanBaku_Nama;
     }
 
-    if (key == "bahan_baku"){
+    if (key == "bahan_baku") {
       return Item.Nama;
     }
 
-    if (key == "penitip"){
+    if (key == "penitip") {
       return Item.Nama_Penitip;
     }
 
-    if (key == "pengeluaran"){
+    if (key == "pengeluaran") {
       return Item.Nama_Pengeluaran;
     }
   };
@@ -50,7 +50,6 @@ function Modal_Delete() {
     if (key == "produk") {
       mutation.mutate(id, {
         onSuccess: (res) => {
-          console.log(res);
           toast.success("Produk berhasil dihapus");
           window.location.reload(true);
         },
@@ -124,7 +123,6 @@ function Modal_Delete() {
         },
       });
     }
-
   };
 
   if (stateModal.isOpen) {
@@ -153,7 +151,10 @@ function Modal_Delete() {
             style={{ width: "5rem" }}
             onClick={() => deleteProdukFunc(Item.Id)}
           >
-            {mutation.isLoading || mutateHampers.isLoading || MutatePengadaan.isLoading || mutateBahan.isLoading ? (
+            {mutation.isLoading ||
+            mutateHampers.isLoading ||
+            MutatePengadaan.isLoading ||
+            mutateBahan.isLoading ? (
               <span className="loading loading-dots loading-md"></span>
             ) : (
               "Ya"

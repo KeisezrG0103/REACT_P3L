@@ -115,14 +115,12 @@ const Modal_DetailHampers = () => {
       })
       .then(() => {
         refetch();
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
       });
     setIsInput(false);
   };
-
-  console.log(produkNonPenitip);
-  console.log(detailHampers);
 
   if (stateIsOpen) {
     document.getElementById("modal_Detail_Hampers").showModal();
@@ -131,7 +129,6 @@ const Modal_DetailHampers = () => {
     <dialog id="modal_Detail_Hampers" className="modal">
       <div className="modal-box">
         <form method="dialog">
-          {/* if there is a button in form, it will close the modal */}
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
             onClick={() => setOpen_Modal(false)}
