@@ -50,6 +50,7 @@ export const CUSTOMER_ROUTES = {
     GET_PesananSelesaiWithDetailPesananAndTanggal: BASEURL + "/api/PesananSelesaiWithDetailPesananAndTanggal",
     GET_PesananOnGoing: BASEURL + "/api/getPesananAndProdukOnGoing",
     GET_NOTA_BY_NO_NOTA: BASEURL + "/api/getNotaById",
+    ADD_BUKTI_BAYAR: BASEURL + "/api/sendBuktiBayar",
     GET_ALAMAT : BASEURL + "/api/getAlamat",
     ADD_ALAMAT : BASEURL + "/api/addAlamat",
 }

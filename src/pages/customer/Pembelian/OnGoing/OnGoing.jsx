@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "react-query";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useQuery, useMutation } from "react-query";
 import { getPesananOnGoingByCustomer } from "../../../../api/detail_pesanan/detail_pesanan_query";
-
+import { addBuktiBayar } from "../../../../api/pesanan/Pembayaran/pembayaran_query";
+import { toast } from "react-hot-toast";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const OnGoing = () => {
   const [filterStatus, setFilterStatus] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedNota, setSelectedNota] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to track submission status
   const customer = JSON.parse(localStorage?.getItem("customer"));
   const Email = customer?.Email;
-  const dispatch = useDispatch();
 
-  const { data: pesananOnGoing, isLoading } = useQuery(
+  const { data: pesananOnGoing, isLoading, refetch } = useQuery(
     ["pesananOnGoing", Email],
     () => getPesananOnGoingByCustomer(Email),
     {
@@ -18,8 +21,32 @@ const OnGoing = () => {
     }
   );
 
+  const mutation = useMutation((data) => addBuktiBayar(data.noNota, data.file), {
+    onSuccess: () => {
+      toast.success("Bukti Pembayaran Berhasil Dikirim!");
+      setIsSubmitting(false);
+      refetch();
+    },
+    onError: (error) => {
+      toast.error("Gagal Mengirim Bukti Pembayaran", error);
+      setIsSubmitting(false);
+    },
+  });
+
   const handleFilterChange = (e) => {
     setFilterStatus(e.target.value);
+  };
+
+  const handleFileChange = (e, noNota) => {
+    setSelectedFile(e.target.files[0]);
+    setSelectedNota(noNota);
+  };
+
+  const handleSubmit = () => {
+    if (selectedFile && selectedNota) {
+      setIsSubmitting(true);
+      mutation.mutate({ noNota: selectedNota, file: selectedFile });
+    }
   };
 
   if (isLoading) {
@@ -79,11 +106,46 @@ const OnGoing = () => {
               </h1>
             </div>
             <p className="font-bold mt-2" style={{ fontSize: 14 }}>
-              <span className={`px-3 py-3 rounded-full text-white ${item.Status === "Menunggu Pembayaran" ? "bg-error" : "bg-primary"}`}>
+            <span className={`px-3 py-3 rounded-full text-white ${item.Status === "Menunggu Konfirmasi Pembayaran" || item.Status === "Menunggu Pembayaran" ? "bg-error" : "bg-primary"}`}>
                 {item.Status}
               </span>
             </p>
           </div>
+          <h1 className="card-title text-md font-normal text-black mt-2">
+            Total : <strong>Rp.</strong>
+            <span className="font-bold"> {item.Total}</span>
+          </h1>
+          {item.Status === "Menunggu Pembayaran" && (
+            <div className="mt-6">
+              <div>
+                <h1 className="font-bold text-lg mb-4">Kirim Bukti Pembayaran</h1>
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileChange(e, item.NoNota)}
+                required
+                className="border border-gray-300 rounded-md mb-4"
+              />
+              <button
+                onClick={handleSubmit}
+                className="px-4 py-2 bg-primary text-white rounded-md ml-4"
+                disabled={isSubmitting} // Disable button saat sedang mengirim
+              >
+                {isSubmitting ? <CircularProgress size={25} color="inherit" /> : "Submit"}
+              </button>
+            </div>
+          )}
+          {item.Status === "Menunggu Konfirmasi Pembayaran" && item.Bukti && (
+              <div className="mt-6">
+                <h1 className="font-bold text-lg mb-4">Bukti Pembayaran</h1>
+                <img
+                  src= {item.Bukti}
+                  alt="Bukti Pembayaran"
+                  className="border border-gray-300 rounded-md mb-4"
+                />
+              </div>
+            )}
           {item.DetailPesanan.map((detailPesanan, index) => (
             <div key={index} className="flex flex-col items-start card-body">
               <div className="flex flex-row items-start card border-gray-50-2 border-gray-600 shadow-md rounded-sm w-full">
@@ -91,8 +153,7 @@ const OnGoing = () => {
                   src={
                     detailPesanan.Gambar_Produk || detailPesanan.Gambar_Hampers
                   }
-                  alt="ongoing"
-                  className="w-32 h-32"
+                  alt="ongoing" className= "w-32 h-32"
                 />
                 <div className="flex flex-col items-start ml-4">
                   <h1 className="text-2xl font-normal text-black ml-4">
@@ -113,5 +174,4 @@ const OnGoing = () => {
     </div>
   );
 };
-
 export default OnGoing;
