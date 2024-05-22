@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
-import { useQuery, useMutation } from 'react-query';
-import { getPesananOnGoingByCustomer } from '../../../../api/detail_pesanan/detail_pesanan_query';
-import { addBuktiBayar } from '../../../../api/pesanan/Pembayaran/pembayaran_query';
-import ModalBukti from '../../../../components/Modal_Bukti';
-import { useDispatch } from 'react-redux';
-import { setModal } from '../../../../slicer/slicer_bukti';
-import { toast } from 'react-hot-toast';
-import CircularProgress from '@mui/material/CircularProgress';
+import React, { useState } from "react";
+import { useQuery, useMutation } from "react-query";
+import { getPesananOnGoingByCustomer } from "../../../../api/detail_pesanan/detail_pesanan_query";
+import { addBuktiBayar } from "../../../../api/pesanan/Pembayaran/pembayaran_query";
+import ModalBukti from "../../../../components/Modal_Bukti";
+import { useDispatch } from "react-redux";
+import { setModal } from "../../../../slicer/slicer_bukti";
+import { toast } from "react-hot-toast";
 
 const OnGoing = () => {
   const [filterStatus, setFilterStatus] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedNota, setSelectedNota] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const customer = JSON.parse(localStorage?.getItem("customer"));
   const Email = customer?.Email;
   const dispatch = useDispatch();
 
-  const { data: pesananOnGoing, isLoading, refetch } = useQuery(
+  const {
+    data: pesananOnGoing,
+    isLoading,
+    refetch,
+  } = useQuery(
     ["pesananOnGoing", Email],
     () => getPesananOnGoingByCustomer(Email),
     {
@@ -25,17 +28,20 @@ const OnGoing = () => {
     }
   );
 
-  const mutation = useMutation((data) => addBuktiBayar(data.noNota, data.file), {
-    onSuccess: () => {
-      toast.success("Bukti Pembayaran Berhasil Dikirim!");
-      setIsSubmitting(false);
-      refetch();
-    },
-    onError: (error) => {
-      toast.error("Gagal Mengirim Bukti Pembayaran", error);
-      setIsSubmitting(false);
-    },
-  });
+  const mutation = useMutation(
+    (data) => addBuktiBayar(data.noNota, data.file),
+    {
+      onSuccess: () => {
+        toast.success("Bukti Pembayaran Berhasil Dikirim!");
+        setIsSubmitting(false);
+        refetch();
+      },
+      onError: (error) => {
+        toast.error("Gagal Mengirim Bukti Pembayaran", error);
+        setIsSubmitting(false);
+      },
+    }
+  );
 
   const handleFilterChange = (e) => {
     setFilterStatus(e.target.value);
@@ -94,7 +100,9 @@ const OnGoing = () => {
         >
           <option value="">All</option>
           <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
-          <option value="Menunggu Konfirmasi Pembayaran">Menunggu Konfirmasi Pembayaran</option>
+          <option value="Menunggu Konfirmasi Pembayaran">
+            Menunggu Konfirmasi Pembayaran
+          </option>
           <option value="Dikirim">Sedang Dikirim</option>
           <option value="Siap Dipickup">Siap Di Pick-Up</option>
         </select>
@@ -115,7 +123,14 @@ const OnGoing = () => {
               </h1>
             </div>
             <p className="font-bold mt-2" style={{ fontSize: 14 }}>
-              <span className={`px-3 py-3 rounded-full text-white ${item.Status === "Menunggu Konfirmasi Pembayaran" || item.Status === "Menunggu Pembayaran" ? "bg-error" : "bg-primary"}`}>
+              <span
+                className={`px-3 py-3 rounded-full text-white ${
+                  item.Status === "Menunggu Konfirmasi Pembayaran" ||
+                  item.Status === "Menunggu Pembayaran"
+                    ? "bg-error"
+                    : "bg-primary"
+                }`}
+              >
                 {item.Status}
               </span>
             </p>
@@ -127,7 +142,9 @@ const OnGoing = () => {
           {item.Status === "Menunggu Pembayaran" && (
             <div className="mt-6">
               <div>
-                <h1 className="font-bold text-lg mb-4">Kirim Bukti Pembayaran</h1>
+                <h1 className="font-bold text-lg mb-4">
+                  Kirim Bukti Pembayaran
+                </h1>
               </div>
               <input
                 type="file"
@@ -139,9 +156,13 @@ const OnGoing = () => {
               <button
                 onClick={handleSubmit}
                 className="px-4 py-2 bg-primary text-white rounded-md ml-4"
-                disabled={isSubmitting} 
+                disabled={isSubmitting}
               >
-                {isSubmitting ? <CircularProgress size={25} color="inherit" /> : "Submit"}
+                {isSubmitting ? (
+                  <span className="loading loading-spinner loading-lg"></span>
+                ) : (
+                  "Kirim"
+                )}
               </button>
             </div>
           )}
@@ -162,7 +183,8 @@ const OnGoing = () => {
                   src={
                     detailPesanan.Gambar_Produk || detailPesanan.Gambar_Hampers
                   }
-                  alt="ongoing" className= "w-32 h-32"
+                  alt="ongoing"
+                  className="w-32 h-32"
                 />
                 <div className="flex flex-col items-start ml-4">
                   <h1 className="text-2xl font-normal text-black ml-4">

@@ -27,7 +27,7 @@ const HomePage_layout = () => {
   const navigate = useNavigate();
 
   const customer = JSON.parse(localStorage?.getItem("customer"));
-  const karyawan = JSON.parse(localStorage.getItem("karyawan"));
+  const karyawan = JSON.parse(localStorage?.getItem("karyawan"));
 
   const { data: poinCustomer } = useQuery(
     ["poin", customer?.Email],
