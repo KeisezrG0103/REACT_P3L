@@ -44,6 +44,7 @@ import Selesai from "./pages/customer/Pembelian/Selesai/Selesai.jsx";
 import OnGoing from "./pages/customer/Pembelian/OnGoing/OnGoing.jsx";
 import Ditolak from "./pages/customer/Pembelian/Ditolak/Ditolak.jsx";
 import Proses_Pembelian from "./pages/dashboard/MO/Proses_Pembelian/Proses_Pembelian.jsx";
+import Konfirmasi_Pembelian from "./pages/dashboard/MO/Konfirmasi_Pembelian/Konfirmasi_Pembelian.jsx";
 import Resep from "./pages/dashboard/ADMIN/Resep/Resep.jsx";
 
 function App() {
@@ -142,6 +143,11 @@ function App() {
                 element={<Proses_Pembelian />}
               />
 
+              <Route
+                path="/dashboard/MO/konfirmasipembelian"
+                element={<Konfirmasi_Pembelian />}
+              />
+ 
               <Route
                 path="/dashboard/MO/Penitip/tambah"
                 element={<Tambah_Edit_Penitip />}

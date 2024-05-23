@@ -31,3 +31,13 @@ export const getPesananOnGoingByCustomer = async (Email) => {
     });
     return res.data;
 }
+
+export const getPesananDitolakByCustomer = async (Email) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${CUSTOMER_ROUTES.GET_PesananDitolak}/${Email}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return res.data;
+}
