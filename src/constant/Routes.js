@@ -30,6 +30,9 @@ export const ADMIN_ROUTES = {
 export const MO_ROUTES = {
     PENGADAAN_BAHAN_BAKU: BASEURL + "/api/pengadaan_bahan_baku",
     getDaftarPesananYangDiprosesHariIni: BASEURL + "/api/getDaftarPesananYangDiprosesHariIni",
+    GET_DAFTAR_PESANAN_TO_CONFIRM: BASEURL + "/api/daftarPesananToConfirm",
+    CONFIRM_PESANAN: BASEURL + "/api/konfirmasiPesanan",
+    TOLAK_PESANAN: BASEURL + "/api/tolakPesanan",
 }
 
 
@@ -51,6 +54,7 @@ export const CUSTOMER_ROUTES = {
     GET_USER_BY_EMAIL: BASEURL + "/api/customer",
     GET_PesananSelesaiWithDetailPesananAndTanggal: BASEURL + "/api/PesananSelesaiWithDetailPesananAndTanggal",
     GET_PesananOnGoing: BASEURL + "/api/getPesananAndProdukOnGoing",
+    GET_PesananDitolak: BASEURL + "/api/getPesananAndProdukDitolak",
     GET_NOTA_BY_NO_NOTA: BASEURL + "/api/getNotaById",
     ADD_BUKTI_BAYAR: BASEURL + "/api/sendBuktiBayar",
     GET_ALAMAT : BASEURL + "/api/getAlamat",

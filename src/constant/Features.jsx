@@ -6,6 +6,7 @@ import { RxDashboard } from "react-icons/rx";
 import { IoPerson } from "react-icons/io5";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { PiEggCrackFill } from "react-icons/pi";
+import { FaListCheck } from "react-icons/fa6";
 
 export const ADMIN_FEATURES = {
   DASHBOARD: {
@@ -68,6 +69,11 @@ export const MO_FEATURES = {
     name: "Proses Pembelian",
     logo: <IoReceiptOutline />,
     route: "/dashboard/MO/prosespembelian",
+  },
+  KONFIRMASI_PEMBELIAN: {
+    name: "Konfirmasi Pembelian",
+    logo: <FaListCheck />,
+    route: "/dashboard/MO/konfirmasipembelian",
   },
 };
 
