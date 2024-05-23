@@ -292,6 +292,8 @@ const Checkout = () => {
                           {alamatData?.data.length === 0 && (
                             <option>Anda belum memiliki alamat</option>
                           )}
+                          <option value={0}>Pilih Alamat</option>{" "}
+                          {/* Default Option */}
                           {alamatData?.data.map((alamat, index) => (
                             <option key={index} value={alamat.Id}>
                               {alamat.Alamat}
