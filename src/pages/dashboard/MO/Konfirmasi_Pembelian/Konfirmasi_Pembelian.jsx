@@ -93,7 +93,7 @@ const Konfirmasi_Pembelian = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredPesanan.map((item, index) => (
+                {filteredPesanan.map((item, index) => (
                     <tr key={item.Id} className="text-center"> 
                       <td>{index + 1}</td>
                       <td>{item.Id}</td>
@@ -105,14 +105,14 @@ const Konfirmasi_Pembelian = () => {
                         <button 
                           className="btn btn-sm btn-primary text-white" 
                           onClick={() => handleKonfirmasi(item.Id)}
-                          disabled={item.Status === "Ditolak"}
+                          disabled={item.Status === "Diterima" || item.Status === "Ditolak"}
                         >
                           Konfirmasi
                         </button>
                         <button 
                           className="ml-4 btn btn-sm btn-error text-white" 
                           onClick={() => handleTolak(item.Id)}
-                          disabled={item.Status === "Ditolak"}
+                          disabled={item.Status === "Diterima" || item.Status === "Ditolak"}
                         >
                           Tolak
                         </button>
