@@ -36,13 +36,16 @@ const Checkout = () => {
 
   const customer = JSON.parse(localStorage.getItem("customer"));
 
-  const { data: alamatData } = useQuery(
+  const { data: alamatData, refetch } = useQuery(
     ["alamat", customer.Email],
     () => GetAlamat(customer.Email),
     {
       enabled: isDelivery,
     }
   );
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const { data: TanggalLahirData } = useQuery(
     ["tanggalLahir", customer.Email],
