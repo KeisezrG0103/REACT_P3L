@@ -183,7 +183,7 @@ const OnGoing = () => {
         ))
       ) : (
         <div className="text-center text-xl font-semibold mt-10">
-          Tidak Ada Pesanan !
+          Tidak Ada Pesanan On Going!
         </div>
       )}
       <ModalBukti />

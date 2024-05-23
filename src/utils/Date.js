@@ -13,6 +13,7 @@ export class Custom_Date {
 
     // Convert date to string
     toStringDate(date) {
+        date = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
         return date.toISOString().split("T")[0];
     }
 
