@@ -45,8 +45,7 @@ const Konfirmasi_Pembelian = () => {
 
   const filteredPesanan = pesanan?.filter((item) =>
     item.Id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.Status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.Status_Pembayaran.toLowerCase().includes(searchTerm.toLowerCase())
+    item.Status.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (isLoading) {
@@ -94,31 +93,31 @@ const Konfirmasi_Pembelian = () => {
                 </thead>
                 <tbody>
                 {filteredPesanan.map((item, index) => (
-                    <tr key={item.Id} className="text-center"> 
-                      <td>{index + 1}</td>
-                      <td>{item.Id}</td>
-                      <td>{item.Tanggal_Pesan}</td>
-                      <td>{item.Tanggal_Diambil}</td>
-                      <td>{item.Status}</td>
-                      <td>{item.Status_Pembayaran}</td>
-                      <td>
-                        <button 
-                          className="btn btn-sm btn-primary text-white" 
-                          onClick={() => handleKonfirmasi(item.Id)}
-                          disabled={item.Status === "Diterima" || item.Status === "Ditolak"}
-                        >
-                          Konfirmasi
-                        </button>
-                        <button 
-                          className="ml-4 btn btn-sm btn-error text-white" 
-                          onClick={() => handleTolak(item.Id)}
-                          disabled={item.Status === "Diterima" || item.Status === "Ditolak"}
-                        >
-                          Tolak
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                <tr key={item.Id} className="text-center"> 
+                  <td>{index + 1}</td>
+                  <td>{item.Id}</td>
+                  <td>{item.Tanggal_Pesan}</td>
+                  <td>{item.Tanggal_Diambil}</td>
+                  <td>{item.Status}</td>
+                  <td>{item.Status_Pembayaran}</td>
+                  <td>
+                    <button 
+                      className="btn btn-sm btn-primary text-white" 
+                      onClick={() => handleKonfirmasi(item.Id)}
+                      disabled={item.Status === "Diterima" || item.Status === "Ditolak"}
+                    >
+                      Konfirmasi
+                    </button>
+                    <button 
+                      className="ml-4 btn btn-sm btn-error text-white" 
+                      onClick={() => handleTolak(item.Id)}
+                      disabled={item.Status === "Diterima" || item.Status === "Ditolak"}
+                    >
+                      Tolak
+                    </button>
+                  </td>
+                </tr>
+              ))}
                 </tbody>
               </table>
             </div>
