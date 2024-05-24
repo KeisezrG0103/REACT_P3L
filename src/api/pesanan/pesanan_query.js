@@ -57,3 +57,25 @@ export const getDaftarPesananYangDiprosesHariIni = async (tanggalBesok) => {
     return res.data;
 }
 
+export const GetKekuranganBahanBaku = async (NoNota) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${MO_ROUTES.GetKekuranganBahanBaku}/${NoNota}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+
+    });
+    return res.data;
+}
+
+export const changeStatusToProses = async (NoNota) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.post(`${MO_ROUTES.changeStatusToDiproses}/${NoNota}`, {}, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+}
+
+

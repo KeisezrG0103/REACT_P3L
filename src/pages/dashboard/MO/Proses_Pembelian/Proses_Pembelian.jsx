@@ -1,15 +1,62 @@
 import { Link } from "react-router-dom";
-import { getDaftarPesananYangDiprosesHariIni } from "../../../../api/pesanan/pesanan_query";
+import {
+  getDaftarPesananYangDiprosesHariIni,
+  GetKekuranganBahanBaku,
+  changeStatusToProses,
+} from "../../../../api/pesanan/pesanan_query";
 import { useQuery } from "react-query";
 import { Custom_Date } from "../../../../utils/Date";
+import { useEffect, useState } from "react";
+import { Toast } from "flowbite-react";
+import toast from "react-hot-toast";
+import { useMutation } from "react-query";
 
 const Proses_Pembelian = () => {
   const tanggal = new Custom_Date();
 
-  const { data: pesanan, isLoading } = useQuery(
+  const [No_Nota, setNo_Nota] = useState("");
+
+  const {
+    data: pesanan,
+    isLoading,
+    refetch,
+  } = useQuery(
     ["getDaftarPesananYangDiprosesHariIni", tanggal.tommorowToString()],
     () => getDaftarPesananYangDiprosesHariIni(tanggal.tommorowToString())
   );
+
+  useEffect(() => {
+    refetch();
+  }, [pesanan, refetch]);
+
+  const { data: kekurangan } = useQuery(
+    ["GetKekuranganBahanBaku", No_Nota],
+    () => GetKekuranganBahanBaku(No_Nota),
+    {
+      enabled: No_Nota != "",
+    }
+  );
+
+  const { mutate } = useMutation(changeStatusToProses);
+
+  const selectNoNota = (Nota) => {
+    setNo_Nota(Nota);
+
+    mutate(Nota, {
+      onSuccess: (data) => {
+        console.log(data);
+        if (data.message == "Ada bahan baku yang kurang") {
+          toast.error("Ada bahan baku yang kurang");
+        } else {
+          toast.success("Berhasil Mengonfirmasi Pesanan");
+        }
+      },
+      onError: () => {
+        toast.error("Gagal Mengonfirmasi Pesanan");
+      },
+    });
+  };
+
   return (
     <div>
       <div className="flex justify-between place-items-end lg:place-items-center">
@@ -58,7 +105,10 @@ const Proses_Pembelian = () => {
                         <td>{item.Status}</td>
                         <td>{item.Tanggal_Diambil}</td>
                         <td>
-                          <button className="btn btn-sm btn-primary text-white">
+                          <button
+                            className="btn btn-sm btn-primary text-white"
+                            onClick={() => selectNoNota(item.Id)}
+                          >
                             Proses
                           </button>
                         </td>
