@@ -129,6 +129,7 @@ const Checkout = () => {
 
   const toStringWithTime = (date) => {
     return (
+      //ofset
       date.toISOString().split("T")[0] + " " + date.toTimeString().split(" ")[0]
     );
   };

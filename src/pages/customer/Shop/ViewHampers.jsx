@@ -23,7 +23,12 @@ const ViewHampers = () => {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const toStringDate = (date) => date.toISOString().split("T")[0];
+  const toStringDate = (date) => 
+    {
+      date = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+      return date.toISOString().split("T")[0];
+    }
+
   const location = useLocation();
   const [jumlah, setJumlah] = useState(0);
   const id = location.pathname.split("/")[2];
