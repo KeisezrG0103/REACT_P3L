@@ -46,6 +46,7 @@ import Ditolak from "./pages/customer/Pembelian/Ditolak/Ditolak.jsx";
 import Proses_Pembelian from "./pages/dashboard/MO/Proses_Pembelian/Proses_Pembelian.jsx";
 import Konfirmasi_Pembelian from "./pages/dashboard/MO/Konfirmasi_Pembelian/Konfirmasi_Pembelian.jsx";
 import Resep from "./pages/dashboard/ADMIN/Resep/Resep.jsx";
+import History_Bahan_Baku from "./pages/dashboard/MO/History_Bahan_Baku/History_Bahan_Baku.jsx";
 
 function App() {
   return (
@@ -131,6 +132,7 @@ function App() {
                 path="/dashboard/MO/pengadaanBahanBaku/:id"
                 element={<Tambah_Edit_PengadaanBahanBaku />}
               />
+              <Route path="/dashboard/MO/history_bahan_baku" element={<History_Bahan_Baku />} />
 
               <Route
                 path="/dashboard/MO/pengadaanBahanBaku/tambah"
@@ -147,7 +149,7 @@ function App() {
                 path="/dashboard/MO/konfirmasipembelian"
                 element={<Konfirmasi_Pembelian />}
               />
- 
+
               <Route
                 path="/dashboard/MO/Penitip/tambah"
                 element={<Tambah_Edit_Penitip />}
