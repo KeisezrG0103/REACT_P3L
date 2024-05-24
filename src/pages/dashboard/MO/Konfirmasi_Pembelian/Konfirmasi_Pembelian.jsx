@@ -104,14 +104,14 @@ const Konfirmasi_Pembelian = () => {
                     <button 
                       className="btn btn-sm btn-primary text-white" 
                       onClick={() => handleKonfirmasi(item.Id)}
-                      disabled={item.Status === "Diterima" || item.Status === "Ditolak"}
+                      disabled={item.Status === "Diterima" || item.Status === "Ditolak"  ||item.Status === "Diproses"}
                     >
                       Konfirmasi
                     </button>
                     <button 
                       className="ml-4 btn btn-sm btn-error text-white" 
                       onClick={() => handleTolak(item.Id)}
-                      disabled={item.Status === "Diterima" || item.Status === "Ditolak"}
+                      disabled={item.Status === "Diterima" || item.Status === "Ditolak" ||item.Status === "Diproses"}
                     >
                       Tolak
                     </button>
