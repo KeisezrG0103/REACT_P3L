@@ -35,7 +35,7 @@ export const ADMIN_FEATURES = {
     logo: <IoPerson />,
     route: "/dashboard/admin/customer",
   },
-  
+
   RESEP: {
     name: "Resep",
     logo: <IoReceiptOutline />,
@@ -75,7 +75,12 @@ export const MO_FEATURES = {
     logo: <IoReceiptOutline />,
     route: "/dashboard/MO/prosespembelian",
   },
- 
+
+  HISTORY_BAHAN_BAKU: {
+    name: "History Bahan Baku",
+    logo: <FaListCheck />,
+    route: "/dashboard/MO/history_bahan_baku",
+  },
 };
 
 export const OWNER_FEATURES = {

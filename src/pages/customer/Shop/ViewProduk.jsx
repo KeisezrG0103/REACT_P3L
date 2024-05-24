@@ -37,7 +37,10 @@ const ViewProduk = () => {
   const id = location.pathname.split("/")[2];
 
   // Convert date to string in YYYY-MM-DD format
-  const toStringDate = (date) => date.toISOString().split("T")[0];
+  const toStringDate = (date) => {
+    date = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return date.toISOString().split("T")[0];
+  };
 
   // Query for ProdukData
   const { data: ProdukData } = useQuery(

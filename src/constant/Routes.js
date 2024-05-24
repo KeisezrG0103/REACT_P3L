@@ -34,7 +34,8 @@ export const MO_ROUTES = {
     CONFIRM_PESANAN: BASEURL + "/api/konfirmasiPesanan",
     TOLAK_PESANAN: BASEURL + "/api/tolakPesanan",
     GetKekuranganBahanBaku: BASEURL + "/api/GetKekuranganBahanBaku",
-    changeStatusToDiproses : BASEURL + "/api/changeStatusToDiproses",
+    changeStatusToDiproses: BASEURL + "/api/changeStatusToDiproses",
+    getHistoryBahanBaku: BASEURL + "/api/getHistoryBahanBaku",
 }
 
 
