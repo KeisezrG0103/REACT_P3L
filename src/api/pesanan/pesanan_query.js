@@ -79,3 +79,34 @@ export const changeStatusToProses = async (NoNota) => {
 }
 
 
+export const getListPesananHarianDanYangDibeli = async (tanggalBesok) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${MO_ROUTES.GET_getListPesananHarianDanYangDibeli}/${tanggalBesok}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+}
+
+export const getDetailResepDanNamaResepUntukPesananBesok = async (tanggalBesok) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${MO_ROUTES.GET_getDetailResepDanNamaResepUntukPesananBesok}/${tanggalBesok}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+}
+
+export const getRekapPesananHarian = async (tanggalBesok) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${MO_ROUTES.GET_getRekapPesananHarian}/${tanggalBesok}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+}
+
+

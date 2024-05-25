@@ -36,6 +36,9 @@ export const MO_ROUTES = {
     GetKekuranganBahanBaku: BASEURL + "/api/GetKekuranganBahanBaku",
     changeStatusToDiproses: BASEURL + "/api/changeStatusToDiproses",
     getHistoryBahanBaku: BASEURL + "/api/getHistoryBahanBaku",
+    GET_getListPesananHarianDanYangDibeli: BASEURL + "/api/getListPesananHarianDanYangDibeli",
+    GET_getDetailResepDanNamaResepUntukPesananBesok: BASEURL + "/api/getDetailResepDanNamaResepUntukPesananBesok",
+    GET_getRekapPesananHarian: BASEURL + "/api/getRekapPesananHarian",
 }
 
 
@@ -62,6 +65,7 @@ export const CUSTOMER_ROUTES = {
     ADD_BUKTI_BAYAR: BASEURL + "/api/sendBuktiBayar",
     GET_ALAMAT: BASEURL + "/api/getAlamat",
     ADD_ALAMAT: BASEURL + "/api/addAlamat",
+
 }
 
 export const OWNER_ROUTES = {

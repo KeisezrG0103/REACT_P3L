@@ -10,11 +10,16 @@ import { useEffect, useState } from "react";
 import { Toast } from "flowbite-react";
 import toast from "react-hot-toast";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { setModal } from "../../../../slicer/slicer_modal";
+import Modal_Detail_Pesanan from "../../../../components/Modal_Detail_Pesanan";
 
 const Proses_Pembelian = () => {
   const tanggal = new Custom_Date();
 
   const [No_Nota, setNo_Nota] = useState("");
+
+  const dispatch = useDispatch();
 
   const {
     data: pesanan,
@@ -27,7 +32,7 @@ const Proses_Pembelian = () => {
 
   useEffect(() => {
     refetch();
-  }, [pesanan, refetch]);
+  }, [refetch]);
 
   const { data: kekurangan } = useQuery(
     ["GetKekuranganBahanBaku", No_Nota],
@@ -36,6 +41,10 @@ const Proses_Pembelian = () => {
       enabled: No_Nota != "",
     }
   );
+
+  useEffect(() => {
+    dispatch(setModal(false));
+  }, [dispatch]);
 
   const { mutate } = useMutation(changeStatusToProses);
 
@@ -57,9 +66,13 @@ const Proses_Pembelian = () => {
     });
   };
 
+  const open_detail_pesanan = () => {
+    dispatch(setModal(true));
+  };
+
   return (
     <div>
-      <div className="flex justify-between place-items-end lg:place-items-center">
+      <div className="flex justify-between align-baseline lg:place-items-center lg:items-end">
         <div className="flex items-start space-y-4 flex-col">
           <h1 className="font-bold text-2xl">Proses Pembelian</h1>
           <div className="form-control">
@@ -71,6 +84,15 @@ const Proses_Pembelian = () => {
               //   onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+        </div>
+        <div>
+          <button
+            className="btn btn-primary w-28 text-white"
+            onClick={open_detail_pesanan}
+          >
+            Detail
+          </button>
+          <Modal_Detail_Pesanan />
         </div>
       </div>
       <div className="overflow-x-auto w-full mt-5">
