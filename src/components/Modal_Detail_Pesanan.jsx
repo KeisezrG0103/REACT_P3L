@@ -27,7 +27,7 @@ const Modal_Detail_Pesanan = () => {
     ["getListPesananHarianDanYangDibeli", Tanggal.tommorowToString()],
     () => getListPesananHarianDanYangDibeli(Tanggal.tommorowToString()),
     {
-      enabled: isOpen ? true : false,
+      enabled: isOpen,
     }
   );
 
@@ -36,7 +36,7 @@ const Modal_Detail_Pesanan = () => {
     () =>
       getDetailResepDanNamaResepUntukPesananBesok(Tanggal.tommorowToString()),
     {
-      enabled: isOpen ? true : false,
+      enabled: isOpen,
     }
   );
 
@@ -44,7 +44,7 @@ const Modal_Detail_Pesanan = () => {
     ["getRekapPesananHarian", Tanggal.tommorowToString()],
     () => getRekapPesananHarian(Tanggal.tommorowToString()),
     {
-      enabled: isOpen ? true : false,
+      enabled: isOpen,
     }
   );
 
@@ -52,7 +52,7 @@ const Modal_Detail_Pesanan = () => {
     ["getYangPerluDibuat", Tanggal.tommorowToString()],
     () => getYangPerluDibuat(Tanggal.tommorowToString()),
     {
-      enabled: isOpen ? true : false,
+      enabled: isOpen,
     }
   );
 
@@ -60,7 +60,7 @@ const Modal_Detail_Pesanan = () => {
     ["rekapBahanBakuPesananHarian", Tanggal.tommorowToString()],
     () => rekapBahanBakuPesananHarian(Tanggal.tommorowToString()),
     {
-      enabled: isOpen ? true : false,
+      enabled: isOpen,
     }
   );
 
