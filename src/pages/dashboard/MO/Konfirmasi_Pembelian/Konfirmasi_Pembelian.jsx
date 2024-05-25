@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
-import { getDaftarPesananToConfirm } from "../../../../api/pesanan/Konfirmasi/konfirmasi_query";
-import { useQuery, useMutation } from "react-query";
-import { konfirmasiPesanan, tolakPesanan } from '../../../../api/pesanan/Konfirmasi/konfirmasi_query';
-import toast from "react-hot-toast";
-import { useState } from "react";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQuery, useMutation } from 'react-query';
+import { getDaftarPesananToConfirm, konfirmasiPesanan, tolakPesanan } from '../../../../api/pesanan/Konfirmasi/konfirmasi_query';
+import { fetchBahanBakuKurang, showModal } from '../../../../slicer/slicer_bahan_baku_kurang';
+import toast from 'react-hot-toast';
+import { useState, useEffect } from 'react';
+import Modal from '../../../../components/Modal_Bahan';
 
 const Konfirmasi_Pembelian = () => {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  const { data: pesanan, isLoading, isError, refetch } = useQuery(
+  const { data: pesanan, isLoading } = useQuery(
     ["getDaftarPesananToConfirm"],
     () => getDaftarPesananToConfirm()
   );
@@ -43,10 +48,25 @@ const Konfirmasi_Pembelian = () => {
     }
   };
 
+  const handleCekBahanBaku = async (noNota) => {
+    dispatch(showModal());
+    dispatch(fetchBahanBakuKurang(noNota));
+  };
+
   const filteredPesanan = pesanan?.filter((item) =>
     item.Id.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.Status.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const totalPages = Math.ceil(filteredPesanan?.length / itemsPerPage);
+  const paginatedPesanan = filteredPesanan?.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   if (isLoading) {
     return (
@@ -87,43 +107,65 @@ const Konfirmasi_Pembelian = () => {
                     <th>Tanggal Pesan</th>
                     <th>Tanggal Diambil</th>
                     <th>Status</th>
-                    <th>Status Pembayaran</th>              
+                    <th>Status Pembayaran</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                {filteredPesanan.map((item, index) => (
-                <tr key={item.Id} className="text-center"> 
-                  <td>{index + 1}</td>
-                  <td>{item.Id}</td>
-                  <td>{item.Tanggal_Pesan}</td>
-                  <td>{item.Tanggal_Diambil}</td>
-                  <td>{item.Status}</td>
-                  <td>{item.Status_Pembayaran}</td>
-                  <td>
-                    <button 
-                      className="btn btn-sm btn-primary text-white" 
-                      onClick={() => handleKonfirmasi(item.Id)}
-                      disabled={item.Status !== "Lunas"}
-                    >
-                      Konfirmasi
-                    </button>
-                    <button 
-                      className="ml-4 btn btn-sm btn-error text-white" 
-                      onClick={() => handleTolak(item.Id)}
-                      disabled={item.Status !== "Lunas"}
-                    >
-                      Tolak
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                  {paginatedPesanan?.map((item, index) => (
+                    <tr key={item.Id} className="text-center">
+                      <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                      <td>{item.Id}</td>
+                      <td>{item.Tanggal_Pesan}</td>
+                      <td>{item.Tanggal_Diambil}</td>
+                      <td>{item.Status}</td>
+                      <td>{item.Status_Pembayaran}</td>
+                      <td>
+                        <div className="flex flex-col md:flex-row justify-center items-center">
+                          <button
+                            className="btn btn-sm btn-success text-white"
+                            onClick={() => handleKonfirmasi(item.Id)}
+                            disabled={item.Status !== "Lunas"}
+                          >
+                            Konfirmasi
+                          </button>
+                          <button
+                            className="ml-0 mt-2 md:mt-0 md:ml-2 btn btn-sm btn-error text-white"
+                            onClick={() => handleTolak(item.Id)}
+                            disabled={item.Status !== "Lunas"}
+                          >
+                            Tolak
+                          </button>
+                          <button
+                            className="ml-0 mt-2 md:mt-0 md:ml-2 btn btn-sm btn-primary text-white"
+                            onClick={() => handleCekBahanBaku(item.Id)} // Add this handler
+                          >
+                            Cek Bahan Baku
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
+          <div className="join flex justify-center mb-4">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                className={`join-item btn btn-square ${
+                  index + 1 === currentPage ? "btn-primary text-white" : ""
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+      <Modal /> 
     </div>
   );
 };

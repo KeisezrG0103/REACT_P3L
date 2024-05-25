@@ -41,3 +41,18 @@ export const tolakPesanan = async (id) => {
         throw error;
     }
 };
+
+export const getBahanBakuKurang = async (noNota) => {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await Axios.get(`${MO_ROUTES.getBahanBakuKurang}/${noNota}`,  {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Gagal Cek Bahan Baku:', error);
+        throw error;
+    }
+};

@@ -1,3 +1,4 @@
+import { getBahanBakuKurang } from "../api/pesanan/Konfirmasi/konfirmasi_query";
 
 
 const BASEURL = "http://localhost:8000";
@@ -36,6 +37,7 @@ export const MO_ROUTES = {
     GetKekuranganBahanBaku: BASEURL + "/api/GetKekuranganBahanBaku",
     changeStatusToDiproses: BASEURL + "/api/changeStatusToDiproses",
     getHistoryBahanBaku: BASEURL + "/api/getHistoryBahanBaku",
+    getBahanBakuKurang: BASEURL + "/api/GetKekuranganBahanBaku",
 }
 
 

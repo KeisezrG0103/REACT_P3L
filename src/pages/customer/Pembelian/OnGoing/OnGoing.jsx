@@ -74,7 +74,9 @@ const OnGoing = () => {
     );
   }
 
-  const filteredPesanan = pesananOnGoing?.data.filter((item) =>
+  const sortedPesanan = pesananOnGoing?.data.sort((a, b) => b.NoNota.localeCompare(a.NoNota));
+
+  const filteredPesanan = sortedPesanan?.filter((item) =>
     filterStatus ? item.Status === filterStatus : true
   );
 
@@ -95,8 +97,8 @@ const OnGoing = () => {
           <option value="">All</option>
           <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
           <option value="Menunggu Konfirmasi Pembayaran">Menunggu Konfirmasi Pembayaran</option>
-          <option value="Dikirim">Sedang Dikirim</option>
-          <option value="Siap Dipickup">Siap Di Pick-Up</option>
+          <option value="Siap dideliver">Sedang Dikirim</option>
+          <option value="Siap dipickup">Siap Di Pick-Up</option>
         </select>
       </div>
       {filteredPesanan?.length > 0 ? (
@@ -111,12 +113,13 @@ const OnGoing = () => {
                   No Nota :<span className="font-bold"> {item.NoNota}</span>
                 </h1>
                 <h1 className="text-md font-normal text-black mt-2">
-                  Tanggal Pemesanan :
+                  Tanggal Diambil :
                   <span className="font-bold"> {item.TanggalDiambil}</span>
                 </h1>
               </div>
               <p className="font-bold mt-2" style={{ fontSize: 14 }}>
-                <span className={`px-3 py-3 rounded-full text-white ${item.Status === "Menunggu Konfirmasi Pembayaran" || item.Status === "Menunggu Pembayaran" ? "bg-error" : "bg-primary"}`}>
+              <span className={`px-3 py-3 rounded-full text-white ${item.Status === "Menunggu Konfirmasi Pembayaran" || item.Status === "Menunggu Pembayaran" ? "bg-error" 
+                      : item.Status === "Siap dipickup" || item.Status === "Siap dideliver" || item.Status === "Diterima" ? "bg-success" : "bg-primary"}`}>
                   {item.Status}
                 </span>
               </p>
@@ -163,7 +166,7 @@ const OnGoing = () => {
                     src={
                       detailPesanan.Gambar_Produk || detailPesanan.Gambar_Hampers
                     }
-                    alt="ongoing" className= "w-32 h-32"
+                    alt="ongoing" className="w-32 h-32"
                   />
                   <div className="flex flex-col items-start ml-4">
                     <h1 className="text-2xl font-normal text-black ml-4">
