@@ -6,11 +6,14 @@ import {
   getListPesananHarianDanYangDibeli,
   getDetailResepDanNamaResepUntukPesananBesok,
   getRekapPesananHarian,
+  getYangPerluDibuat,
+  rekapBahanBakuPesananHarian,
 } from "../api/pesanan/pesanan_query";
 import { useQuery } from "react-query";
 import ListYangDibeli from "./component_detail_pesanan/ListYangDIbeli";
 import DetailResepList from "./component_detail_pesanan/DetailResepList";
-import RekapHarian from "./component_detail_pesanan/RekapHarian"; // Import the new component
+import RekapHarian from "./component_detail_pesanan/RekapHarian";
+import RekapBahanBaku from "./component_detail_pesanan/RekapBahanBaku";
 
 const Modal_Detail_Pesanan = () => {
   const isOpen = useSelector((state) => state.modal.isOpen);
@@ -45,6 +48,22 @@ const Modal_Detail_Pesanan = () => {
     }
   );
 
+  const { data: yangPerluDibuat } = useQuery(
+    ["getYangPerluDibuat", Tanggal.tommorowToString()],
+    () => getYangPerluDibuat(Tanggal.tommorowToString()),
+    {
+      enabled: isOpen ? true : false,
+    }
+  );
+
+  const { data: rekapBahanBaku } = useQuery(
+    ["rekapBahanBakuPesananHarian", Tanggal.tommorowToString()],
+    () => rekapBahanBakuPesananHarian(Tanggal.tommorowToString()),
+    {
+      enabled: isOpen ? true : false,
+    }
+  );
+
   useEffect(() => {
     if (isOpen) {
       document.getElementById("modal_detail_pesanan").showModal();
@@ -55,12 +74,8 @@ const Modal_Detail_Pesanan = () => {
 
   return (
     <div>
-      <dialog
-        id="modal_detail_pesanan"
-        className="modal"
-        style={{ width: "80%", height: "80%" }}
-      >
-        <div className="modal-box" style={{ width: "100%", height: "100%" }}>
+      <dialog id="modal_detail_pesanan" className="modal">
+        <div className="modal-box">
           <form method="dialog">
             <button
               className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -85,7 +100,10 @@ const Modal_Detail_Pesanan = () => {
                 />
               </div>
               <div>
-                <RekapHarian rekapHarian={rekapHarian} />
+                <RekapHarian
+                  rekapHarian={rekapHarian}
+                  YangPerluDibuat={yangPerluDibuat}
+                />
               </div>
             </div>
 
@@ -94,7 +112,10 @@ const Modal_Detail_Pesanan = () => {
                 <h3 className="font-bold text-lg">Bahan</h3>
                 <DetailResepList detailResep={DetailResep} />
               </div>
-              <div>hello 3</div>
+              <div>
+                <h3 className="font-bold text-lg">Rekap Bahan Baku</h3>
+                <RekapBahanBaku rekapBahanBaku={rekapBahanBaku} />
+              </div>
             </div>
           </div>
         </div>

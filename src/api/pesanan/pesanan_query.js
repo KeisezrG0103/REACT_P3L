@@ -109,4 +109,23 @@ export const getRekapPesananHarian = async (tanggalBesok) => {
     return res.data;
 }
 
+export const getYangPerluDibuat = async (tanggalBesok) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${MO_ROUTES.GET_getYangPerluDibuat}/${tanggalBesok}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+}
+
+export const rekapBahanBakuPesananHarian = async (tanggalBesok) => {
+    const token = localStorage.getItem("token");
+    const res = await Axios.get(`${MO_ROUTES.GET_rekapBahanBakuPesananHarian}/${tanggalBesok}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.data;
+}
 

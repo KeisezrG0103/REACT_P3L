@@ -40,7 +40,9 @@ export const MO_ROUTES = {
     GET_getListPesananHarianDanYangDibeli: BASEURL + "/api/getListPesananHarianDanYangDibeli",
     GET_getDetailResepDanNamaResepUntukPesananBesok: BASEURL + "/api/getDetailResepDanNamaResepUntukPesananBesok",
     GET_getRekapPesananHarian: BASEURL + "/api/getRekapPesananHarian",
+    GET_getYangPerluDibuat: BASEURL + "/api/getYangPerluDibuat",
     getBahanBakuKurang: BASEURL + "/api/GetKekuranganBahanBaku",
+    GET_rekapBahanBakuPesananHarian: BASEURL + "/api/rekapBahanBakuPesananHarian",
 }
 
 
