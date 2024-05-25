@@ -118,6 +118,7 @@ const Pengeluaran = () => {
                       <th>Harga</th>
                       <th>Satuan</th>
                       <th>Qty</th>
+                      <th>Tanggal</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -129,6 +130,7 @@ const Pengeluaran = () => {
                         <td>{pengeluaran.Harga}</td>
                         <td>{pengeluaran.Satuan}</td>
                         <td>{pengeluaran.Qty}</td>
+                        <td>{pengeluaran.tanggal}</td>
                         <td>
                         <Link to={`/dashboard/MO/pengeluaran/${pengeluaran.id}`}>
                             <button
