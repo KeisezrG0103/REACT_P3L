@@ -1,5 +1,6 @@
 
 
+
 const BASEURL = "http://localhost:8000";
 export const TOKEN = localStorage.getItem("token");
 
@@ -39,6 +40,7 @@ export const MO_ROUTES = {
     GET_getListPesananHarianDanYangDibeli: BASEURL + "/api/getListPesananHarianDanYangDibeli",
     GET_getDetailResepDanNamaResepUntukPesananBesok: BASEURL + "/api/getDetailResepDanNamaResepUntukPesananBesok",
     GET_getRekapPesananHarian: BASEURL + "/api/getRekapPesananHarian",
+    getBahanBakuKurang: BASEURL + "/api/GetKekuranganBahanBaku",
 }
 
 

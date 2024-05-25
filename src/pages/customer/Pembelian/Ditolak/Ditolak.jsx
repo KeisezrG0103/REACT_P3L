@@ -37,10 +37,12 @@ const Ditolak = () => {
     );
   }
 
+  const sortedPesanan = pesananDitolak?.data.sort((a, b) => b.NoNota.localeCompare(a.NoNota));
+
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      {pesananDitolak?.data.length > 0 ? (
-        pesananDitolak.data.map((item) => (
+      {sortedPesanan?.length > 0 ? (
+        sortedPesanan.map((item) => (
           <div
             key={item.NoNota}
             className="Card w-full border-gray-50-2 border-gray-600 shadow-md p-4 rounded-sm"

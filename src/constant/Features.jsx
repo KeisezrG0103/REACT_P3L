@@ -65,16 +65,17 @@ export const MO_FEATURES = {
     logo: <FaMoneyBillAlt />,
     route: "/dashboard/MO/pengeluaran",
   },
-  PROSES_PEMBELIAN: {
-    name: "Proses Pembelian",
-    logo: <IoReceiptOutline />,
-    route: "/dashboard/MO/prosespembelian",
-  },
   KONFIRMASI_PEMBELIAN: {
     name: "Konfirmasi Pembelian",
     logo: <FaListCheck />,
     route: "/dashboard/MO/konfirmasipembelian",
   },
+  PROSES_PEMBELIAN: {
+    name: "Proses Pembelian",
+    logo: <IoReceiptOutline />,
+    route: "/dashboard/MO/prosespembelian",
+  },
+
   HISTORY_BAHAN_BAKU: {
     name: "History Bahan Baku",
     logo: <FaListCheck />,
