@@ -7,6 +7,7 @@ import { IoPerson } from "react-icons/io5";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { PiEggCrackFill } from "react-icons/pi";
 import { FaListCheck } from "react-icons/fa6";
+import { MdAccountBalanceWallet } from "react-icons/md";
 
 export const ADMIN_FEATURES = {
   DASHBOARD: {
@@ -40,6 +41,12 @@ export const ADMIN_FEATURES = {
     name: "Resep",
     logo: <IoReceiptOutline />,
     route: "/dashboard/admin/resep",
+  },
+
+  SALDO: {
+    name: "Saldo",
+    logo: <MdAccountBalanceWallet />,
+    route: "/dashboard/admin/saldo",
   },
 };
 

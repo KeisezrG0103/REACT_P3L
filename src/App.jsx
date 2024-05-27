@@ -47,6 +47,7 @@ import Proses_Pembelian from "./pages/dashboard/MO/Proses_Pembelian/Proses_Pembe
 import Konfirmasi_Pembelian from "./pages/dashboard/MO/Konfirmasi_Pembelian/Konfirmasi_Pembelian.jsx";
 import Resep from "./pages/dashboard/ADMIN/Resep/Resep.jsx";
 import History_Bahan_Baku from "./pages/dashboard/MO/History_Bahan_Baku/History_Bahan_Baku.jsx";
+import Konfirmasi_Saldo from "./pages/dashboard/MO/Konfirmasi_Saldo/Konfirmasi_Saldo.jsx";
 
 function App() {
   return (
@@ -117,6 +118,11 @@ function App() {
               <Route
                 path="/dashboard/Admin/bahan_baku/:id"
                 element={<Tambah_Edit_Bahan_Baku />}
+              />
+
+             <Route
+                path="/dashboard/Admin/saldo"
+                element={< Konfirmasi_Saldo />}
               />
 
               <Route path="/dashboard/Admin/customer" element={<Customer />} />

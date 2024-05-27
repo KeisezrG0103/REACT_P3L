@@ -138,7 +138,7 @@ const Konfirmasi_Pembelian = () => {
                           </button>
                           <button
                             className="ml-0 mt-2 md:mt-0 md:ml-2 btn btn-sm btn-primary text-white"
-                            onClick={() => handleCekBahanBaku(item.Id)} // Add this handler
+                            onClick={() => handleCekBahanBaku(item.Id)} 
                           >
                             Cek Bahan Baku
                           </button>

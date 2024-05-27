@@ -25,7 +25,9 @@ export const ADMIN_ROUTES = {
     PENGELUARAN: BASEURL + "/api/pengeluaran",
     CUSTOMER: BASEURL + "/api/customer",
     HISTORY: BASEURL + "/api/history",
-    GET_RESEP: BASEURL + "/api/resep"
+    GET_RESEP: BASEURL + "/api/resep",
+    GET_SALDO: BASEURL + "/api/getSaldoToConfirm",
+    CONFIRM_SALDO: BASEURL + "/api/confirmRequestSaldo"
 }
 
 export const MO_ROUTES = {
