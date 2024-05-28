@@ -95,6 +95,11 @@ export const MO_FEATURES = {
     logo: <FaListCheck />,
     route: "/dashboard/MO/laporan_penjualan_produk",
   },
+  LAPORAN_STOK_BAHAN_BAKU: {
+    name: "Laporan Stok Bahan Baku",
+    logo: <FaListCheck />,
+    route: "/dashboard/MO/laporan_stok_bahan_baku",
+  },
 };
 
 export const OWNER_FEATURES = {
@@ -103,5 +108,10 @@ export const OWNER_FEATURES = {
     name: "Laporan Penjualan Produk",
     logo: <FaListCheck />,
     route: "/dashboard/owner/laporan_penjualan_produk",
+  },
+  LAPORAN_STOK_BAHAN_BAKU: {
+    name: "Laporan Stok Bahan Baku",
+    logo: <FaListCheck />,
+    route: "/dashboard/owner/laporan_stok_bahan_baku",
   },
 };

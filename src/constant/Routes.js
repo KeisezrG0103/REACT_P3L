@@ -79,6 +79,14 @@ export const OWNER_ROUTES = {
 }
 
 
+
+
+export const LAPORAN_ROUTES = {
+    LAPORAN_BAHAN_BAKU: BASEURL + "/api/laporan_bahan_baku",
+    LAPORAN_PRODUK_PER_BULAN: BASEURL + "/api/laporan_produk_per_bulan",
+}
+
+
 export const ROUTES_HOMEPAGE = {
     HOME: {
         name: "Home",

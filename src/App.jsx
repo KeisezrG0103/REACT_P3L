@@ -49,6 +49,7 @@ import Resep from "./pages/dashboard/ADMIN/Resep/Resep.jsx";
 import History_Bahan_Baku from "./pages/dashboard/MO/History_Bahan_Baku/History_Bahan_Baku.jsx";
 import Konfirmasi_Saldo from "./pages/dashboard/MO/Konfirmasi_Saldo/Konfirmasi_Saldo.jsx";
 import Laporan_Penjualan_Produk from "./pages/laporan/Laporan_Penjualan_Produk.jsx";
+import Laporan_Stok_Bahan_Baku from "./pages/laporan/Laporan_Stok_Bahan_Baku.jsx";
 
 function App() {
   return (
@@ -188,6 +189,11 @@ function App() {
                 path="/dashboard/MO/pengeluaran/:id"
                 element={<Tambah_Edit_Pengeluaran />}
               />
+
+              <Route
+                path="/dashboard/MO/Laporan_Stok_Bahan_Baku"
+                element={<Laporan_Stok_Bahan_Baku />}
+              />
             </Route>
 
             <Route path="/dashboard/Owner" element={<OwnerRoutes />}>
@@ -195,6 +201,10 @@ function App() {
               <Route
                 path="/dashboard/Owner/Laporan_Penjualan_Produk"
                 element={<Laporan_Penjualan_Produk />}
+              />
+              <Route
+                path="/dashboard/Owner/Laporan_Stok_Bahan_Baku"
+                element={<Laporan_Stok_Bahan_Baku />}
               />
             </Route>
           </Route>
