@@ -8,6 +8,7 @@ import { FaMoneyBillAlt } from "react-icons/fa";
 import { PiEggCrackFill } from "react-icons/pi";
 import { FaListCheck } from "react-icons/fa6";
 import { MdAccountBalanceWallet } from "react-icons/md";
+import laporan_penjualan_produk from "../pages/laporan/Laporan_Penjualan_Produk";
 
 export const ADMIN_FEATURES = {
   DASHBOARD: {
@@ -88,8 +89,19 @@ export const MO_FEATURES = {
     logo: <FaListCheck />,
     route: "/dashboard/MO/history_bahan_baku",
   },
+
+  LAPORAN_PENJUALAN_PRODUK: {
+    name: "Laporan Penjualan Produk",
+    logo: <FaListCheck />,
+    route: "/dashboard/MO/laporan_penjualan_produk",
+  },
 };
 
 export const OWNER_FEATURES = {
   LAPORAN: "Laporan",
+  LAPORAN_PENJUALAN_PRODUK: {
+    name: "Laporan Penjualan Produk",
+    logo: <FaListCheck />,
+    route: "/dashboard/owner/laporan_penjualan_produk",
+  },
 };
