@@ -57,11 +57,11 @@ const Proses_Pembelian = () => {
         if (data.message == "Ada bahan baku yang kurang") {
           toast.error("Ada bahan baku yang kurang");
         } else {
-          toast.success("Berhasil Mengonfirmasi Pesanan");
+          toast.success("Berhasil Memproses Pesanan");
         }
       },
       onError: () => {
-        toast.error("Gagal Mengonfirmasi Pesanan");
+        toast.error("Gagal Memproses Pesanan");
       },
     });
   };

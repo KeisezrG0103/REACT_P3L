@@ -21,3 +21,14 @@ export const getLaporanProdukPerBulan = async (bulan, year) => {
     });
     return response.data;
 }
+
+export const getLaporanPresensiPerBulan = async (tanggal) => {
+    const token = localStorage.getItem("token");
+    const response = await Axios.get(`${LAPORAN_ROUTES.LAPORAN_PRESENSI}/${tanggal}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+
+    });
+    return response.data;
+}

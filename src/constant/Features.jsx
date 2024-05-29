@@ -100,6 +100,11 @@ export const MO_FEATURES = {
     logo: <FaListCheck />,
     route: "/dashboard/MO/laporan_stok_bahan_baku",
   },
+  LAPORAN_PRESENSI: {
+    name: "Laporan Presensi",
+    logo: <FaListCheck />,
+    route: "/dashboard/MO/laporan_presensi",
+  },
 };
 
 export const OWNER_FEATURES = {
