@@ -214,7 +214,13 @@ function App() {
                 path="/dashboard/Owner/Laporan_Stok_Bahan_Baku"
                 element={<Laporan_Stok_Bahan_Baku />}
               />
+
+              <Route
+                path="/dashboard/Owner/Laporan_Presensi"
+                element={<Laporan_Presensi />}
+              />
             </Route>
+            
           </Route>
 
           <Route path="*" element={<NotFound />} />

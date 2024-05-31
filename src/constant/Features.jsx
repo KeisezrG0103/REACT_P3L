@@ -119,4 +119,9 @@ export const OWNER_FEATURES = {
     logo: <FaListCheck />,
     route: "/dashboard/owner/laporan_stok_bahan_baku",
   },
+  LAPORAN_PRESENSI: {
+    name: "Laporan Presensi",
+    logo: <FaListCheck />,
+    route: "/dashboard/owner/laporan_presensi",
+  },
 };
