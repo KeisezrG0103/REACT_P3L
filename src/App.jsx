@@ -51,6 +51,7 @@ import Konfirmasi_Saldo from "./pages/dashboard/MO/Konfirmasi_Saldo/Konfirmasi_S
 import Laporan_Penjualan_Produk from "./pages/laporan/Laporan_Penjualan_Produk.jsx";
 import Laporan_Stok_Bahan_Baku from "./pages/laporan/Laporan_Stok_Bahan_Baku.jsx";
 import Laporan_Presensi from "./pages/laporan/Laporan_Presensi.jsx";
+import Laporan_Keuangan from "./pages/laporan/Laporan_Keuangan.jsx";
 
 function App() {
   return (
@@ -200,6 +201,11 @@ function App() {
                 path="/dashboard/MO/Laporan_Presensi"
                 element={<Laporan_Presensi />}
               />
+
+              <Route
+                path="/dashboard/MO/Laporan_Keuangan"
+                element={<Laporan_Keuangan />}
+              />
             </Route>
 
             
@@ -218,6 +224,11 @@ function App() {
               <Route
                 path="/dashboard/Owner/Laporan_Presensi"
                 element={<Laporan_Presensi />}
+              />
+
+              <Route
+                path="/dashboard/Owner/Laporan_Keuangan"
+                element={<Laporan_Keuangan />}
               />
             </Route>
             

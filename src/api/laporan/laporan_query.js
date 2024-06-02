@@ -32,3 +32,14 @@ export const getLaporanPresensiPerBulan = async (tanggal) => {
     });
     return response.data;
 }
+
+export const getLaporanKeuanganPerBulan = async (tanggal) => {
+    const token = localStorage.getItem("token");
+    const response = await Axios.get(`${LAPORAN_ROUTES.LAPORAN_KEUANGAN}/${tanggal}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+
+    });
+    return response.data;
+}
