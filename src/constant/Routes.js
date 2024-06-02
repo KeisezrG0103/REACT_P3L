@@ -85,7 +85,8 @@ export const LAPORAN_ROUTES = {
     LAPORAN_BAHAN_BAKU: BASEURL + "/api/laporan_bahan_baku",
     LAPORAN_PRODUK_PER_BULAN: BASEURL + "/api/laporan_produk_per_bulan",
     LAPORAN_PRESENSI: BASEURL + '/api/getLaporanPresensi',
-    LAPORAN_KEUANGAN: BASEURL + '/api/getLaporanKeuangan'
+    LAPORAN_KEUANGAN: BASEURL + '/api/getLaporanKeuangan',
+    LAPORAN_PENITIP: BASEURL + '/api/getLaporanPenitip',
 }
 
 

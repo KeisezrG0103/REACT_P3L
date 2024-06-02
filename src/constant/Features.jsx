@@ -110,6 +110,11 @@ export const MO_FEATURES = {
     logo: <FaListCheck />,
     route: "/dashboard/MO/laporan_keuangan",
   },
+  LAPORAN_PENITIP: {
+    name: "Laporan Penitip",
+    logo: <FaListCheck />,
+    route: "/dashboard/MO/laporan_penitip",
+  },
 };
 
 export const OWNER_FEATURES = {
@@ -133,5 +138,10 @@ export const OWNER_FEATURES = {
     name: "Laporan Keuangan",
     logo: <FaListCheck />,
     route: "/dashboard/owner/laporan_keuangan",
+  },
+  LAPORAN_PENITIP: {
+    name: "Laporan Penitip",
+    logo: <FaListCheck />,
+    route: "/dashboard/owner/laporan_penitip",
   },
 };
