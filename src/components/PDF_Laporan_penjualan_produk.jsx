@@ -1,5 +1,6 @@
 import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import dayjs from "dayjs";
 
 const styles = StyleSheet.create({
   table: {
@@ -34,6 +35,7 @@ const convertDateToYear = (date) => {
 };
 
 const PDF_Laporan_penjualan_produk = ({ data, selectedDate }) => {
+  const currentDate = dayjs().format("DD/MM/YYYY");
   // Ensure data is available and not null or undefined
   const totalUang = data?.data?.reduce((acc, item) => acc + item.Total, 0) || 0;
 
@@ -47,6 +49,9 @@ const PDF_Laporan_penjualan_produk = ({ data, selectedDate }) => {
           <Text style={{ fontSize: 12 }}>
             Bulan: {convertDateToMonth(selectedDate)} Tahun:{" "}
             {convertDateToYear(selectedDate)}
+          </Text>
+          <Text style={{ fontSize: 12, marginTop: 10 }}>
+            Tanggal: {currentDate}
           </Text>
         </View>
         <View style={styles.table}>
