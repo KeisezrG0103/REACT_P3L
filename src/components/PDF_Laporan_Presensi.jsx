@@ -45,7 +45,12 @@ const convertDateToYear = (date) => {
 };
 
 const PDF_Laporan_Presensi = ({ data, selectedDate }) => {
-  const totalUang = data?.data?.reduce((acc, item) => acc + (item.Total || 0), 0) || 0;
+  
+  const dataArray = Array.isArray(data?.data?.presensi) ? data.data.presensi : [];
+
+  // Hitung total uang dengan reduce hanya jika dataArray merupakan array
+  const totalUang = dataArray.reduce((acc, item) => acc + (item.Total || 0), 0) || 0;
+
   const currentDate = dayjs().format('DD/MM/YYYY');
 
   return (
@@ -82,7 +87,7 @@ const PDF_Laporan_Presensi = ({ data, selectedDate }) => {
               <Text style={styles.tableCellHeader}>Total</Text>
             </View>
           </View>
-          {data?.data?.map((item, index) => (
+          {dataArray.map((item, index) => (
             <View style={styles.tableRow} key={index}>
               <View style={styles.tableCol}>
                 <Text style={styles.tableCell}>{item.Nama}</Text>

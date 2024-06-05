@@ -55,7 +55,7 @@ const PDF_Laporan_Keuangan = ({ data, selectedDate }) => {
   const totalPengeluaranLain = Array.isArray(data?.data?.pengeluaranLain) ? data?.data?.pengeluaranLain?.reduce((acc, item) => acc + item.Harga, 0) || 0 : 0;
   const totalPengadaanBahanBaku = data?.data?.totalPengadaanBahanBaku?.TotalPengadaanBahanBaku || 0;
   const totalPembayaranPenitip = data?.data?.totalPembayaranPenitip?.TotalPembayaranPenitip || 0;
-  const totalGajiKaryawan = data?.data?.totalGajiKaryawan?.TotalGajiKaryawan || 0;
+  const totalGajiKaryawan = data?.data?.totalGajiKaryawan || 0;
 
   const totalPemasukan = totalPenjualan + totalTip;
   const totalPengeluaran = totalGajiKaryawan + totalPengadaanBahanBaku + totalPembayaranPenitip + totalPengeluaranLain;

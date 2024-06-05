@@ -19,7 +19,9 @@ const Laporan_Presensi = () => {
     () => getLaporanPresensiPerBulan(formatDateForAPI(selectedDate))
   );
 
-  const totalUang = data?.data.reduce((acc, item) => acc + (item.Total || 0), 0) || 0;
+  const presensiData = data?.data?.presensi || [];
+
+  const totalUang = presensiData.reduce((acc, item) => acc + (item.Total || 0), 0);
 
   return (
     <div>
@@ -86,7 +88,7 @@ const Laporan_Presensi = () => {
                     </tr>
                   )}
 
-                  {data?.data.length === 0 && (
+                  {presensiData.length === 0 && !isLoading && (
                     <tr>
                       <td colSpan="6" className="text-center">
                         Data tidak ditemukan
@@ -94,7 +96,7 @@ const Laporan_Presensi = () => {
                     </tr>
                   )}
 
-                  {data?.data.map((item) => (
+                  {presensiData.map((item) => (
                     <tr key={item.id} className="text-center">
                       <td>{item.Nama}</td>
                       <td>{item.Jumlah_Hadir}</td>
